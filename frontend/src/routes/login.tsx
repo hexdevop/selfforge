@@ -25,7 +25,7 @@ function LoginPage() {
       <LoginForm onSuccess={() => navigate({ href: safeRedirect(target) })} />
       <div className="mt-6 flex flex-col gap-3 text-base">
         <Link to="/forgot-password" className="underline underline-offset-4">
-          Забыл пароль
+          Не помню пароль
         </Link>
         <p className="text-muted-foreground">
           Нет аккаунта?{' '}

@@ -20,7 +20,7 @@ function ForgotPasswordPage() {
       ) : (
         <>
           <p className="mb-6 text-muted-foreground">
-            Укажи email, с которым регистрировался, — пришлём ссылку для нового пароля.
+            Укажи email от аккаунта — пришлём ссылку для нового пароля.
           </p>
           <ForgotPasswordForm onSent={() => setSent(true)} />
         </>
