@@ -9,30 +9,10 @@ from app.engine.inventory import (
     resolve_available_exercises,
     weight_grid,
 )
-from app.engine.types import CatalogExercise, Constraints, Equipment, Location, Plate, Surface
-from app.seed import load_catalog
+from app.engine.types import Constraints, Equipment, Location, Plate, Surface
+from tests.engine.catalog import BY_SLUG, CATALOG
 
 D = Decimal  # short alias keeps the weight tables readable
-
-CATALOG = [
-    CatalogExercise(
-        slug=slug,
-        pattern=pattern.value,
-        level=ex.difficulty_level,
-        required_equipment=tuple(tuple(g) for g in ex.required_equipment),
-        requires_pair=ex.requires_pair,
-        is_unilateral=ex.is_unilateral,
-        is_quiet=ex.is_quiet,
-        needs_floor_space=ex.needs_floor_space,
-        needs_ceiling_height=ex.needs_ceiling_height,
-        lies_on_floor=ex.lies_on_floor,
-        contraindicated_for=frozenset(ex.contraindicated_for),
-        prev_slug=ex.prev_slug,
-        next_slug=ex.next_slug,
-    )
-    for slug, (pattern, ex) in load_catalog().exercises.items()
-]
-BY_SLUG = {e.slug: e for e in CATALOG}
 
 HOUSEHOLD = {code: Equipment(code) for code in ("chair", "sofa", "wall", "towel")}
 
