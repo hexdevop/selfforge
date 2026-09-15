@@ -12,7 +12,7 @@ def test_engine_never_imports_infrastructure() -> None:
     check = (
         f"import sys; import {', '.join(modules)}; "
         "leaked = {'sqlalchemy', 'fastapi', 'redis'} & {m.split('.')[0] for m in sys.modules}; "
-        "sys.exit(', '.join(sorted(leaked)))"
+        "sys.exit(', '.join(sorted(leaked)) or None)"
     )
     result = subprocess.run([sys.executable, "-c", check], capture_output=True, text=True)
     assert result.returncode == 0, f"engine imports {result.stderr.strip()}"
