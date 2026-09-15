@@ -27,9 +27,10 @@ make revision m="add something"      # alembic revision --autogenerate
 make docker-up / make docker-down    # full stack (app + postgres + redis) via docker-compose
 ```
 
-Tests run against SQLite in-memory (`aiosqlite`) + `fakeredis` — no Docker/Postgres/Redis
-needed for `make test`. Real Postgres/Redis are only needed for `make migrate` /
-`make docker-up` / running the app itself.
+Tests run against a real Postgres (the models rely on JSONB) + `fakeredis`. Start the DB
+with `docker compose up -d db` first; `tests/conftest.py` creates the `app_test` database on
+first run, builds the schema via `Base.metadata.create_all` once per session and truncates
+all tables after every test. The app's own `get_db` is used as-is — no override.
 
 ## Environment
 

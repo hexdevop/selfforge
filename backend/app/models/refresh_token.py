@@ -25,10 +25,4 @@ class RefreshToken(UUIDPrimaryKeyMixin, TimestampMixin, Base):
 
     @property
     def is_active(self) -> bool:
-        # SQLite (used in tests) drops tzinfo on round-trip even for
-        # DateTime(timezone=True) columns; Postgres doesn't. Normalize to
-        # UTC-aware before comparing so this works on both.
-        expires_at = self.expires_at
-        if expires_at.tzinfo is None:
-            expires_at = expires_at.replace(tzinfo=UTC)
-        return self.revoked_at is None and expires_at > datetime.now(UTC)
+        return self.revoked_at is None and self.expires_at > datetime.now(UTC)

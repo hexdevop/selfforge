@@ -12,7 +12,7 @@
 - **JWT** (access + refresh с ротацией и хранением refresh-токенов в БД)
 - **uv** — управление зависимостями и окружением
 - **ruff** + **mypy** (strict) — линт, форматирование, типы
-- **pytest** + **pytest-asyncio** — тесты на SQLite in-memory + fakeredis
+- **pytest** + **pytest-asyncio** — тесты на PostgreSQL + fakeredis
 
 ## Архитектура
 
@@ -30,7 +30,7 @@ app/
 ├── api/v1/           # роутеры, версионирование через префикс /api/v1
 └── main.py           # сборка приложения (lifespan, middlewares, exception handlers)
 alembic/               # миграции
-tests/                 # pytest, отдельная БД (sqlite) и redis (fakeredis)
+tests/                 # pytest, отдельная БД app_test в Postgres и fakeredis
 ```
 
 Поток вызова: `api/v1/*` → `services/*` (бизнес-правила, транзакции) →
@@ -105,11 +105,11 @@ uv run uvicorn app.main:app --reload
 
 ## Тесты
 
-Тесты изолированы от реальных Postgres/Redis: БД — SQLite in-memory
-(`aiosqlite`), кеш — `fakeredis`. Это делает `pytest` быстрым и не требующим
-поднятого Docker-стека для разработки.
+Тесты идут на настоящем PostgreSQL (модель данных опирается на JSONB), кеш —
+`fakeredis`. База `app_test` создаётся автоматически при первом запуске.
 
 ```bash
+docker compose up -d db
 uv run pytest
 ```
 
