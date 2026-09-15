@@ -1,0 +1,105 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+@import "@fontsource-variable/golos-text";
+
+@custom-variant dark (&:is(.dark *));
+
+/* Palette from docs/05-frontend.md. Light is the default on purpose: the app is used
+   outdoors in bright sun. --heat is spent only on the active set and progression. */
+:root {
+  --ink: #14181d;
+  --steel-700: #454e59;
+  --steel-400: #8e98a3; /* non-text only: below 4.5:1 on light surfaces */
+  --steel-200: #d2d7dc;
+  --steel-050: #edeff1;
+  --paper: #f8f9fa;
+  --heat: #e0532b;
+
+  --background: var(--steel-050);
+  --foreground: var(--ink);
+  --card: var(--paper);
+  --card-foreground: var(--ink);
+  --popover: var(--paper);
+  --popover-foreground: var(--ink);
+  --primary: var(--ink);
+  --primary-foreground: var(--paper);
+  --secondary: var(--steel-200);
+  --secondary-foreground: var(--ink);
+  --muted: var(--steel-050);
+  --muted-foreground: var(--steel-700);
+  --accent: var(--steel-200);
+  --accent-foreground: var(--ink);
+  --destructive: #b3261e;
+  --border: var(--steel-200);
+  --input: var(--steel-200);
+  --ring: var(--steel-700);
+}
+
+/* Inversion along the same scale; --heat stays. */
+.dark {
+  --background: var(--ink);
+  --foreground: var(--steel-050);
+  --card: #1d2228;
+  --card-foreground: var(--steel-050);
+  --popover: #1d2228;
+  --popover-foreground: var(--steel-050);
+  --primary: var(--steel-050);
+  --primary-foreground: var(--ink);
+  --secondary: var(--steel-700);
+  --secondary-foreground: var(--steel-050);
+  --muted: #1d2228;
+  --muted-foreground: var(--steel-400);
+  --accent: var(--steel-700);
+  --accent-foreground: var(--steel-050);
+  --destructive: #f2897f;
+  --border: var(--steel-700);
+  --input: var(--steel-700);
+  --ring: var(--steel-400);
+}
+
+@theme inline {
+  --font-sans: "Golos Text Variable", system-ui, sans-serif;
+  --font-heading: var(--font-sans);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-heat: var(--heat);
+
+  /* Radii by hierarchy: fields 6px, buttons and chips 8px, large surfaces 12px. */
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --radius-xl: 12px;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  html {
+    @apply font-sans;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+}
