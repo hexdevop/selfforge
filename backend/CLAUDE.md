@@ -4,10 +4,10 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What this is
 
-A lightweight, reusable FastAPI starter template (not a specific product) — meant to be
-copied/forked as the base for future small-to-medium projects. It ships ready-made building
-blocks (users, JWT auth by email/username, middlewares, generic repository with filters,
-pagination, Redis caching) that a new project can extend rather than rebuild.
+Backend of Self Forge (see the root `CLAUDE.md` and `../docs/` — they win over this file).
+Grown from a FastAPI starter template: users, JWT auth by email/username (refresh token in
+an httpOnly cookie), email verification / password reset over SMTP, Redis rate limiting,
+middlewares, generic repository with filters, pagination, Redis caching.
 
 ## Commands
 

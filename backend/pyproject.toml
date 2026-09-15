@@ -1,7 +1,7 @@
 [project]
-name = "fastapi-template"
+name = "selfforge"
 version = "0.1.0"
-description = "Lightweight production-ready FastAPI template"
+description = "Self Forge backend: strength training at home and outdoors"
 authors = [
     { name = "hexdevop", email = "abduraxmonislomov@gmail.com" }
 ]

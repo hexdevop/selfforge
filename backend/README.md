@@ -1,8 +1,8 @@
-# FastAPI Template
+# Self Forge — бэкенд
 
-Лёгкий стартовый шаблон для FastAPI-проектов: пользователи, JWT-аутентификация
-по email/username, миддлвари, generic-репозитории с фильтрами и пагинацией,
-кеширование в Redis — всё, что обычно нужно в начале проекта, без лишнего.
+API приложения Self Forge. Вырос из шаблона fastapi-template: пользователи,
+JWT-аутентификация по email/username, миддлвари, generic-репозитории с фильтрами
+и пагинацией, кеширование в Redis. Продуктовые спецификации — в `../docs/`.
 
 ## Стек
 
@@ -78,17 +78,19 @@ Postgres и Redis внутри docker-сети видны приложению �
 порты (`POSTGRES_EXPOSED_PORT=5433`, `REDIS_EXPOSED_PORT=6380`), чтобы не
 конфликтовать с локально установленными Postgres/Redis.
 
-### Вариант 2 — локально без Docker
+### Вариант 2 — приложение на хосте, сервисы в Docker
 
-Нужны свои Postgres и Redis (доступные по `localhost` со стандартными портами,
-либо укажите свои в `.env`).
+`.env.example` уже смотрит на порты контейнеров (5433 / 6380 / 1025).
 
 ```bash
 cp .env.example .env
+docker compose up -d db redis mailpit minio
 uv sync
 uv run alembic upgrade head
 uv run uvicorn app.main:app --reload
 ```
+
+Письма в dev ловит Mailpit: http://localhost:8025. Консоль MinIO: http://localhost:9001.
 
 ## Команды
 

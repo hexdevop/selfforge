@@ -1,6 +1,7 @@
 from functools import lru_cache
-from typing import Literal
+from typing import Literal, Self
 
+from pydantic import model_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -15,7 +16,7 @@ class Settings(BaseSettings):
 
     model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8", extra="ignore")
 
-    PROJECT_NAME: str = "FastAPI Template"
+    PROJECT_NAME: str = "Self Forge"
     ENV: Literal["local", "test", "staging", "production"] = "local"
     DEBUG: bool = True
     API_V1_PREFIX: str = "/api/v1"
@@ -48,6 +49,14 @@ class Settings(BaseSettings):
     SMTP_PASSWORD: str = ""
     SMTP_STARTTLS: bool = False
     EMAIL_FROM: str = "Self Forge <noreply@selfforge.local>"
+
+    @model_validator(mode="after")
+    def _require_real_secret_outside_dev(self) -> Self:
+        if self.ENV in ("staging", "production") and (
+            len(self.SECRET_KEY) < 32 or self.SECRET_KEY == "change-me"
+        ):
+            raise ValueError("SECRET_KEY must be a random string of 32+ chars outside local/test")
+        return self
 
     @property
     def DATABASE_URL(self) -> str:  # noqa: N802 (kept uppercase to match the settings fields)
