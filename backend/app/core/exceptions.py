@@ -44,6 +44,14 @@ class InvalidTokenException(AppException):
     message = "Сессия истекла, войди заново"
 
 
+class InvalidLinkException(AppException):
+    """Bad or expired token from an emailed link. Deliberately not 401: it says nothing
+    about the current session, so clients must not treat it as one expiring."""
+
+    code = "invalid_link"
+    message = "Ссылка устарела или уже не действует"
+
+
 class PermissionDeniedException(AppException):
     status_code = status.HTTP_403_FORBIDDEN
     code = "permission_denied"

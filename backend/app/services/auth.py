@@ -6,6 +6,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.core.exceptions import (
     AlreadyExistsException,
     InvalidCredentialsException,
+    InvalidLinkException,
     InvalidTokenException,
 )
 from app.core.security import (
@@ -84,7 +85,7 @@ class AuthService:
         payload = decode_token(token, TokenType.EMAIL_VERIFY)
         user = await self.users.get(payload["sub"]) if payload else None
         if payload is None or user is None or payload.get("email") != user.email:
-            raise InvalidTokenException("Ссылка устарела или уже не действует")
+            raise InvalidLinkException()
         if not user.is_verified:
             await self.users.update(user, is_verified=True)
             await self.session.commit()
@@ -101,7 +102,7 @@ class AuthService:
             or user is None
             or payload.get("pwd") != password_fingerprint(user.hashed_password)
         ):
-            raise InvalidTokenException("Ссылка устарела или уже использована")
+            raise InvalidLinkException("Ссылка устарела или уже использована")
 
         # Following the link proves ownership of the address, so it counts as verified.
         await self.users.update(user, hashed_password=hash_password(new_password), is_verified=True)

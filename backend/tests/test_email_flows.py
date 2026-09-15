@@ -50,7 +50,8 @@ async def test_verify_email_rejects_garbage_and_foreign_token_types(
 
     for token in ("not-a-token", access_token):
         response = await client.post("/api/v1/auth/verify-email", json={"token": token})
-        assert response.status_code == 401
+        assert response.status_code == 400
+        assert response.json()["detail"]["code"] == "invalid_link"
 
 
 async def test_resend_verification_requires_auth(
@@ -98,7 +99,7 @@ async def test_password_reset_changes_password_once_and_revokes_sessions(
         "/api/v1/auth/password-reset/confirm",
         json={"token": reset_token, "password": "another-pass-3"},
     )
-    assert reuse.status_code == 401
+    assert reuse.status_code == 400
 
     client.cookies.clear()
     client.cookies.set("refresh_token", old_refresh)
