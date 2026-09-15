@@ -6,11 +6,8 @@ class LoginRequest(BaseModel):
     password: str
 
 
-class RefreshRequest(BaseModel):
-    refresh_token: str
-
-
 class TokenResponse(BaseModel):
+    """Access token only — the refresh token is set as an httpOnly cookie."""
+
     access_token: str
-    refresh_token: str
     token_type: str = "bearer"

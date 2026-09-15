@@ -53,7 +53,12 @@ async def test_login_by_email_or_username(client: AsyncClient, login: str) -> No
     body = response.json()
     assert body["token_type"] == "bearer"
     assert body["access_token"]
-    assert body["refresh_token"]
+    assert "refresh_token" not in body
+    set_cookie = response.headers["set-cookie"]
+    assert "refresh_token=" in set_cookie
+    assert "HttpOnly" in set_cookie
+    assert "Path=/api/v1/auth" in set_cookie
+    assert "SameSite=strict" in set_cookie
 
 
 async def test_login_wrong_password_rejected(client: AsyncClient) -> None:
@@ -116,40 +121,48 @@ async def test_me_returns_current_user(client: AsyncClient) -> None:
     assert response.json()["username"] == "alice"
 
 
-async def test_refresh_rotates_token_and_old_one_stops_working(client: AsyncClient) -> None:
-    await _register(client)
+async def _login_refresh_cookie(client: AsyncClient) -> str:
     login_response = await client.post(
         "/api/v1/auth/login",
         json={"login": "alice", "password": REGISTER_PAYLOAD["password"]},
     )
-    old_refresh_token = login_response.json()["refresh_token"]
+    return login_response.cookies["refresh_token"]
 
-    refresh_response = await client.post(
-        "/api/v1/auth/refresh", json={"refresh_token": old_refresh_token}
-    )
+
+async def test_refresh_rotates_token_and_old_one_stops_working(client: AsyncClient) -> None:
+    await _register(client)
+    old_refresh_token = await _login_refresh_cookie(client)
+
+    refresh_response = await client.post("/api/v1/auth/refresh")
     assert refresh_response.status_code == 200
-    assert refresh_response.json()["refresh_token"] != old_refresh_token
+    assert refresh_response.json()["access_token"]
+    new_refresh_token = refresh_response.cookies["refresh_token"]
+    assert new_refresh_token != old_refresh_token
 
-    reuse_response = await client.post(
-        "/api/v1/auth/refresh", json={"refresh_token": old_refresh_token}
-    )
+    # Swap the jar contents by hand to prove it's the cookie that is checked.
+    client.cookies.clear()
+    client.cookies.set("refresh_token", new_refresh_token)
+    assert (await client.post("/api/v1/auth/refresh")).status_code == 200
+
+    client.cookies.clear()
+    client.cookies.set("refresh_token", old_refresh_token)
+    reuse_response = await client.post("/api/v1/auth/refresh")
     assert reuse_response.status_code == 401
+
+
+async def test_refresh_without_cookie_rejected(client: AsyncClient) -> None:
+    response = await client.post("/api/v1/auth/refresh")
+    assert response.status_code == 401
 
 
 async def test_logout_revokes_refresh_token(client: AsyncClient) -> None:
     await _register(client)
-    login_response = await client.post(
-        "/api/v1/auth/login",
-        json={"login": "alice", "password": REGISTER_PAYLOAD["password"]},
-    )
-    refresh_token = login_response.json()["refresh_token"]
+    refresh_token = await _login_refresh_cookie(client)
 
-    logout_response = await client.post(
-        "/api/v1/auth/logout", json={"refresh_token": refresh_token}
-    )
+    logout_response = await client.post("/api/v1/auth/logout")
     assert logout_response.status_code == 204
+    assert "refresh_token" not in client.cookies
 
-    reuse_response = await client.post(
-        "/api/v1/auth/refresh", json={"refresh_token": refresh_token}
-    )
+    client.cookies.set("refresh_token", refresh_token)
+    reuse_response = await client.post("/api/v1/auth/refresh")
     assert reuse_response.status_code == 401

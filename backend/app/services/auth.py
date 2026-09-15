@@ -1,3 +1,4 @@
+from dataclasses import dataclass
 from uuid import UUID
 
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -17,8 +18,13 @@ from app.core.security import (
 from app.models.user import User
 from app.repositories.refresh_token import RefreshTokenRepository
 from app.repositories.user import UserRepository
-from app.schemas.auth import TokenResponse
 from app.schemas.user import UserCreate
+
+
+@dataclass(frozen=True)
+class IssuedTokens:
+    access_token: str
+    refresh_token: str
 
 
 class AuthService:
@@ -52,13 +58,13 @@ class AuthService:
             raise InvalidCredentialsException()
         return user
 
-    async def login(self, login: str, password: str) -> TokenResponse:
+    async def login(self, login: str, password: str) -> IssuedTokens:
         user = await self.authenticate(login, password)
         tokens = await self._issue_tokens(user.id)
         await self.session.commit()
         return tokens
 
-    async def refresh(self, raw_refresh_token: str) -> TokenResponse:
+    async def refresh(self, raw_refresh_token: str) -> IssuedTokens:
         token_hash = hash_refresh_token(raw_refresh_token)
         stored_token = await self.refresh_tokens.get_by_hash(token_hash)
 
@@ -78,7 +84,7 @@ class AuthService:
             await self.refresh_tokens.revoke(stored_token)
             await self.session.commit()
 
-    async def _issue_tokens(self, user_id: UUID) -> TokenResponse:
+    async def _issue_tokens(self, user_id: UUID) -> IssuedTokens:
         access_token = create_access_token(user_id)
         raw_refresh_token, token_hash, expires_at = create_refresh_token_pair(user_id)
 
@@ -86,4 +92,4 @@ class AuthService:
             user_id=user_id, token_hash=token_hash, expires_at=expires_at
         )
 
-        return TokenResponse(access_token=access_token, refresh_token=raw_refresh_token)
+        return IssuedTokens(access_token=access_token, refresh_token=raw_refresh_token)
