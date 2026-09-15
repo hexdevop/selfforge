@@ -21,6 +21,8 @@ import { Route as AuthedOnboardingRouteImport } from './routes/_authed/onboardin
 import { Route as AuthedExercisesIndexRouteImport } from './routes/_authed/exercises/index'
 import { Route as AuthedExercisesSlugRouteImport } from './routes/_authed/exercises/$slug'
 import { Route as AuthedPatternsCodeRouteImport } from './routes/_authed/patterns/$code'
+import { Route as AuthedProgramIndexRouteImport } from './routes/_authed/program/index'
+import { Route as AuthedProgramNewRouteImport } from './routes/_authed/program/new'
 
 const AuthedRoute = AuthedRouteImport.update({
   id: '/_authed',
@@ -81,6 +83,16 @@ const AuthedPatternsCodeRoute = AuthedPatternsCodeRouteImport.update({
   path: '/patterns/$code',
   getParentRoute: () => AuthedRoute,
 } as any)
+const AuthedProgramIndexRoute = AuthedProgramIndexRouteImport.update({
+  id: '/program/',
+  path: '/program/',
+  getParentRoute: () => AuthedRoute,
+} as any)
+const AuthedProgramNewRoute = AuthedProgramNewRouteImport.update({
+  id: '/program/new',
+  path: '/program/new',
+  getParentRoute: () => AuthedRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof AuthedIndexRoute
@@ -93,7 +105,9 @@ export interface FileRoutesByFullPath {
   '/onboarding': typeof AuthedOnboardingRoute
   '/exercises/$slug': typeof AuthedExercisesSlugRoute
   '/patterns/$code': typeof AuthedPatternsCodeRoute
+  '/program/new': typeof AuthedProgramNewRoute
   '/exercises/': typeof AuthedExercisesIndexRoute
+  '/program/': typeof AuthedProgramIndexRoute
 }
 export interface FileRoutesByTo {
   '/forgot-password': typeof ForgotPasswordRoute
@@ -106,7 +120,9 @@ export interface FileRoutesByTo {
   '/': typeof AuthedIndexRoute
   '/exercises/$slug': typeof AuthedExercisesSlugRoute
   '/patterns/$code': typeof AuthedPatternsCodeRoute
+  '/program/new': typeof AuthedProgramNewRoute
   '/exercises': typeof AuthedExercisesIndexRoute
+  '/program': typeof AuthedProgramIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -121,7 +137,9 @@ export interface FileRoutesById {
   '/_authed/': typeof AuthedIndexRoute
   '/_authed/exercises/$slug': typeof AuthedExercisesSlugRoute
   '/_authed/patterns/$code': typeof AuthedPatternsCodeRoute
+  '/_authed/program/new': typeof AuthedProgramNewRoute
   '/_authed/exercises/': typeof AuthedExercisesIndexRoute
+  '/_authed/program/': typeof AuthedProgramIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -136,7 +154,9 @@ export interface FileRouteTypes {
     | '/onboarding'
     | '/exercises/$slug'
     | '/patterns/$code'
+    | '/program/new'
     | '/exercises/'
+    | '/program/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/forgot-password'
@@ -149,7 +169,9 @@ export interface FileRouteTypes {
     | '/'
     | '/exercises/$slug'
     | '/patterns/$code'
+    | '/program/new'
     | '/exercises'
+    | '/program'
   id:
     | '__root__'
     | '/_authed'
@@ -163,7 +185,9 @@ export interface FileRouteTypes {
     | '/_authed/'
     | '/_authed/exercises/$slug'
     | '/_authed/patterns/$code'
+    | '/_authed/program/new'
     | '/_authed/exercises/'
+    | '/_authed/program/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -261,6 +285,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthedPatternsCodeRouteImport
       parentRoute: typeof AuthedRoute
     }
+    '/_authed/program/': {
+      id: '/_authed/program/'
+      path: '/program'
+      fullPath: '/program/'
+      preLoaderRoute: typeof AuthedProgramIndexRouteImport
+      parentRoute: typeof AuthedRoute
+    }
+    '/_authed/program/new': {
+      id: '/_authed/program/new'
+      path: '/program/new'
+      fullPath: '/program/new'
+      preLoaderRoute: typeof AuthedProgramNewRouteImport
+      parentRoute: typeof AuthedRoute
+    }
   }
 }
 
@@ -270,7 +308,9 @@ interface AuthedRouteChildren {
   AuthedIndexRoute: typeof AuthedIndexRoute
   AuthedExercisesSlugRoute: typeof AuthedExercisesSlugRoute
   AuthedPatternsCodeRoute: typeof AuthedPatternsCodeRoute
+  AuthedProgramNewRoute: typeof AuthedProgramNewRoute
   AuthedExercisesIndexRoute: typeof AuthedExercisesIndexRoute
+  AuthedProgramIndexRoute: typeof AuthedProgramIndexRoute
 }
 
 const AuthedRouteChildren: AuthedRouteChildren = {
@@ -279,7 +319,9 @@ const AuthedRouteChildren: AuthedRouteChildren = {
   AuthedIndexRoute: AuthedIndexRoute,
   AuthedExercisesSlugRoute: AuthedExercisesSlugRoute,
   AuthedPatternsCodeRoute: AuthedPatternsCodeRoute,
+  AuthedProgramNewRoute: AuthedProgramNewRoute,
   AuthedExercisesIndexRoute: AuthedExercisesIndexRoute,
+  AuthedProgramIndexRoute: AuthedProgramIndexRoute,
 }
 
 const AuthedRouteWithChildren =

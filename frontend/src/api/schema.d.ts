@@ -486,6 +486,77 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/programs/preview": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Preview Program
+         * @description Build a program without saving it, for the «here's what you'd get» screen.
+         */
+        post: operations["preview_program_api_v1_programs_preview_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/programs": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Create Program */
+        post: operations["create_program_api_v1_programs_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/programs/active": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Active Program */
+        get: operations["active_program_api_v1_programs_active_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/programs/{program_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get Program */
+        get: operations["get_program_api_v1_programs__program_id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -524,6 +595,22 @@ export interface components {
          * @enum {string}
          */
         BandResistance: "light" | "medium" | "heavy";
+        /**
+         * BlockKind
+         * @enum {string}
+         */
+        BlockKind: "warmup" | "main" | "accessory" | "finisher" | "cooldown";
+        /** BlockRead */
+        BlockRead: {
+            kind: components["schemas"]["BlockKind"];
+            /** Minutes */
+            minutes: number;
+            /**
+             * Exercises
+             * @default []
+             */
+            exercises: components["schemas"]["PlannedExerciseRead"][];
+        };
         /** Constraints */
         "Constraints-Input": {
             /**
@@ -943,6 +1030,55 @@ export interface components {
          * @enum {string}
          */
         Pistol: "no" | "assisted" | "yes";
+        /** PlannedExerciseRead */
+        PlannedExerciseRead: {
+            /** Exercise Slug */
+            exercise_slug: string;
+            pattern_code: components["schemas"]["PatternCode"];
+            /** Sets */
+            sets: number;
+            /** Target Min */
+            target_min: number;
+            /** Target Max */
+            target_max: number;
+            /**
+             * Timed
+             * @description target is seconds of work, not reps
+             */
+            timed: boolean;
+            /** Rest Seconds */
+            rest_seconds: number;
+            /**
+             * Rir
+             * @description reps in reserve: stop the set this far from failure
+             */
+            rir: number;
+            /**
+             * Tempo
+             * @description eccentric-pause-concentric, seconds
+             */
+            tempo: string | null;
+        };
+        /** PlannedSessionRead */
+        PlannedSessionRead: {
+            /**
+             * Id
+             * @description null in a preview
+             */
+            id: string | null;
+            /** Day Index */
+            day_index: number;
+            /** Location Id */
+            location_id: string | null;
+            /** Title Ru */
+            title_ru: string;
+            /** Focus */
+            focus: components["schemas"]["PatternCode"][];
+            /** Estimated Minutes */
+            estimated_minutes: number;
+            /** Blocks */
+            blocks: components["schemas"]["BlockRead"][];
+        };
         /** PlateSet */
         "PlateSet-Input": {
             /** Kg */
@@ -1027,6 +1163,62 @@ export interface components {
             /** Timezone */
             timezone?: string | null;
         };
+        /** ProgramDraft */
+        ProgramDraft: {
+            goal_primary: components["schemas"]["Goal"];
+            structure: components["schemas"]["Structure"];
+            /** Weeks Total */
+            weeks_total: number;
+            /** Rationale Ru */
+            rationale_ru: string;
+            /** Weeks */
+            weeks: components["schemas"]["ProgramWeekRead"][];
+        };
+        /** ProgramRead */
+        ProgramRead: {
+            goal_primary: components["schemas"]["Goal"];
+            structure: components["schemas"]["Structure"];
+            /** Weeks Total */
+            weeks_total: number;
+            /** Rationale Ru */
+            rationale_ru: string;
+            /** Weeks */
+            weeks: components["schemas"]["ProgramWeekRead"][];
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            status: components["schemas"]["ProgramStatus"];
+            /**
+             * Started At
+             * Format: date-time
+             */
+            started_at: string;
+        };
+        /** ProgramRequest */
+        ProgramRequest: {
+            /**
+             * Day Locations
+             * @description Location for each training day, in order; all days at the default one if omitted
+             */
+            day_locations?: string[] | null;
+        };
+        /**
+         * ProgramStatus
+         * @enum {string}
+         */
+        ProgramStatus: "active" | "completed" | "abandoned";
+        /** ProgramWeekRead */
+        ProgramWeekRead: {
+            /** Index */
+            index: number;
+            kind: components["schemas"]["WeekKind"];
+            /** Volume Multiplier */
+            volume_multiplier: number;
+            /** Sessions */
+            sessions: components["schemas"]["PlannedSessionRead"][];
+        };
         /**
          * ProgressionCriteria
          * @description What to complete before moving to the next step, e.g. 3×12 or 3×30 s.
@@ -1076,6 +1268,11 @@ export interface components {
          * @enum {string}
          */
         Squats: "<10" | "10-25" | "25-50" | "50+";
+        /**
+         * Structure
+         * @enum {string}
+         */
+        Structure: "fullbody" | "upper_lower" | "ppl";
         /**
          * Surface
          * @enum {string}
@@ -1152,6 +1349,11 @@ export interface components {
             /** Token */
             token: string;
         };
+        /**
+         * WeekKind
+         * @enum {string}
+         */
+        WeekKind: "accumulation" | "deload";
         /** WeightGrid */
         WeightGrid: {
             /** Equipment Code */
@@ -2505,6 +2707,168 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["PlatesRead"];
+                };
+            };
+            /** @description Unprocessable Entity */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Client Error */
+            "4XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    preview_program_api_v1_programs_preview_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ProgramRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProgramDraft"];
+                };
+            };
+            /** @description Unprocessable Entity */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Client Error */
+            "4XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    create_program_api_v1_programs_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ProgramRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProgramRead"];
+                };
+            };
+            /** @description Unprocessable Entity */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Client Error */
+            "4XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    active_program_api_v1_programs_active_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProgramRead"];
+                };
+            };
+            /** @description Unprocessable Entity */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Client Error */
+            "4XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    get_program_api_v1_programs__program_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                program_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProgramRead"];
                 };
             };
             /** @description Unprocessable Entity */

@@ -52,7 +52,7 @@ function OnboardingPage() {
     const { data, error } = await api.POST('/api/v1/profile/onboarding/complete')
     if (!data) return setError(error?.detail.message)
     queryClient.setQueryData(profileQuery.queryKey, data)
-    await navigate({ to: '/' })
+    await navigate({ to: '/program/new' })
   }
 
   return (

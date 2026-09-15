@@ -27,18 +27,23 @@ function AuthedLayout() {
   return (
     <div className="min-h-dvh">
       <header className="border-b bg-card">
-        <div className="mx-auto flex max-w-3xl items-center gap-1 px-2 py-2 sm:gap-2 sm:px-4">
+        {/* On a phone the sections get their own row under the logo instead of being cut off. */}
+        <div className="mx-auto flex max-w-3xl flex-wrap items-center gap-1 px-2 py-2 sm:flex-nowrap sm:gap-2 sm:px-4">
           <Link
             to="/"
             className="flex h-11 items-center px-2 text-lg font-bold tracking-tight whitespace-nowrap"
           >
             Self Forge
           </Link>
-          <nav aria-label="Разделы" className="flex grow gap-1">
+          <nav
+            aria-label="Разделы"
+            className="order-last flex w-full gap-1 sm:order-none sm:w-auto sm:grow"
+          >
+            <NavLink to="/program">Программа</NavLink>
             <NavLink to="/exercises">Упражнения</NavLink>
             <NavLink to="/locations">Места</NavLink>
           </nav>
-          <Button variant="ghost" className="px-2 sm:px-4" onClick={logout}>
+          <Button variant="ghost" className="ml-auto px-2 sm:ml-0 sm:px-4" onClick={logout}>
             Выйти
           </Button>
         </div>
@@ -51,7 +56,13 @@ function AuthedLayout() {
   )
 }
 
-function NavLink({ to, children }: { to: '/exercises' | '/locations'; children: string }) {
+function NavLink({
+  to,
+  children,
+}: {
+  to: '/program' | '/exercises' | '/locations'
+  children: string
+}) {
   return (
     <Link
       to={to}
