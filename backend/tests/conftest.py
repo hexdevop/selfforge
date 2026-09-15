@@ -61,6 +61,7 @@ async def fake_redis(monkeypatch: pytest.MonkeyPatch) -> AsyncGenerator[None]:
     client = fakeredis.aioredis.FakeRedis(decode_responses=True)
     monkeypatch.setattr("app.cache.redis.redis_client", client)
     monkeypatch.setattr("app.cache.decorator.redis_client", client)
+    monkeypatch.setattr("app.dependencies.rate_limit.redis_client", client)
     yield
     await client.aclose()
 

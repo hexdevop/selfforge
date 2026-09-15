@@ -1,7 +1,8 @@
-from fastapi import APIRouter, status
+from fastapi import APIRouter, Depends, status
 
 from app.dependencies.auth import CurrentActiveUser
 from app.dependencies.db import DbSession
+from app.dependencies.rate_limit import rate_limit
 from app.schemas.auth import LoginRequest, RefreshRequest, TokenResponse
 from app.schemas.user import UserCreate, UserRead
 from app.services.auth import AuthService
@@ -9,13 +10,22 @@ from app.services.auth import AuthService
 router = APIRouter(prefix="/auth", tags=["auth"])
 
 
-@router.post("/register", response_model=UserRead, status_code=status.HTTP_201_CREATED)
+@router.post(
+    "/register",
+    response_model=UserRead,
+    status_code=status.HTTP_201_CREATED,
+    dependencies=[Depends(rate_limit("register", limit=10, window_seconds=3600))],
+)
 async def register(data: UserCreate, session: DbSession) -> UserRead:
     user = await AuthService(session).register(data)
     return UserRead.model_validate(user)
 
 
-@router.post("/login", response_model=TokenResponse)
+@router.post(
+    "/login",
+    response_model=TokenResponse,
+    dependencies=[Depends(rate_limit("login", limit=10, window_seconds=60))],
+)
 async def login(data: LoginRequest, session: DbSession) -> TokenResponse:
     return await AuthService(session).login(data.login, data.password)
 

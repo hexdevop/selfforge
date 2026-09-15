@@ -50,6 +50,12 @@ class PermissionDeniedException(AppException):
     message = "Недостаточно прав"
 
 
+class TooManyRequestsException(AppException):
+    status_code = status.HTTP_429_TOO_MANY_REQUESTS
+    code = "too_many_requests"
+    message = "Слишком много попыток. Подожди немного и попробуй снова"
+
+
 class InactiveUserException(AppException):
     status_code = status.HTTP_403_FORBIDDEN
     code = "inactive_user"

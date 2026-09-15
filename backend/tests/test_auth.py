@@ -67,6 +67,18 @@ async def test_login_wrong_password_rejected(client: AsyncClient) -> None:
     assert response.json()["detail"]["code"] == "invalid_credentials"
 
 
+async def test_login_is_rate_limited(client: AsyncClient) -> None:
+    payload = {"login": "alice", "password": "wrong-password"}
+    for _ in range(10):
+        response = await client.post("/api/v1/auth/login", json=payload)
+        assert response.status_code == 401
+
+    response = await client.post("/api/v1/auth/login", json=payload)
+
+    assert response.status_code == 429
+    assert response.json()["detail"]["code"] == "too_many_requests"
+
+
 async def test_validation_error_uses_unified_format(client: AsyncClient) -> None:
     response = await client.post(
         "/api/v1/auth/register", json={**REGISTER_PAYLOAD, "password": "short"}
