@@ -1,1 +1,3 @@
-.claude/
+# Personal Claude Code overrides and throwaway worktrees; shared config in .claude/ is committed.
+.claude/settings.local.json
+.claude/worktrees/
