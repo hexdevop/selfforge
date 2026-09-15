@@ -49,6 +49,8 @@ class Location:
     id: str
     equipment: Mapping[str, Equipment]
     constraints: Constraints = field(default_factory=Constraints)
+    kind: str = "home"
+    title: str = ""
 
 
 @dataclass(frozen=True)
@@ -56,6 +58,9 @@ class CatalogExercise:
     slug: str
     pattern: str
     level: int
+    title: str = ""
+    # Measured in seconds of work (planks, carries, cardio), not in reps.
+    timed: bool = False
     # AND of OR-groups of equipment codes; empty means bodyweight only.
     required_equipment: tuple[tuple[str, ...], ...] = ()
     requires_pair: bool = False
@@ -67,3 +72,10 @@ class CatalogExercise:
     contraindicated_for: frozenset[str] = frozenset()
     prev_slug: str | None = None
     next_slug: str | None = None
+
+
+def is_timed(pattern: str, criteria: Mapping[str, object] | None) -> bool:
+    """Carries and cardio are timed by nature; the rest when their criteria are in seconds."""
+    if criteria:
+        return bool(criteria.get("hold_seconds"))
+    return pattern in ("carry", "cardio")

@@ -6,17 +6,8 @@ from zoneinfo import available_timezones
 from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
 
 from app.engine.assessment import Overall, Pistol, Pullups, Pushups, Squats
+from app.engine.goals import Goal
 from app.schemas.catalog import HealthTag, PatternCode
-
-
-class Goal(StrEnum):
-    HYPERTROPHY = "hypertrophy"
-    STRENGTH = "strength"
-    ENDURANCE = "endurance"
-    FAT_LOSS = "fat_loss"
-    SKILL = "skill"
-    HEALTH = "health"
-    MAINTENANCE = "maintenance"
 
 
 class GuidanceLevel(StrEnum):

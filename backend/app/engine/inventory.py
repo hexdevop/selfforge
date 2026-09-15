@@ -50,10 +50,16 @@ def _per_side_limits(equipment: Equipment) -> list[tuple[Decimal, int]]:
     return sorted(((kg, n) for kg, n in per_side.items() if n > 0), reverse=True)
 
 
-def weight_grid(equipment: Equipment) -> list[Decimal]:
-    """Every weight one implement can be set to, ascending. Nothing outside it is ever offered."""
+def weight_grid(equipment: Equipment, pair: bool = False) -> list[Decimal]:
+    """Every weight one implement can be set to, ascending. Nothing outside it is ever offered.
+
+    `pair`: only weights there are two pieces of — two 16 kg kettlebells, not a 16 and a 24.
+    """
     if equipment.bar_kg is None:
-        return sorted(set(equipment.weights_kg))
+        weights = equipment.weights_kg
+        if pair and equipment.quantity < 2:
+            weights = tuple(w for w in weights if weights.count(w) > 1)
+        return sorted(set(weights))
 
     # ponytail: enumerates reachable sums; fine for home plate sets (a few dozen plates).
     sides = {Decimal(0)}

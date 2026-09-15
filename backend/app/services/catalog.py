@@ -4,7 +4,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.cache.decorator import cached
 from app.core.exceptions import NotFoundException
-from app.engine.types import CatalogExercise
+from app.engine.types import CatalogExercise, is_timed
 from app.models.catalog import Exercise
 from app.repositories.catalog import CatalogRepository
 from app.schemas.catalog import (
@@ -29,6 +29,8 @@ def to_engine_exercise(e: Exercise) -> CatalogExercise:
         slug=e.slug,
         pattern=e.pattern_code,
         level=e.difficulty_level,
+        title=e.title_ru,
+        timed=is_timed(e.pattern_code, e.progression_criteria),
         required_equipment=tuple(tuple(group) for group in e.required_equipment),
         requires_pair=e.requires_pair,
         is_unilateral=e.is_unilateral,
