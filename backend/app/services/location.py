@@ -47,6 +47,8 @@ def to_engine_location(location: Location) -> engine.Location:
         id=str(location.id),
         equipment=equipment,
         constraints=engine.Constraints(c.quiet_mode, c.low_ceiling, c.limited_space, c.surface),
+        kind=location.kind,
+        title=location.title,
     )
 
 

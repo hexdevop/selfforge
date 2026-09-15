@@ -107,10 +107,21 @@ PostgreSQL. Первичные ключи — UUID. У всех таблиц `cr
 `program_id`, `index`, `kind` (accumulation / deload), `volume_multiplier`.
 
 ### `planned_sessions`
-`program_week_id`, `day_index`, `location_id`, `title_ru`,
+`program_week_id`, `day_index`, `location_id` (при удалении места становится `null` — план
+остаётся читаемым), `title_ru`,
 `focus` (массив паттернов), `estimated_minutes`,
 `blocks` (JSONB — структура тренировки: разминка, основные блоки, финишер, заминка;
 внутри блока список упражнений со схемой подходов, диапазоном повторов, отдыхом, темпом).
+
+```json
+[{ "kind": "main", "minutes": 14, "exercises": [
+    { "exercise_slug": "goblet_squat", "pattern_code": "squat", "sets": 3,
+      "target_min": 8, "target_max": 12, "timed": false,
+      "rest_seconds": 90, "rir": 2, "tempo": null } ] }]
+```
+`kind`: warmup / main / accessory / finisher / cooldown. При `timed: true` цель — секунды
+работы, а не повторы (планки, переноски, финишер). Веса в плане не хранятся: их подставляет
+подготовка сессии из истории (Этап 4).
 
 ## Выполнение
 
