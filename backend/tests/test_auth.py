@@ -36,7 +36,9 @@ async def test_register_duplicate_email_rejected(client: AsyncClient) -> None:
     )
 
     assert response.status_code == 409
-    assert response.json()["error_code"] == "already_exists"
+    detail = response.json()["detail"]
+    assert detail["code"] == "already_exists"
+    assert "email" in detail["fields"]
 
 
 @pytest.mark.parametrize("login", ["alice@example.com", "alice"])
@@ -62,7 +64,18 @@ async def test_login_wrong_password_rejected(client: AsyncClient) -> None:
     )
 
     assert response.status_code == 401
-    assert response.json()["error_code"] == "invalid_credentials"
+    assert response.json()["detail"]["code"] == "invalid_credentials"
+
+
+async def test_validation_error_uses_unified_format(client: AsyncClient) -> None:
+    response = await client.post(
+        "/api/v1/auth/register", json={**REGISTER_PAYLOAD, "password": "short"}
+    )
+
+    assert response.status_code == 422
+    detail = response.json()["detail"]
+    assert detail["code"] == "validation_error"
+    assert "password" in detail["fields"]
 
 
 async def test_me_requires_valid_token(client: AsyncClient) -> None:

@@ -21,7 +21,7 @@ async def get_current_user(
     token: Annotated[str | None, Depends(_oauth2_scheme)],
 ) -> User:
     if token is None:
-        raise InvalidTokenException("Not authenticated")
+        raise InvalidTokenException("Нужно войти")
 
     user_id = decode_access_token(token)
     if user_id is None:
@@ -48,7 +48,7 @@ CurrentActiveUser = Annotated[User, Depends(get_current_active_user)]
 
 async def get_current_superuser(user: CurrentActiveUser) -> User:
     if not user.is_superuser:
-        raise PermissionDeniedException("Superuser privileges required")
+        raise PermissionDeniedException()
     return user
 
 

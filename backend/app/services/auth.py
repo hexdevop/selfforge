@@ -29,9 +29,13 @@ class AuthService:
 
     async def register(self, data: UserCreate) -> User:
         if await self.users.get_by_email(data.email):
-            raise AlreadyExistsException("A user with this email already exists")
+            raise AlreadyExistsException(
+                "Этот email уже зарегистрирован", {"email": "Этот email уже занят"}
+            )
         if await self.users.get_by_username(data.username):
-            raise AlreadyExistsException("A user with this username already exists")
+            raise AlreadyExistsException(
+                "Это имя пользователя уже занято", {"username": "Это имя уже занято"}
+            )
 
         user = await self.users.create(
             email=data.email,
@@ -59,7 +63,7 @@ class AuthService:
         stored_token = await self.refresh_tokens.get_by_hash(token_hash)
 
         if stored_token is None or not stored_token.is_active:
-            raise InvalidTokenException("Refresh token is invalid, expired or already used")
+            raise InvalidTokenException()
 
         # Rotate: revoke the used token and issue a fresh pair.
         await self.refresh_tokens.revoke(stored_token)

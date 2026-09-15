@@ -22,7 +22,7 @@ class UserService:
     async def get(self, user_id: UUID) -> User:
         user = await self.users.get(user_id)
         if user is None:
-            raise NotFoundException("User not found")
+            raise NotFoundException("Пользователь не найден")
         return user
 
     @cached(key_prefix=_CACHE_PREFIX)
@@ -46,13 +46,17 @@ class UserService:
         values = data.model_dump(exclude_unset=True, exclude={"password"})
 
         if data.email and data.email != user.email and await self.users.get_by_email(data.email):
-            raise AlreadyExistsException("A user with this email already exists")
+            raise AlreadyExistsException(
+                "Этот email уже зарегистрирован", {"email": "Этот email уже занят"}
+            )
         if (
             data.username
             and data.username != user.username
             and await self.users.get_by_username(data.username)
         ):
-            raise AlreadyExistsException("A user with this username already exists")
+            raise AlreadyExistsException(
+                "Это имя пользователя уже занято", {"username": "Это имя уже занято"}
+            )
 
         if data.password:
             values["hashed_password"] = hash_password(data.password)

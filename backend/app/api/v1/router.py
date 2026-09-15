@@ -1,7 +1,17 @@
+from typing import Any
+
 from fastapi import APIRouter
 
 from app.api.v1 import auth, users
+from app.schemas.error import ErrorResponse
 
-router = APIRouter()
+# Every error goes through the handlers in `app.main`, so document that single
+# shape for the whole API (it also replaces FastAPI's default 422 schema).
+_ERROR_RESPONSES: dict[int | str, dict[str, Any]] = {
+    "4XX": {"model": ErrorResponse},
+    422: {"model": ErrorResponse},
+}
+
+router = APIRouter(responses=_ERROR_RESPONSES)
 router.include_router(auth.router)
 router.include_router(users.router)

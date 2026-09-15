@@ -75,9 +75,9 @@ repositories only `flush()`.
 
 - **Exceptions** (`app/core/exceptions.py`) — business/domain errors raise `AppException`
   subclasses (`NotFoundException`, `AlreadyExistsException`, etc.), never `HTTPException`,
-  from services/repositories. A single handler in `app/main.py` converts them to
-  `{"error_code", "detail"}` JSON responses — this keeps HTTP status codes out of the service
-  layer.
+  from services/repositories. Handlers in `app/main.py` convert them (and validation /
+  HTTP errors) to `{"detail": {"code", "message", "fields"}}` (`app/schemas/error.py`) —
+  `message` is Russian and shown to the user; `fields` maps form fields to messages.
 
 - **Alembic** (`alembic/env.py`) ignores `alembic.ini`'s `sqlalchemy.url` and instead builds the
   URL from `app.core.config.settings` at runtime, and imports `app.models` (which re-exports

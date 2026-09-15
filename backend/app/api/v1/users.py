@@ -36,7 +36,7 @@ async def update_user(
     user_id: UUID, data: UserUpdate, session: DbSession, current_user: CurrentActiveUser
 ) -> UserRead:
     if current_user.id != user_id and not current_user.is_superuser:
-        raise PermissionDeniedException("You can only update your own profile")
+        raise PermissionDeniedException("Можно менять только свой профиль")
 
     user = await UserService(session).update(user_id, data)
     return UserRead.model_validate(user)

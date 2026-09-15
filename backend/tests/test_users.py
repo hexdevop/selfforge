@@ -42,7 +42,7 @@ async def test_list_users_requires_superuser(client: AsyncClient, db_session: As
     response = await client.get("/api/v1/users", headers=_auth_headers(token))
 
     assert response.status_code == 403
-    assert response.json()["error_code"] == "permission_denied"
+    assert response.json()["detail"]["code"] == "permission_denied"
 
 
 async def test_list_users_as_superuser(client: AsyncClient, db_session: AsyncSession) -> None:

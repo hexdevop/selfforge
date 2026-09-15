@@ -4,52 +4,53 @@ from fastapi import status
 class AppException(Exception):  # noqa: N818 (mirrors FastAPI's own HTTPException naming)
     """Base class for application-level exceptions.
 
-    Raised from services/repositories and translated into a JSON response
-    by the handler registered in `app.main`. Keeps HTTP concerns out of the
-    business logic layer.
+    Raised from services/repositories and translated into the unified error
+    body `{"detail": {"code", "message", "fields"}}` by the handler registered
+    in `app.main`. `message` is Russian and shown to the user as-is.
     """
 
     status_code: int = status.HTTP_400_BAD_REQUEST
-    error_code: str = "bad_request"
-    detail: str = "Bad request"
+    code: str = "bad_request"
+    message: str = "Некорректный запрос"
 
-    def __init__(self, detail: str | None = None) -> None:
-        if detail is not None:
-            self.detail = detail
-        super().__init__(self.detail)
+    def __init__(self, message: str | None = None, fields: dict[str, str] | None = None) -> None:
+        if message is not None:
+            self.message = message
+        self.fields = fields
+        super().__init__(self.message)
 
 
 class NotFoundException(AppException):
     status_code = status.HTTP_404_NOT_FOUND
-    error_code = "not_found"
-    detail = "Resource not found"
+    code = "not_found"
+    message = "Не найдено"
 
 
 class AlreadyExistsException(AppException):
     status_code = status.HTTP_409_CONFLICT
-    error_code = "already_exists"
-    detail = "Resource already exists"
+    code = "already_exists"
+    message = "Такая запись уже есть"
 
 
 class InvalidCredentialsException(AppException):
     status_code = status.HTTP_401_UNAUTHORIZED
-    error_code = "invalid_credentials"
-    detail = "Invalid credentials"
+    code = "invalid_credentials"
+    message = "Неверный логин или пароль"
 
 
 class InvalidTokenException(AppException):
     status_code = status.HTTP_401_UNAUTHORIZED
-    error_code = "invalid_token"
-    detail = "Invalid or expired token"
+    code = "invalid_token"
+    message = "Сессия истекла, войди заново"
 
 
 class PermissionDeniedException(AppException):
     status_code = status.HTTP_403_FORBIDDEN
-    error_code = "permission_denied"
-    detail = "Permission denied"
+    code = "permission_denied"
+    message = "Недостаточно прав"
 
 
 class InactiveUserException(AppException):
     status_code = status.HTTP_403_FORBIDDEN
-    error_code = "inactive_user"
-    detail = "User is inactive"
+    code = "inactive_user"
+    message = "Аккаунт отключён"
