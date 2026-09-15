@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { createFileRoute, Outlet, redirect, useNavigate } from '@tanstack/react-router'
+import { createFileRoute, Link, Outlet, redirect, useNavigate } from '@tanstack/react-router'
 import { meQueryOptions, signOut, type User, useMe } from '@/api/auth'
 import { api } from '@/api/client'
 import { Button } from '@/components/ui/button'
@@ -27,8 +27,13 @@ function AuthedLayout() {
   return (
     <div className="min-h-dvh">
       <header className="border-b bg-card">
-        <div className="mx-auto flex max-w-3xl items-center justify-between gap-4 px-4 py-2">
-          <span className="text-lg font-bold tracking-tight">Self Forge</span>
+        <div className="mx-auto flex max-w-3xl items-center gap-2 px-4 py-2">
+          <Link to="/" className="mr-2 text-lg font-bold tracking-tight">
+            Self Forge
+          </Link>
+          <nav aria-label="Разделы" className="flex grow gap-1">
+            <NavLink to="/exercises">Упражнения</NavLink>
+          </nav>
           <Button variant="ghost" onClick={logout}>
             Выйти
           </Button>
@@ -39,6 +44,18 @@ function AuthedLayout() {
         <Outlet />
       </main>
     </div>
+  )
+}
+
+function NavLink({ to, children }: { to: '/exercises'; children: string }) {
+  return (
+    <Link
+      to={to}
+      className="flex h-11 items-center rounded-lg px-3 text-base hover:bg-secondary"
+      activeProps={{ className: 'font-semibold', 'aria-current': 'page' }}
+    >
+      {children}
+    </Link>
   )
 }
 

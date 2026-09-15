@@ -16,6 +16,9 @@ import { Route as RegisterRouteImport } from './routes/register'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as VerifyEmailRouteImport } from './routes/verify-email'
 import { Route as AuthedIndexRouteImport } from './routes/_authed/index'
+import { Route as AuthedExercisesIndexRouteImport } from './routes/_authed/exercises/index'
+import { Route as AuthedExercisesSlugRouteImport } from './routes/_authed/exercises/$slug'
+import { Route as AuthedPatternsCodeRouteImport } from './routes/_authed/patterns/$code'
 
 const AuthedRoute = AuthedRouteImport.update({
   id: '/_authed',
@@ -51,6 +54,21 @@ const AuthedIndexRoute = AuthedIndexRouteImport.update({
   path: '/',
   getParentRoute: () => AuthedRoute,
 } as any)
+const AuthedExercisesIndexRoute = AuthedExercisesIndexRouteImport.update({
+  id: '/exercises/',
+  path: '/exercises/',
+  getParentRoute: () => AuthedRoute,
+} as any)
+const AuthedExercisesSlugRoute = AuthedExercisesSlugRouteImport.update({
+  id: '/exercises/$slug',
+  path: '/exercises/$slug',
+  getParentRoute: () => AuthedRoute,
+} as any)
+const AuthedPatternsCodeRoute = AuthedPatternsCodeRouteImport.update({
+  id: '/patterns/$code',
+  path: '/patterns/$code',
+  getParentRoute: () => AuthedRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof AuthedIndexRoute
@@ -59,6 +77,9 @@ export interface FileRoutesByFullPath {
   '/register': typeof RegisterRoute
   '/reset-password': typeof ResetPasswordRoute
   '/verify-email': typeof VerifyEmailRoute
+  '/exercises/$slug': typeof AuthedExercisesSlugRoute
+  '/patterns/$code': typeof AuthedPatternsCodeRoute
+  '/exercises/': typeof AuthedExercisesIndexRoute
 }
 export interface FileRoutesByTo {
   '/forgot-password': typeof ForgotPasswordRoute
@@ -67,6 +88,9 @@ export interface FileRoutesByTo {
   '/reset-password': typeof ResetPasswordRoute
   '/verify-email': typeof VerifyEmailRoute
   '/': typeof AuthedIndexRoute
+  '/exercises/$slug': typeof AuthedExercisesSlugRoute
+  '/patterns/$code': typeof AuthedPatternsCodeRoute
+  '/exercises': typeof AuthedExercisesIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -77,6 +101,9 @@ export interface FileRoutesById {
   '/reset-password': typeof ResetPasswordRoute
   '/verify-email': typeof VerifyEmailRoute
   '/_authed/': typeof AuthedIndexRoute
+  '/_authed/exercises/$slug': typeof AuthedExercisesSlugRoute
+  '/_authed/patterns/$code': typeof AuthedPatternsCodeRoute
+  '/_authed/exercises/': typeof AuthedExercisesIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -87,6 +114,9 @@ export interface FileRouteTypes {
     | '/register'
     | '/reset-password'
     | '/verify-email'
+    | '/exercises/$slug'
+    | '/patterns/$code'
+    | '/exercises/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/forgot-password'
@@ -95,6 +125,9 @@ export interface FileRouteTypes {
     | '/reset-password'
     | '/verify-email'
     | '/'
+    | '/exercises/$slug'
+    | '/patterns/$code'
+    | '/exercises'
   id:
     | '__root__'
     | '/_authed'
@@ -104,6 +137,9 @@ export interface FileRouteTypes {
     | '/reset-password'
     | '/verify-email'
     | '/_authed/'
+    | '/_authed/exercises/$slug'
+    | '/_authed/patterns/$code'
+    | '/_authed/exercises/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -166,15 +202,42 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthedIndexRouteImport
       parentRoute: typeof AuthedRoute
     }
+    '/_authed/exercises/': {
+      id: '/_authed/exercises/'
+      path: '/exercises'
+      fullPath: '/exercises/'
+      preLoaderRoute: typeof AuthedExercisesIndexRouteImport
+      parentRoute: typeof AuthedRoute
+    }
+    '/_authed/exercises/$slug': {
+      id: '/_authed/exercises/$slug'
+      path: '/exercises/$slug'
+      fullPath: '/exercises/$slug'
+      preLoaderRoute: typeof AuthedExercisesSlugRouteImport
+      parentRoute: typeof AuthedRoute
+    }
+    '/_authed/patterns/$code': {
+      id: '/_authed/patterns/$code'
+      path: '/patterns/$code'
+      fullPath: '/patterns/$code'
+      preLoaderRoute: typeof AuthedPatternsCodeRouteImport
+      parentRoute: typeof AuthedRoute
+    }
   }
 }
 
 interface AuthedRouteChildren {
   AuthedIndexRoute: typeof AuthedIndexRoute
+  AuthedExercisesSlugRoute: typeof AuthedExercisesSlugRoute
+  AuthedPatternsCodeRoute: typeof AuthedPatternsCodeRoute
+  AuthedExercisesIndexRoute: typeof AuthedExercisesIndexRoute
 }
 
 const AuthedRouteChildren: AuthedRouteChildren = {
   AuthedIndexRoute: AuthedIndexRoute,
+  AuthedExercisesSlugRoute: AuthedExercisesSlugRoute,
+  AuthedPatternsCodeRoute: AuthedPatternsCodeRoute,
+  AuthedExercisesIndexRoute: AuthedExercisesIndexRoute,
 }
 
 const AuthedRouteWithChildren =

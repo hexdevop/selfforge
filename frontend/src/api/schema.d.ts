@@ -210,10 +210,131 @@ export interface paths {
         patch: operations["update_user_api_v1_users__user_id__patch"];
         trace?: never;
     };
+    "/api/v1/exercises": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List Exercises */
+        get: operations["list_exercises_api_v1_exercises_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/exercises/{slug}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get Exercise */
+        get: operations["get_exercise_api_v1_exercises__slug__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/patterns": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List Patterns */
+        get: operations["list_patterns_api_v1_patterns_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/patterns/{code}/ladder": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get Ladder */
+        get: operations["get_ladder_api_v1_patterns__code__ladder_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/equipment": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List Equipment */
+        get: operations["list_equipment_api_v1_equipment_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/skills": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List Skills */
+        get: operations["list_skills_api_v1_skills_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
+        /**
+         * EquipmentCategory
+         * @enum {string}
+         */
+        EquipmentCategory: "weights" | "bars" | "bands" | "bench" | "support" | "bodyweight";
+        /** EquipmentRead */
+        EquipmentRead: {
+            /** Code */
+            code: string;
+            /** Title Ru */
+            title_ru: string;
+            category: components["schemas"]["EquipmentCategory"];
+            /** Supports Quantity */
+            supports_quantity: boolean;
+            /** Supports Weight List */
+            supports_weight_list: boolean;
+            /** Is Outdoor */
+            is_outdoor: boolean;
+        };
         /** ErrorDetail */
         ErrorDetail: {
             /** Code */
@@ -229,6 +350,89 @@ export interface components {
         ErrorResponse: {
             detail: components["schemas"]["ErrorDetail"];
         };
+        /** ExerciseRead */
+        ExerciseRead: {
+            /** Slug */
+            slug: string;
+            /** Title Ru */
+            title_ru: string;
+            pattern_code: components["schemas"]["PatternCode"];
+            /** Difficulty Level */
+            difficulty_level: number;
+            /** Is Unilateral */
+            is_unilateral: boolean;
+            /** Requires Pair */
+            requires_pair: boolean;
+            /** Is Quiet */
+            is_quiet: boolean;
+            /**
+             * Required Equipment
+             * @description AND of OR-groups of equipment codes; empty means bodyweight only
+             */
+            required_equipment: string[][];
+            /** Primary Muscles */
+            primary_muscles: components["schemas"]["Muscle"][];
+            /** Needs Floor Space */
+            needs_floor_space: boolean;
+            /** Needs Ceiling Height */
+            needs_ceiling_height: boolean;
+            /** Lies On Floor */
+            lies_on_floor: boolean;
+            /** Secondary Muscles */
+            secondary_muscles: components["schemas"]["Muscle"][];
+            /** Contraindicated For */
+            contraindicated_for: components["schemas"]["HealthTag"][];
+            /** Technique Ru */
+            technique_ru: string;
+            /** Common Mistakes Ru */
+            common_mistakes_ru: string[];
+            /** Media */
+            media: {
+                [key: string]: string;
+            };
+            /** Prev Slug */
+            prev_slug: string | null;
+            /** Next Slug */
+            next_slug: string | null;
+            progression_criteria: components["schemas"]["ProgressionCriteria"] | null;
+        };
+        /** ExerciseSummary */
+        ExerciseSummary: {
+            /** Slug */
+            slug: string;
+            /** Title Ru */
+            title_ru: string;
+            pattern_code: components["schemas"]["PatternCode"];
+            /** Difficulty Level */
+            difficulty_level: number;
+            /** Is Unilateral */
+            is_unilateral: boolean;
+            /** Requires Pair */
+            requires_pair: boolean;
+            /** Is Quiet */
+            is_quiet: boolean;
+            /**
+             * Required Equipment
+             * @description AND of OR-groups of equipment codes; empty means bodyweight only
+             */
+            required_equipment: string[][];
+            /** Primary Muscles */
+            primary_muscles: components["schemas"]["Muscle"][];
+        };
+        /**
+         * HealthTag
+         * @enum {string}
+         */
+        HealthTag: "knees" | "shoulders" | "lower_back" | "wrists" | "neck" | "elbows";
+        /** LadderRead */
+        LadderRead: {
+            pattern: components["schemas"]["PatternRead"];
+            /**
+             * Exercises
+             * @description Ordered by difficulty_level
+             */
+            exercises: components["schemas"]["ExerciseSummary"][];
+        };
         /** LoginRequest */
         LoginRequest: {
             /**
@@ -239,6 +443,11 @@ export interface components {
             /** Password */
             password: string;
         };
+        /**
+         * Muscle
+         * @enum {string}
+         */
+        Muscle: "chest" | "front_delts" | "side_delts" | "rear_delts" | "triceps" | "biceps" | "forearms" | "lats" | "upper_back" | "lower_back" | "abs" | "obliques" | "glutes" | "quads" | "hamstrings" | "adductors" | "calves" | "hip_flexors";
         /** Page[UserRead] */
         Page_UserRead_: {
             /** Items */
@@ -266,6 +475,55 @@ export interface components {
              * Format: email
              */
             email: string;
+        };
+        /**
+         * PatternCode
+         * @enum {string}
+         */
+        PatternCode: "squat" | "hinge" | "push_h" | "push_v" | "pull_h" | "pull_v" | "lunge" | "carry" | "core" | "cardio";
+        /** PatternRead */
+        PatternRead: {
+            code: components["schemas"]["PatternCode"];
+            /** Title Ru */
+            title_ru: string;
+            /** Description Ru */
+            description_ru: string;
+            /** Is Bilateral Default */
+            is_bilateral_default: boolean;
+        };
+        /**
+         * ProgressionCriteria
+         * @description What to complete before moving to the next step, e.g. 3×12 or 3×30 s.
+         */
+        ProgressionCriteria: {
+            /** Sets */
+            sets: number;
+            /** Reps */
+            reps?: number | null;
+            /** Hold Seconds */
+            hold_seconds?: number | null;
+        };
+        /** SkillPrerequisite */
+        SkillPrerequisite: {
+            /** Exercise Slug */
+            exercise_slug: string;
+            /** Reps */
+            reps?: number | null;
+            /** Hold Seconds */
+            hold_seconds?: number | null;
+        };
+        /** SkillRead */
+        SkillRead: {
+            /** Slug */
+            slug: string;
+            /** Title Ru */
+            title_ru: string;
+            /** Description Ru */
+            description_ru: string;
+            /** Prerequisites */
+            prerequisites: components["schemas"]["SkillPrerequisite"][];
+            /** Lead Up Exercise Slugs */
+            lead_up_exercise_slugs: string[];
         };
         /**
          * TokenResponse
@@ -870,6 +1128,244 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["UserRead"];
+                };
+            };
+            /** @description Unprocessable Entity */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Client Error */
+            "4XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    list_exercises_api_v1_exercises_get: {
+        parameters: {
+            query?: {
+                pattern?: components["schemas"]["PatternCode"] | null;
+                /** @description Equipment code the exercise uses; `none` for bodyweight only */
+                equipment?: string | null;
+                difficulty_min?: number | null;
+                difficulty_max?: number | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ExerciseSummary"][];
+                };
+            };
+            /** @description Unprocessable Entity */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Client Error */
+            "4XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    get_exercise_api_v1_exercises__slug__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                slug: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ExerciseRead"];
+                };
+            };
+            /** @description Unprocessable Entity */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Client Error */
+            "4XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    list_patterns_api_v1_patterns_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PatternRead"][];
+                };
+            };
+            /** @description Unprocessable Entity */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Client Error */
+            "4XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    get_ladder_api_v1_patterns__code__ladder_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                code: components["schemas"]["PatternCode"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LadderRead"];
+                };
+            };
+            /** @description Unprocessable Entity */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Client Error */
+            "4XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    list_equipment_api_v1_equipment_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EquipmentRead"][];
+                };
+            };
+            /** @description Unprocessable Entity */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Client Error */
+            "4XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    list_skills_api_v1_skills_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SkillRead"][];
                 };
             };
             /** @description Unprocessable Entity */

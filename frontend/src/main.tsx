@@ -3,6 +3,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { createRouter, RouterProvider } from '@tanstack/react-router'
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
+import { Button } from './components/ui/button'
 import { routeTree } from './routeTree.gen'
 
 const queryClient = new QueryClient({
@@ -14,6 +15,15 @@ const router = createRouter({
   context: { queryClient },
   defaultPreload: 'intent',
   defaultPreloadStaleTime: 0,
+  defaultErrorComponent: ({ reset }) => (
+    <div role="alert" className="mx-auto flex max-w-prose flex-col items-start gap-4 px-4 py-10">
+      <h1 className="text-2xl font-semibold">Не получилось загрузить страницу</h1>
+      <p>Скорее всего, пропала связь. Проверь интернет и попробуй ещё раз.</p>
+      <Button variant="outline" onClick={() => router.invalidate().then(reset)}>
+        Попробовать ещё раз
+      </Button>
+    </div>
+  ),
 })
 
 declare module '@tanstack/react-router' {
