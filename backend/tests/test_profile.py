@@ -109,6 +109,14 @@ async def test_manual_level_correction(user_client: AsyncClient) -> None:
     assert levels["push_h"]["assessment_source"] == "onboarding"
 
 
+async def test_timezone_is_validated(user_client: AsyncClient) -> None:
+    ok = await user_client.patch("/api/v1/profile", json={"timezone": "Asia/Tashkent"})
+    assert ok.json()["timezone"] == "Asia/Tashkent"
+
+    bad = await user_client.patch("/api/v1/profile", json={"timezone": "Mars/Olympus"})
+    assert bad.json()["detail"]["fields"] == {"timezone": "Неизвестный часовой пояс"}
+
+
 async def test_goals_must_differ(user_client: AsyncClient) -> None:
     response = await user_client.patch(
         "/api/v1/profile", json={"goal_primary": "strength", "goal_secondary": "strength"}

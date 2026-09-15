@@ -63,7 +63,9 @@ def create_app() -> FastAPI:
         request: Request, exc: RequestValidationError
     ) -> JSONResponse:
         fields = {
-            ".".join(str(part) for part in err["loc"][1:]) or str(err["loc"][0]): err["msg"]
+            ".".join(str(part) for part in err["loc"][1:]) or str(err["loc"][0]): err[
+                "msg"
+            ].removeprefix("Value error, ")
             for err in exc.errors()
         }
         return _error(
