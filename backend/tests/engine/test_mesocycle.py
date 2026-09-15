@@ -209,6 +209,23 @@ def test_one_kettlebell_and_a_park_becomes_an_explained_hybrid() -> None:
     assert covered >= set(COVERED)
 
 
+def test_extras_that_fit_a_place_better_do_not_push_out_the_legs() -> None:
+    # Carries need iron, so home beats the park for them — that alone must not cost a squat.
+    house = home(KB16, Equipment("dumbbell", quantity=2, weights_kg=(D(8), D(10))), quiet_mode=True)
+    week = build(
+        house,
+        PARK,
+        house,
+        goal=Goal.STRENGTH,
+        secondary=Goal.HYPERTROPHY,
+        levels=BEGINNER | {"push_h": 4, "squat": 2, "lunge": 2},
+        health=frozenset({"knees"}),
+    ).weeks[0]
+    for day in week.days:
+        if day.location_id == "home":
+            assert {"squat", "lunge"} & set(day.focus), day.focus
+
+
 def test_quiet_mode_has_no_jumps_rope_or_dropped_iron() -> None:
     location = home(KB16, Equipment("jump_rope"), quiet_mode=True)
     program = build(

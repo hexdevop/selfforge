@@ -269,16 +269,20 @@ class _Planner:
         return list(max(permutations(templates), key=score))
 
     def order(self, patterns: tuple[str, ...], loc_id: str) -> list[str]:
-        """Patterns another place of the week serves better go last, better-here ones first."""
+        """Patterns another place of the week serves better go last; main patterns this place
+        serves best go first. Core and carry keep their spot: an extra that happens to fit
+        here better must not push a squat out of the day."""
         others = [loc for loc in self.week_locations if loc != loc_id]
         if not others:
             return list(patterns)
 
-        def edge(p: str) -> int:
+        def rank(p: str) -> int:
             here, elsewhere = self.fit(p, loc_id), max(self.fit(p, o) for o in others)
-            return (here < elsewhere) - (here > elsewhere)
+            if here < elsewhere:
+                return 2
+            return 0 if here > elsewhere and p not in _NEVER_MAIN else 1
 
-        return sorted(patterns, key=edge)
+        return sorted(patterns, key=rank)
 
     def cost(self, p: PlannedExercise, sets: int | None = None) -> int:
         """Seconds the exercise takes, counting the top of the range and both sides."""
@@ -466,7 +470,7 @@ class _Planner:
                 "в выбранных местах для этого нет снарядов."
             )
             if hints := self.gear_hints(no_gear):
-                text += f" Подойдёт, например, {listing(hints, 'или')}."
+                text += f" Подойдёт, например: {listing(hints, 'или')}."
             paragraphs.append(text)
         if no_time:
             paragraphs.append(
