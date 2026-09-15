@@ -27,14 +27,18 @@ function AuthedLayout() {
   return (
     <div className="min-h-dvh">
       <header className="border-b bg-card">
-        <div className="mx-auto flex max-w-3xl items-center gap-2 px-4 py-2">
-          <Link to="/" className="mr-2 text-lg font-bold tracking-tight">
+        <div className="mx-auto flex max-w-3xl items-center gap-1 px-2 py-2 sm:gap-2 sm:px-4">
+          <Link
+            to="/"
+            className="flex h-11 items-center px-2 text-lg font-bold tracking-tight whitespace-nowrap"
+          >
             Self Forge
           </Link>
           <nav aria-label="Разделы" className="flex grow gap-1">
             <NavLink to="/exercises">Упражнения</NavLink>
+            <NavLink to="/locations">Места</NavLink>
           </nav>
-          <Button variant="ghost" onClick={logout}>
+          <Button variant="ghost" className="px-2 sm:px-4" onClick={logout}>
             Выйти
           </Button>
         </div>
@@ -47,11 +51,11 @@ function AuthedLayout() {
   )
 }
 
-function NavLink({ to, children }: { to: '/exercises'; children: string }) {
+function NavLink({ to, children }: { to: '/exercises' | '/locations'; children: string }) {
   return (
     <Link
       to={to}
-      className="flex h-11 items-center rounded-lg px-3 text-base hover:bg-secondary"
+      className="flex h-11 items-center rounded-lg px-2 text-base hover:bg-secondary sm:px-3"
       activeProps={{ className: 'font-semibold', 'aria-current': 'page' }}
     >
       {children}

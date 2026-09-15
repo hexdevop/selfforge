@@ -5,8 +5,8 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { ExerciseRow } from '@/features/catalog/exercise-row'
 import { BODYWEIGHT, type CatalogFilter, filterExercises } from '@/features/catalog/filter'
-import { CATEGORY_LABELS, plural } from '@/features/catalog/labels'
 import { useEquipmentMap } from '@/features/catalog/use-equipment-map'
+import { CATEGORY_LABELS, exercisesCount } from '@/lib/format'
 import { cn } from '@/lib/utils'
 
 const text = (value: unknown) => (typeof value === 'string' && value ? value : undefined)
@@ -103,7 +103,7 @@ function CatalogPage() {
 
       <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
         <p className="text-muted-foreground" aria-live="polite">
-          {found.length} {plural(found.length, ['упражнение', 'упражнения', 'упражнений'])}
+          {exercisesCount(found.length)}
         </p>
         {selectedPattern && (
           <Link

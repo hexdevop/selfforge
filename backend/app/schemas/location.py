@@ -22,7 +22,13 @@ class BandResistance(StrEnum):
     HEAVY = "heavy"
 
 
-class Constraints(BaseModel):
+class _Model(BaseModel):
+    # Fields with defaults are always present in responses; say so in the OpenAPI schema
+    # so generated TS types don't mark them optional.
+    model_config = ConfigDict(json_schema_serialization_defaults_required=True)
+
+
+class Constraints(_Model):
     quiet_mode: bool = False
     low_ceiling: bool = False
     limited_space: bool = False
@@ -34,11 +40,11 @@ class PlateSet(BaseModel):
     count: int = Field(ge=1, le=50)
 
 
-class EquipmentDetails(BaseModel):
+class EquipmentDetails(_Model):
     """`fixed`: weights_kg, one entry per piece (two 16 kg bells → [16, 16]).
     `adjustable`: bar_kg + plates. Bands: resistances. Everything else: empty."""
 
-    model_config = ConfigDict(extra="forbid")
+    model_config = ConfigDict(extra="forbid", json_schema_serialization_defaults_required=True)
 
     type: Literal["fixed", "adjustable"] | None = None
     weights_kg: list[Kg] = Field(default=[], max_length=30)
@@ -47,14 +53,16 @@ class EquipmentDetails(BaseModel):
     resistances: list[BandResistance] = []
 
 
-class LocationEquipmentIn(BaseModel):
+class LocationEquipmentIn(_Model):
     equipment_code: str
     quantity: int = Field(default=1, ge=1, le=2)
     details: EquipmentDetails = EquipmentDetails()
 
 
 class LocationEquipmentRead(LocationEquipmentIn):
-    model_config = ConfigDict(from_attributes=True)
+    model_config = ConfigDict(
+        from_attributes=True, json_schema_serialization_defaults_required=True
+    )
 
 
 class LocationCreate(BaseModel):

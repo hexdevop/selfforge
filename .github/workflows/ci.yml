@@ -67,5 +67,5 @@ jobs:
         run: |
           (cd ../backend && uv sync --locked && uv run python -c \
             "import json; from app.main import app; print(json.dumps(app.openapi()))") > openapi.json
-          pnpm exec openapi-typescript openapi.json -o src/api/schema.d.ts
+          pnpm exec openapi-typescript openapi.json --default-non-nullable false -o src/api/schema.d.ts
           git diff --exit-code src/api/schema.d.ts

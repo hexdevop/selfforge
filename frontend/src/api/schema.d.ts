@@ -312,15 +312,337 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/profile": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get Profile */
+        get: operations["get_profile_api_v1_profile_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /** Update Profile */
+        patch: operations["update_profile_api_v1_profile_patch"];
+        trace?: never;
+    };
+    "/api/v1/profile/disclaimer": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Accept Disclaimer */
+        post: operations["accept_disclaimer_api_v1_profile_disclaimer_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/profile/assessment": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Assess */
+        post: operations["assess_api_v1_profile_assessment_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/profile/pattern-levels": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List Pattern Levels */
+        get: operations["list_pattern_levels_api_v1_profile_pattern_levels_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /** Update Pattern Levels */
+        patch: operations["update_pattern_levels_api_v1_profile_pattern_levels_patch"];
+        trace?: never;
+    };
+    "/api/v1/profile/onboarding/complete": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Complete Onboarding */
+        post: operations["complete_onboarding_api_v1_profile_onboarding_complete_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/locations": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List Locations */
+        get: operations["list_locations_api_v1_locations_get"];
+        put?: never;
+        /** Create Location */
+        post: operations["create_location_api_v1_locations_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/locations/{location_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /** Delete Location */
+        delete: operations["delete_location_api_v1_locations__location_id__delete"];
+        options?: never;
+        head?: never;
+        /** Update Location */
+        patch: operations["update_location_api_v1_locations__location_id__patch"];
+        trace?: never;
+    };
+    "/api/v1/locations/{location_id}/equipment": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /** Replace Equipment */
+        put: operations["replace_equipment_api_v1_locations__location_id__equipment_put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/locations/{location_id}/weight-grid": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Weight Grid */
+        get: operations["weight_grid_api_v1_locations__location_id__weight_grid_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/locations/{location_id}/plates": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Plates */
+        post: operations["plates_api_v1_locations__location_id__plates_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
+        /** AssessmentRead */
+        AssessmentRead: {
+            overall: components["schemas"]["Overall"];
+            guidance_level: components["schemas"]["GuidanceLevel"];
+            /** Levels */
+            levels: components["schemas"]["PatternLevelRead"][];
+        };
+        /** AssessmentRequest */
+        AssessmentRequest: {
+            pushups: components["schemas"]["Pushups"];
+            pullups: components["schemas"]["Pullups"];
+            squats: components["schemas"]["Squats"];
+            pistol: components["schemas"]["Pistol"];
+            /** Experienced */
+            experienced: boolean;
+            /** Knows Terms */
+            knows_terms: boolean;
+            /**
+             * Shift
+             * @default 0
+             * @enum {integer}
+             */
+            shift?: -1 | 0 | 1;
+        };
+        /**
+         * AssessmentSource
+         * @enum {string}
+         */
+        AssessmentSource: "onboarding" | "performance" | "manual";
+        /**
+         * BandResistance
+         * @enum {string}
+         */
+        BandResistance: "light" | "medium" | "heavy";
+        /** Constraints */
+        "Constraints-Input": {
+            /**
+             * Quiet Mode
+             * @default false
+             */
+            quiet_mode?: boolean;
+            /**
+             * Low Ceiling
+             * @default false
+             */
+            low_ceiling?: boolean;
+            /**
+             * Limited Space
+             * @default false
+             */
+            limited_space?: boolean;
+            surface?: components["schemas"]["Surface"] | null;
+        };
+        /** Constraints */
+        "Constraints-Output": {
+            /**
+             * Quiet Mode
+             * @default false
+             */
+            quiet_mode: boolean;
+            /**
+             * Low Ceiling
+             * @default false
+             */
+            low_ceiling: boolean;
+            /**
+             * Limited Space
+             * @default false
+             */
+            limited_space: boolean;
+            surface: components["schemas"]["Surface"] | null;
+        };
+        /**
+         * DisclaimerRequest
+         * @description Start-up health screen. The answers only decide the recommendation; they aren't stored.
+         */
+        DisclaimerRequest: {
+            /** Birth Year */
+            birth_year: number;
+            /** Heart Condition */
+            heart_condition: boolean;
+            /** Pregnancy */
+            pregnancy: boolean;
+            /** Recent Injury */
+            recent_injury: boolean;
+            /**
+             * Health Flags
+             * @default []
+             */
+            health_flags?: components["schemas"]["HealthTag"][];
+            /**
+             * Accepted
+             * @constant
+             */
+            accepted: true;
+        };
         /**
          * EquipmentCategory
          * @enum {string}
          */
         EquipmentCategory: "weights" | "bars" | "bands" | "bench" | "support" | "bodyweight";
+        /**
+         * EquipmentDetails
+         * @description `fixed`: weights_kg, one entry per piece (two 16 kg bells → [16, 16]).
+         *     `adjustable`: bar_kg + plates. Bands: resistances. Everything else: empty.
+         */
+        "EquipmentDetails-Input": {
+            /** Type */
+            type?: ("fixed" | "adjustable") | null;
+            /**
+             * Weights Kg
+             * @default []
+             */
+            weights_kg?: (number | string)[];
+            /** Bar Kg */
+            bar_kg?: number | string | null;
+            /**
+             * Plates
+             * @default []
+             */
+            plates?: components["schemas"]["PlateSet-Input"][];
+            /**
+             * Resistances
+             * @default []
+             */
+            resistances?: components["schemas"]["BandResistance"][];
+        };
+        /**
+         * EquipmentDetails
+         * @description `fixed`: weights_kg, one entry per piece (two 16 kg bells → [16, 16]).
+         *     `adjustable`: bar_kg + plates. Bands: resistances. Everything else: empty.
+         */
+        "EquipmentDetails-Output": {
+            /** Type */
+            type: ("fixed" | "adjustable") | null;
+            /**
+             * Weights Kg
+             * @default []
+             */
+            weights_kg: string[];
+            /** Bar Kg */
+            bar_kg: string | null;
+            /**
+             * Plates
+             * @default []
+             */
+            plates: components["schemas"]["PlateSet-Output"][];
+            /**
+             * Resistances
+             * @default []
+             */
+            resistances: components["schemas"]["BandResistance"][];
+        };
         /** EquipmentRead */
         EquipmentRead: {
             /** Code */
@@ -420,6 +742,16 @@ export interface components {
             primary_muscles: components["schemas"]["Muscle"][];
         };
         /**
+         * Goal
+         * @enum {string}
+         */
+        Goal: "hypertrophy" | "strength" | "endurance" | "fat_loss" | "skill" | "health" | "maintenance";
+        /**
+         * GuidanceLevel
+         * @enum {string}
+         */
+        GuidanceLevel: "verbose" | "normal" | "quiet";
+        /**
          * HealthTag
          * @enum {string}
          */
@@ -432,6 +764,101 @@ export interface components {
              * @description Ordered by difficulty_level
              */
             exercises: components["schemas"]["ExerciseSummary"][];
+        };
+        /** LocationCreate */
+        LocationCreate: {
+            kind: components["schemas"]["LocationKind"];
+            /** Title */
+            title: string;
+            /**
+             * Is Default
+             * @default false
+             */
+            is_default?: boolean;
+            /** Travel Minutes */
+            travel_minutes?: number | null;
+            /**
+             * @default {
+             *       "quiet_mode": false,
+             *       "low_ceiling": false,
+             *       "limited_space": false
+             *     }
+             */
+            constraints?: components["schemas"]["Constraints-Input"];
+        };
+        /** LocationEquipmentIn */
+        LocationEquipmentIn: {
+            /** Equipment Code */
+            equipment_code: string;
+            /**
+             * Quantity
+             * @default 1
+             */
+            quantity?: number;
+            /**
+             * @default {
+             *       "weights_kg": [],
+             *       "plates": [],
+             *       "resistances": []
+             *     }
+             */
+            details?: components["schemas"]["EquipmentDetails-Input"];
+        };
+        /** LocationEquipmentRead */
+        LocationEquipmentRead: {
+            /** Equipment Code */
+            equipment_code: string;
+            /**
+             * Quantity
+             * @default 1
+             */
+            quantity: number;
+            /**
+             * @default {
+             *       "weights_kg": [],
+             *       "plates": [],
+             *       "resistances": []
+             *     }
+             */
+            details: components["schemas"]["EquipmentDetails-Output"];
+        };
+        /**
+         * LocationKind
+         * @enum {string}
+         */
+        LocationKind: "home" | "outdoor_gym" | "outdoor_bare" | "travel";
+        /** LocationRead */
+        LocationRead: {
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            kind: components["schemas"]["LocationKind"];
+            /** Title */
+            title: string;
+            /** Is Default */
+            is_default: boolean;
+            /** Travel Minutes */
+            travel_minutes: number | null;
+            constraints: components["schemas"]["Constraints-Output"];
+            /** Equipment */
+            equipment: components["schemas"]["LocationEquipmentRead"][];
+            /**
+             * Available Exercise Count
+             * @description Exercises doable here, given the equipment, constraints and health flags
+             */
+            available_exercise_count: number;
+        };
+        /** LocationUpdate */
+        LocationUpdate: {
+            /** Title */
+            title?: string | null;
+            /** Is Default */
+            is_default?: boolean | null;
+            /** Travel Minutes */
+            travel_minutes?: number | null;
+            constraints?: components["schemas"]["Constraints-Input"] | null;
         };
         /** LoginRequest */
         LoginRequest: {
@@ -448,6 +875,11 @@ export interface components {
          * @enum {string}
          */
         Muscle: "chest" | "front_delts" | "side_delts" | "rear_delts" | "triceps" | "biceps" | "forearms" | "lats" | "upper_back" | "lower_back" | "abs" | "obliques" | "glutes" | "quads" | "hamstrings" | "adductors" | "calves" | "hip_flexors";
+        /**
+         * Overall
+         * @enum {string}
+         */
+        Overall: "beginner" | "intermediate" | "advanced";
         /** Page[UserRead] */
         Page_UserRead_: {
             /** Items */
@@ -481,6 +913,21 @@ export interface components {
          * @enum {string}
          */
         PatternCode: "squat" | "hinge" | "push_h" | "push_v" | "pull_h" | "pull_v" | "lunge" | "carry" | "core" | "cardio";
+        /** PatternLevelRead */
+        PatternLevelRead: {
+            pattern_code: components["schemas"]["PatternCode"];
+            /** Estimated Level */
+            estimated_level: number;
+            /** Current Exercise Slug */
+            current_exercise_slug: string;
+            assessment_source: components["schemas"]["AssessmentSource"];
+        };
+        /** PatternLevelUpdate */
+        PatternLevelUpdate: {
+            pattern_code: components["schemas"]["PatternCode"];
+            /** Estimated Level */
+            estimated_level: number;
+        };
         /** PatternRead */
         PatternRead: {
             code: components["schemas"]["PatternCode"];
@@ -490,6 +937,95 @@ export interface components {
             description_ru: string;
             /** Is Bilateral Default */
             is_bilateral_default: boolean;
+        };
+        /**
+         * Pistol
+         * @enum {string}
+         */
+        Pistol: "no" | "assisted" | "yes";
+        /** PlateSet */
+        "PlateSet-Input": {
+            /** Kg */
+            kg: number | string;
+            /** Count */
+            count: number;
+        };
+        /** PlateSet */
+        "PlateSet-Output": {
+            /** Kg */
+            kg: string;
+            /** Count */
+            count: number;
+        };
+        /** PlatesRead */
+        PlatesRead: {
+            /** Target Kg */
+            target_kg: string;
+            /** Achievable */
+            achievable: boolean;
+            /**
+             * Per Side
+             * @description Plates for EACH side, heaviest first
+             */
+            per_side: components["schemas"]["PlateSet-Output"][];
+            /**
+             * Nearest Kg
+             * @description Closest reachable weights when not achievable
+             */
+            nearest_kg: string[];
+        };
+        /** PlatesRequest */
+        PlatesRequest: {
+            /**
+             * Equipment Code
+             * @enum {string}
+             */
+            equipment_code: "barbell" | "dumbbell";
+            /** Target Kg */
+            target_kg: number | string;
+        };
+        /** ProfileRead */
+        ProfileRead: {
+            /** Birth Year */
+            birth_year: number | null;
+            goal_primary: components["schemas"]["Goal"] | null;
+            goal_secondary: components["schemas"]["Goal"] | null;
+            /** Days Per Week */
+            days_per_week: number | null;
+            /** Session Minutes */
+            session_minutes: number | null;
+            guidance_level: components["schemas"]["GuidanceLevel"];
+            /** Health Flags */
+            health_flags: components["schemas"]["HealthTag"][];
+            /** Needs Medical Clearance */
+            needs_medical_clearance: boolean;
+            /** Medical Disclaimer Accepted At */
+            medical_disclaimer_accepted_at: string | null;
+            /**
+             * Units
+             * @enum {string}
+             */
+            units: "metric" | "imperial";
+            /** Timezone */
+            timezone: string;
+            /** Onboarding Completed At */
+            onboarding_completed_at: string | null;
+        };
+        /** ProfileUpdate */
+        ProfileUpdate: {
+            /** Birth Year */
+            birth_year?: number | null;
+            goal_primary?: components["schemas"]["Goal"] | null;
+            goal_secondary?: components["schemas"]["Goal"] | null;
+            /** Days Per Week */
+            days_per_week?: number | null;
+            /** Session Minutes */
+            session_minutes?: number | null;
+            guidance_level?: components["schemas"]["GuidanceLevel"] | null;
+            /** Health Flags */
+            health_flags?: components["schemas"]["HealthTag"][] | null;
+            /** Timezone */
+            timezone?: string | null;
         };
         /**
          * ProgressionCriteria
@@ -503,6 +1039,16 @@ export interface components {
             /** Hold Seconds */
             hold_seconds?: number | null;
         };
+        /**
+         * Pullups
+         * @enum {string}
+         */
+        Pullups: "0" | "1-3" | "4-8" | "9-15" | "15+";
+        /**
+         * Pushups
+         * @enum {string}
+         */
+        Pushups: "0" | "1-5" | "6-15" | "16-30" | "30+";
         /** SkillPrerequisite */
         SkillPrerequisite: {
             /** Exercise Slug */
@@ -526,6 +1072,16 @@ export interface components {
             lead_up_exercise_slugs: string[];
         };
         /**
+         * Squats
+         * @enum {string}
+         */
+        Squats: "<10" | "10-25" | "25-50" | "50+";
+        /**
+         * Surface
+         * @enum {string}
+         */
+        Surface: "rubber" | "sand" | "asphalt";
+        /**
          * TokenResponse
          * @description Access token only — the refresh token is set as an httpOnly cookie.
          */
@@ -536,7 +1092,7 @@ export interface components {
              * Token Type
              * @default bearer
              */
-            token_type: string;
+            token_type?: string;
         };
         /** UserCreate */
         UserCreate: {
@@ -595,6 +1151,15 @@ export interface components {
         VerifyEmailRequest: {
             /** Token */
             token: string;
+        };
+        /** WeightGrid */
+        WeightGrid: {
+            /** Equipment Code */
+            equipment_code: string;
+            /** Weights Kg */
+            weights_kg: string[];
+            /** Min Step Kg */
+            min_step_kg: string | null;
         };
     };
     responses: never;
@@ -1158,6 +1723,8 @@ export interface operations {
                 equipment?: string | null;
                 difficulty_min?: number | null;
                 difficulty_max?: number | null;
+                /** @description Only what's doable at this location of the signed-in user */
+                location_id?: string | null;
             };
             header?: never;
             path?: never;
@@ -1366,6 +1933,578 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["SkillRead"][];
+                };
+            };
+            /** @description Unprocessable Entity */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Client Error */
+            "4XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    get_profile_api_v1_profile_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProfileRead"];
+                };
+            };
+            /** @description Unprocessable Entity */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Client Error */
+            "4XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    update_profile_api_v1_profile_patch: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ProfileUpdate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProfileRead"];
+                };
+            };
+            /** @description Unprocessable Entity */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Client Error */
+            "4XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    accept_disclaimer_api_v1_profile_disclaimer_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["DisclaimerRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProfileRead"];
+                };
+            };
+            /** @description Unprocessable Entity */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Client Error */
+            "4XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    assess_api_v1_profile_assessment_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AssessmentRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AssessmentRead"];
+                };
+            };
+            /** @description Unprocessable Entity */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Client Error */
+            "4XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    list_pattern_levels_api_v1_profile_pattern_levels_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PatternLevelRead"][];
+                };
+            };
+            /** @description Unprocessable Entity */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Client Error */
+            "4XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    update_pattern_levels_api_v1_profile_pattern_levels_patch: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PatternLevelUpdate"][];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PatternLevelRead"][];
+                };
+            };
+            /** @description Unprocessable Entity */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Client Error */
+            "4XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    complete_onboarding_api_v1_profile_onboarding_complete_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProfileRead"];
+                };
+            };
+            /** @description Unprocessable Entity */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Client Error */
+            "4XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    list_locations_api_v1_locations_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LocationRead"][];
+                };
+            };
+            /** @description Unprocessable Entity */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Client Error */
+            "4XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    create_location_api_v1_locations_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["LocationCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LocationRead"];
+                };
+            };
+            /** @description Unprocessable Entity */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Client Error */
+            "4XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    delete_location_api_v1_locations__location_id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                location_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Unprocessable Entity */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Client Error */
+            "4XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    update_location_api_v1_locations__location_id__patch: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                location_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["LocationUpdate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LocationRead"];
+                };
+            };
+            /** @description Unprocessable Entity */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Client Error */
+            "4XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    replace_equipment_api_v1_locations__location_id__equipment_put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                location_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["LocationEquipmentIn"][];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LocationRead"];
+                };
+            };
+            /** @description Unprocessable Entity */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Client Error */
+            "4XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    weight_grid_api_v1_locations__location_id__weight_grid_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                location_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["WeightGrid"][];
+                };
+            };
+            /** @description Unprocessable Entity */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Client Error */
+            "4XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    plates_api_v1_locations__location_id__plates_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                location_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PlatesRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PlatesRead"];
                 };
             };
             /** @description Unprocessable Entity */

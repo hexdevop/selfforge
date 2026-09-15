@@ -16,6 +16,14 @@
   --paper: #f8f9fa;
   --heat: #e0532b;
 
+  /* Plate colours follow the international disc coding — they carry information. */
+  --plate-25: #c8102e;
+  --plate-20: #0057b8;
+  --plate-15: #ffb81c;
+  --plate-10: #00843d;
+  --plate-5: #e9e9e9;
+  --plate-2-5: #c8102e;
+
   --background: var(--steel-050);
   --foreground: var(--ink);
   --card: var(--paper);

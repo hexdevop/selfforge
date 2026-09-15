@@ -16,6 +16,8 @@ import { Route as RegisterRouteImport } from './routes/register'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as VerifyEmailRouteImport } from './routes/verify-email'
 import { Route as AuthedIndexRouteImport } from './routes/_authed/index'
+import { Route as AuthedLocationsRouteImport } from './routes/_authed/locations'
+import { Route as AuthedOnboardingRouteImport } from './routes/_authed/onboarding'
 import { Route as AuthedExercisesIndexRouteImport } from './routes/_authed/exercises/index'
 import { Route as AuthedExercisesSlugRouteImport } from './routes/_authed/exercises/$slug'
 import { Route as AuthedPatternsCodeRouteImport } from './routes/_authed/patterns/$code'
@@ -54,6 +56,16 @@ const AuthedIndexRoute = AuthedIndexRouteImport.update({
   path: '/',
   getParentRoute: () => AuthedRoute,
 } as any)
+const AuthedLocationsRoute = AuthedLocationsRouteImport.update({
+  id: '/locations',
+  path: '/locations',
+  getParentRoute: () => AuthedRoute,
+} as any)
+const AuthedOnboardingRoute = AuthedOnboardingRouteImport.update({
+  id: '/onboarding',
+  path: '/onboarding',
+  getParentRoute: () => AuthedRoute,
+} as any)
 const AuthedExercisesIndexRoute = AuthedExercisesIndexRouteImport.update({
   id: '/exercises/',
   path: '/exercises/',
@@ -77,6 +89,8 @@ export interface FileRoutesByFullPath {
   '/register': typeof RegisterRoute
   '/reset-password': typeof ResetPasswordRoute
   '/verify-email': typeof VerifyEmailRoute
+  '/locations': typeof AuthedLocationsRoute
+  '/onboarding': typeof AuthedOnboardingRoute
   '/exercises/$slug': typeof AuthedExercisesSlugRoute
   '/patterns/$code': typeof AuthedPatternsCodeRoute
   '/exercises/': typeof AuthedExercisesIndexRoute
@@ -87,6 +101,8 @@ export interface FileRoutesByTo {
   '/register': typeof RegisterRoute
   '/reset-password': typeof ResetPasswordRoute
   '/verify-email': typeof VerifyEmailRoute
+  '/locations': typeof AuthedLocationsRoute
+  '/onboarding': typeof AuthedOnboardingRoute
   '/': typeof AuthedIndexRoute
   '/exercises/$slug': typeof AuthedExercisesSlugRoute
   '/patterns/$code': typeof AuthedPatternsCodeRoute
@@ -100,6 +116,8 @@ export interface FileRoutesById {
   '/register': typeof RegisterRoute
   '/reset-password': typeof ResetPasswordRoute
   '/verify-email': typeof VerifyEmailRoute
+  '/_authed/locations': typeof AuthedLocationsRoute
+  '/_authed/onboarding': typeof AuthedOnboardingRoute
   '/_authed/': typeof AuthedIndexRoute
   '/_authed/exercises/$slug': typeof AuthedExercisesSlugRoute
   '/_authed/patterns/$code': typeof AuthedPatternsCodeRoute
@@ -114,6 +132,8 @@ export interface FileRouteTypes {
     | '/register'
     | '/reset-password'
     | '/verify-email'
+    | '/locations'
+    | '/onboarding'
     | '/exercises/$slug'
     | '/patterns/$code'
     | '/exercises/'
@@ -124,6 +144,8 @@ export interface FileRouteTypes {
     | '/register'
     | '/reset-password'
     | '/verify-email'
+    | '/locations'
+    | '/onboarding'
     | '/'
     | '/exercises/$slug'
     | '/patterns/$code'
@@ -136,6 +158,8 @@ export interface FileRouteTypes {
     | '/register'
     | '/reset-password'
     | '/verify-email'
+    | '/_authed/locations'
+    | '/_authed/onboarding'
     | '/_authed/'
     | '/_authed/exercises/$slug'
     | '/_authed/patterns/$code'
@@ -202,6 +226,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthedIndexRouteImport
       parentRoute: typeof AuthedRoute
     }
+    '/_authed/locations': {
+      id: '/_authed/locations'
+      path: '/locations'
+      fullPath: '/locations'
+      preLoaderRoute: typeof AuthedLocationsRouteImport
+      parentRoute: typeof AuthedRoute
+    }
+    '/_authed/onboarding': {
+      id: '/_authed/onboarding'
+      path: '/onboarding'
+      fullPath: '/onboarding'
+      preLoaderRoute: typeof AuthedOnboardingRouteImport
+      parentRoute: typeof AuthedRoute
+    }
     '/_authed/exercises/': {
       id: '/_authed/exercises/'
       path: '/exercises'
@@ -227,6 +265,8 @@ declare module '@tanstack/react-router' {
 }
 
 interface AuthedRouteChildren {
+  AuthedLocationsRoute: typeof AuthedLocationsRoute
+  AuthedOnboardingRoute: typeof AuthedOnboardingRoute
   AuthedIndexRoute: typeof AuthedIndexRoute
   AuthedExercisesSlugRoute: typeof AuthedExercisesSlugRoute
   AuthedPatternsCodeRoute: typeof AuthedPatternsCodeRoute
@@ -234,6 +274,8 @@ interface AuthedRouteChildren {
 }
 
 const AuthedRouteChildren: AuthedRouteChildren = {
+  AuthedLocationsRoute: AuthedLocationsRoute,
+  AuthedOnboardingRoute: AuthedOnboardingRoute,
   AuthedIndexRoute: AuthedIndexRoute,
   AuthedExercisesSlugRoute: AuthedExercisesSlugRoute,
   AuthedPatternsCodeRoute: AuthedPatternsCodeRoute,

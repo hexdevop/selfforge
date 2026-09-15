@@ -1,11 +1,5 @@
-import type {
-  Equipment,
-  EquipmentCategory,
-  Exercise,
-  ExerciseSummary,
-  HealthTag,
-  Muscle,
-} from '@/api/catalog'
+import type { Equipment, Exercise, ExerciseSummary, HealthTag, Muscle } from '@/api/catalog'
+import { plural } from '@/lib/format'
 
 export const MUSCLE_LABELS: Record<Muscle, string> = {
   chest: 'грудь',
@@ -37,25 +31,8 @@ export const HEALTH_LABELS: Record<HealthTag, string> = {
   elbows: 'локти',
 }
 
-export const CATEGORY_LABELS: Record<EquipmentCategory, string> = {
-  weights: 'Отягощения',
-  bars: 'Турники и брусья',
-  bands: 'Резинки и петли',
-  bench: 'Скамьи и опоры',
-  support: 'Подручное',
-  bodyweight: 'Аксессуары',
-}
-
 export const listRu = (items: string[]) =>
   items.length < 2 ? (items[0] ?? '') : `${items.slice(0, -1).join(', ')} и ${items.at(-1)}`
-
-const pluralRules = new Intl.PluralRules('ru')
-
-/** plural(5, ['упражнение', 'упражнения', 'упражнений']) → 'упражнений' */
-export function plural(n: number, [one, few, many]: [string, string, string]): string {
-  const form = pluralRules.select(n)
-  return form === 'one' ? one : form === 'few' ? few : many
-}
 
 /** [["pullup_bar", "rings"], ["backpack"]] → "Турник или гимнастические кольца + рюкзак с грузом" */
 export function equipmentText(

@@ -1,6 +1,7 @@
 import { expect, it } from 'vitest'
 import type { Equipment, Exercise } from '@/api/catalog'
-import { criteriaText, equipmentText, plural } from './labels'
+import { plural } from '@/lib/format'
+import { criteriaText, equipmentText } from './labels'
 
 const item = (code: string, title_ru: string): [string, Equipment] => [
   code,
