@@ -1,0 +1,2 @@
+# LF everywhere: Biome and ruff format expect it, and CI runs on Linux.
+* text=auto eol=lf

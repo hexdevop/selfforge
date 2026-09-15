@@ -117,5 +117,6 @@ uv run pytest
 
 ## CI
 
-`.github/workflows/ci.yml`: `ruff check`, `ruff format --check`, `mypy`,
-`pytest` на каждый push/PR.
+`../.github/workflows/ci.yml` (в корне монорепозитория): для бэкенда — `ruff check`,
+`ruff format --check`, `mypy`, `pytest` на Postgres-сервисе; для фронта — lint, typecheck,
+test, build и проверка, что `src/api/schema.d.ts` совпадает со схемой бэкенда.
