@@ -1,0 +1,144 @@
+pattern: cardio
+# Timed work: progression_criteria uses hold_seconds as seconds of continuous work.
+exercises:
+  - slug: high_knees_march
+    title_ru: Шаг на месте с высоким подниманием колен
+    difficulty_level: 1
+    next_slug: mountain_climber
+    primary_muscles: [hip_flexors, quads]
+    secondary_muscles: [calves, abs]
+    progression_criteria: {sets: 3, hold_seconds: 60}
+    technique_ru: >-
+      Шагай на месте, поднимая колени до уровня пояса и активно работая руками. Спина прямая.
+      Темп такой, чтобы дыхание ускорилось, но можно было говорить короткими фразами.
+    common_mistakes_ru:
+      - Сутулость
+      - Колени поднимаются всё ниже
+      - Стопа опускается на пятку с ударом
+
+  - slug: mountain_climber
+    title_ru: Скалолаз
+    difficulty_level: 3
+    prev_slug: high_knees_march
+    next_slug: squat_thrust
+    primary_muscles: [abs, hip_flexors]
+    secondary_muscles: [front_delts, quads]
+    contraindicated_for: [wrists]
+    progression_criteria: {sets: 3, hold_seconds: 40}
+    technique_ru: >-
+      Встань в упор лёжа на прямых руках, ладони под плечами. Поочерёдно быстро подтягивай колени к груди,
+      как будто бежишь, таз держи на уровне плеч.
+    common_mistakes_ru:
+      - Таз задирается вверх
+      - Плечи уходят назад от кистей
+      - Короткий ход коленей
+
+  - slug: jump_rope
+    title_ru: Скакалка
+    difficulty_level: 3
+    prev_slug: high_knees_march
+    next_slug: squat_thrust
+    is_quiet: false
+    required_equipment: [[jump_rope]]
+    primary_muscles: [calves]
+    secondary_muscles: [quads, forearms, front_delts]
+    progression_criteria: {sets: 3, hold_seconds: 60}
+    technique_ru: >-
+      Держи рукояти на уровне пояса, локти у корпуса, вращай скакалку кистями.
+      Прыгай невысоко, на передней части стопы, колени мягкие. Начни с отрезков по 30–60 секунд.
+    common_mistakes_ru:
+      - Слишком высокие прыжки
+      - Скакалка вращается всей рукой, а не кистями
+      - Приземление на пятки
+
+  - slug: squat_thrust
+    title_ru: Бёрпи без прыжка
+    difficulty_level: 4
+    prev_slug: mountain_climber
+    next_slug: burpee
+    primary_muscles: [quads, abs]
+    secondary_muscles: [chest, front_delts, glutes]
+    contraindicated_for: [wrists]
+    progression_criteria: {sets: 3, reps: 12}
+    technique_ru: >-
+      Присядь, поставь ладони на пол и по одной отведи ноги назад в упор лёжа.
+      Так же по одной верни ноги к рукам и встань. Без прыжков это упражнение не шумит.
+    common_mistakes_ru:
+      - Поясница провисает в упоре лёжа
+      - Спина округляется при подъёме
+      - Дыхание сбивается — лучше медленнее, но ровно
+
+  - slug: stair_climb
+    title_ru: Подъём по лестнице
+    difficulty_level: 4
+    prev_slug: mountain_climber
+    next_slug: burpee
+    required_equipment: [[stairs]]
+    primary_muscles: [quads, glutes]
+    secondary_muscles: [calves, hamstrings]
+    progression_criteria: {sets: 5, hold_seconds: 60}
+    technique_ru: >-
+      Поднимайся по лестнице быстрым шагом, ставя на ступень всю стопу.
+      Спускайся спокойно — это отдых. Держись за перила, если нужно.
+    common_mistakes_ru:
+      - Спуск бегом
+      - Наклон вперёд с упором руками в колени
+      - Слишком быстрый старт
+
+  - slug: burpee
+    title_ru: Бёрпи
+    difficulty_level: 5
+    prev_slug: squat_thrust
+    next_slug: burpee_pullup
+    is_quiet: false
+    lies_on_floor: true
+    primary_muscles: [quads, chest]
+    secondary_muscles: [abs, front_delts, triceps, glutes]
+    contraindicated_for: [wrists, knees]
+    progression_criteria: {sets: 3, reps: 10}
+    technique_ru: >-
+      Присядь, поставь руки на пол и прыжком уйди в упор лёжа, коснувшись грудью пола.
+      Выжми себя, прыжком верни ноги к рукам и выпрыгни вверх с хлопком над головой. Приземляйся мягко.
+    common_mistakes_ru:
+      - Поясница провисает при касании пола
+      - Жёсткое приземление
+      - Темп выше, чем позволяет техника
+
+  - slug: kb_complex
+    title_ru: Комплекс с гирей
+    difficulty_level: 6
+    prev_slug: burpee
+    next_slug: burpee_pullup
+    is_unilateral: true
+    needs_ceiling_height: true
+    required_equipment: [[kettlebell]]
+    primary_muscles: [glutes, quads]
+    secondary_muscles: [front_delts, hamstrings, abs, upper_back]
+    contraindicated_for: [lower_back, shoulders]
+    progression_criteria: {sets: 3, reps: 5}
+    technique_ru: >-
+      Не выпуская гирю из руки, выполни подряд: 5 махов одной рукой, 5 взятий на грудь,
+      5 жимов вверх и 5 приседаний с гирей на груди. Затем то же другой рукой; отдых — после обеих сторон.
+      Вес выбирай по самому слабому движению — обычно это жим.
+    common_mistakes_ru:
+      - Вес подобран по махам, и жим получается с прогибом
+      - Техника разваливается к концу
+      - Разный объём на стороны
+
+  - slug: burpee_pullup
+    title_ru: Бёрпи с подтягиванием
+    difficulty_level: 7
+    prev_slug: burpee
+    is_quiet: false
+    lies_on_floor: true
+    required_equipment: [[pullup_bar]]
+    primary_muscles: [lats, quads]
+    secondary_muscles: [chest, abs, biceps]
+    contraindicated_for: [wrists, knees]
+    technique_ru: >-
+      Встань под турником. Сделай бёрпи, в конце выпрыгни, возьмись за перекладину и сразу подтянись.
+      Спрыгни мягко и переходи к следующему повтору.
+    common_mistakes_ru:
+      - Рывок в подтягивании без контроля
+      - Жёсткое приземление
+      - Турник слишком высоко для безопасного прыжка

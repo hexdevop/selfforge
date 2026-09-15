@@ -1,0 +1,234 @@
+pattern: push_v
+exercises:
+  - slug: band_overhead_press
+    title_ru: Жим резинки над головой
+    difficulty_level: 1
+    next_slug: pike_pushup
+    needs_ceiling_height: true
+    required_equipment: [[resistance_band]]
+    primary_muscles: [front_delts, triceps]
+    secondary_muscles: [side_delts, upper_back, abs]
+    contraindicated_for: [shoulders]
+    progression_criteria: {sets: 3, reps: 15}
+    technique_ru: >-
+      Встань на середину резинки, рукоятки у плеч. Напряги пресс и ягодицы
+      и выжми руки вверх над головой до прямых локтей. Медленно верни к плечам.
+      Поясница не прогибается.
+    common_mistakes_ru:
+      - Прогиб в пояснице при выжимании
+      - Руки уходят вперёд, а не вверх
+      - Резинка выскальзывает из-под стоп
+
+  - slug: pike_pushup
+    title_ru: Отжимания «домиком»
+    difficulty_level: 3
+    prev_slug: band_overhead_press
+    next_slug: elevated_pike_pushup
+    primary_muscles: [front_delts, triceps]
+    secondary_muscles: [upper_back, side_delts]
+    contraindicated_for: [shoulders, wrists]
+    progression_criteria: {sets: 3, reps: 12}
+    technique_ru: >-
+      Встань в упор и подними таз вверх, чтобы тело образовало перевёрнутую букву V. Ладони чуть шире плеч.
+      Сгибая руки, опусти макушку к полу между кистями, локти идут назад и немного в стороны.
+      Выжми себя обратно.
+    common_mistakes_ru:
+      - Таз опускается, и получается обычное отжимание
+      - Голова касается пола с ударом
+      - Локти разводятся широко в стороны
+
+  - slug: db_overhead_press
+    title_ru: Жим гантелей стоя
+    difficulty_level: 4
+    prev_slug: pike_pushup
+    next_slug: elevated_pike_pushup
+    requires_pair: true
+    needs_ceiling_height: true
+    required_equipment: [[dumbbell]]
+    primary_muscles: [front_delts, triceps]
+    secondary_muscles: [side_delts, upper_back, abs]
+    contraindicated_for: [shoulders]
+    progression_criteria: {sets: 3, reps: 10}
+    technique_ru: >-
+      Встань, стопы на ширине таза, гантели у плеч. Напряги пресс и ягодицы
+      и выжми гантели вверх до прямых рук. Опусти к плечам под контролем.
+    common_mistakes_ru:
+      - Прогиб в пояснице
+      - Толчок ногами вместо жима
+      - Гантели уходят вперёд
+
+  - slug: single_arm_overhead_press
+    title_ru: Жим одной рукой стоя
+    difficulty_level: 4
+    prev_slug: pike_pushup
+    next_slug: elevated_pike_pushup
+    is_unilateral: true
+    needs_ceiling_height: true
+    required_equipment: [[kettlebell, dumbbell]]
+    primary_muscles: [front_delts, triceps]
+    secondary_muscles: [side_delts, obliques, abs]
+    contraindicated_for: [shoulders]
+    progression_criteria: {sets: 3, reps: 10}
+    technique_ru: >-
+      Возьми гирю или гантель в одну руку у плеча, свободную руку отведи в сторону.
+      Напряги пресс и выжми снаряд вверх до прямой руки, не наклоняя корпус. Опусти к плечу.
+      Сделай подход и смени руку.
+    common_mistakes_ru:
+      - Корпус отклоняется в сторону
+      - Прогиб в пояснице
+      - Запястье заламывается назад
+
+  - slug: seated_db_press
+    title_ru: Жим гантелей сидя
+    difficulty_level: 4
+    prev_slug: pike_pushup
+    next_slug: elevated_pike_pushup
+    requires_pair: true
+    required_equipment: [[dumbbell], [bench, chair]]
+    primary_muscles: [front_delts, triceps]
+    secondary_muscles: [side_delts, upper_back]
+    contraindicated_for: [shoulders]
+    progression_criteria: {sets: 3, reps: 10}
+    technique_ru: >-
+      Сядь на скамью или стул со спинкой, стопы на полу, гантели у плеч.
+      Выжми гантели вверх до прямых рук и опусти к плечам.
+      Этот вариант подходит для комнаты с низким потолком.
+    common_mistakes_ru:
+      - Спина отрывается от спинки с прогибом
+      - Неполная амплитуда
+      - Гантели сталкиваются вверху
+
+  - slug: half_kneeling_press
+    title_ru: Жим одной рукой стоя на колене
+    difficulty_level: 4
+    prev_slug: pike_pushup
+    next_slug: elevated_pike_pushup
+    is_unilateral: true
+    required_equipment: [[kettlebell, dumbbell]]
+    primary_muscles: [front_delts, triceps]
+    secondary_muscles: [side_delts, obliques, glutes]
+    contraindicated_for: [shoulders]
+    progression_criteria: {sets: 3, reps: 10}
+    technique_ru: >-
+      Встань на одно колено, вторая стопа впереди. Снаряд в руке со стороны опорного колена.
+      Напряги ягодицу опорной ноги и пресс, выжми снаряд вверх до прямой руки и опусти к плечу.
+      Положение не даёт прогнуться в пояснице и подходит при низком потолке.
+    common_mistakes_ru:
+      - Корпус наклоняется в сторону
+      - Прогиб в пояснице
+      - Колено стоит на жёстком полу без подкладки
+
+  - slug: elevated_pike_pushup
+    title_ru: Отжимания «домиком» с ногами на возвышении
+    difficulty_level: 5
+    prev_slug: pike_pushup
+    next_slug: wall_handstand_hold
+    required_equipment: [[chair, sofa, bench, step_box, stairs]]
+    primary_muscles: [front_delts, triceps]
+    secondary_muscles: [upper_back, side_delts, abs]
+    contraindicated_for: [shoulders, wrists, neck]
+    progression_criteria: {sets: 3, reps: 10}
+    technique_ru: >-
+      Поставь стопы на стул или скамью, ладони на пол и подними таз так, чтобы корпус был почти вертикальным.
+      Опускай макушку к полу чуть впереди кистей и выжимай себя вверх.
+      Это ближайшая подводка к отжиманиям в стойке на руках.
+    common_mistakes_ru:
+      - Корпус не поднят, и нагрузка уходит в грудь
+      - Опора под ногами скользит
+      - Голова резко касается пола
+
+  - slug: push_press
+    title_ru: Жимовой швунг одной рукой
+    difficulty_level: 6
+    prev_slug: elevated_pike_pushup
+    next_slug: wall_hspu_negative
+    is_unilateral: true
+    needs_ceiling_height: true
+    required_equipment: [[kettlebell, dumbbell]]
+    primary_muscles: [front_delts, triceps]
+    secondary_muscles: [quads, glutes, side_delts]
+    contraindicated_for: [shoulders]
+    progression_criteria: {sets: 3, reps: 8}
+    technique_ru: >-
+      Снаряд у плеча. Слегка подсядь, согнув колени на несколько сантиметров, и резко выпрямись,
+      передавая импульс в руку, — дожми снаряд вверх до прямой руки.
+      Опусти к плечу под контролем и повтори. Затем смени руку.
+    common_mistakes_ru:
+      - Глубокий присед вместо короткого подседа
+      - Снаряд падает на плечо сверху
+      - Прогиб в пояснице
+
+  - slug: barbell_overhead_press
+    title_ru: Жим штанги стоя
+    difficulty_level: 6
+    prev_slug: elevated_pike_pushup
+    next_slug: wall_hspu_negative
+    needs_ceiling_height: true
+    required_equipment: [[barbell]]
+    primary_muscles: [front_delts, triceps]
+    secondary_muscles: [side_delts, upper_back, abs]
+    contraindicated_for: [shoulders, lower_back]
+    progression_criteria: {sets: 3, reps: 8}
+    technique_ru: >-
+      Держи гриф на передней части плеч хватом чуть шире них. Напряги пресс и ягодицы
+      и выжми штангу вверх, убирая голову назад, пока гриф проходит мимо лица.
+      Вверху гриф над серединой стопы. Опусти на плечи.
+    common_mistakes_ru:
+      - Прогиб в пояснице
+      - Гриф уходит вперёд от лица
+      - Толчок ногами
+
+  - slug: wall_handstand_hold
+    title_ru: Стойка на руках у стены
+    difficulty_level: 6
+    prev_slug: elevated_pike_pushup
+    next_slug: wall_hspu_negative
+    required_equipment: [[wall]]
+    primary_muscles: [front_delts, triceps]
+    secondary_muscles: [upper_back, abs, side_delts]
+    contraindicated_for: [shoulders, wrists, neck]
+    progression_criteria: {sets: 3, hold_seconds: 30}
+    technique_ru: >-
+      Встань спиной к стене, упрись ладонями в пол в 20–30 см от неё и зашагни ногами по стене вверх,
+      пока тело не станет почти вертикальным. Руки прямые, плечи тянутся к ушам, пресс напряжён.
+      Держи положение и спускайся так же, шагами.
+    common_mistakes_ru:
+      - Сильный прогиб в пояснице
+      - Руки сгибаются в удержании
+      - Спуск падением вместо шагов
+
+  - slug: wall_hspu_negative
+    title_ru: Негативные отжимания в стойке у стены
+    difficulty_level: 7
+    prev_slug: wall_handstand_hold
+    next_slug: wall_hspu
+    required_equipment: [[wall]]
+    primary_muscles: [front_delts, triceps]
+    secondary_muscles: [upper_back, side_delts, abs]
+    contraindicated_for: [shoulders, wrists, neck]
+    progression_criteria: {sets: 3, reps: 5}
+    technique_ru: >-
+      Выйди в стойку у стены. Медленно, за 3–5 секунд, опускайся, пока макушка мягко не коснётся
+      подложенной подушки или сложенного коврика. Встань на ноги, отдохни и повтори.
+      Подниматься на руках не нужно.
+    common_mistakes_ru:
+      - Быстрый провал вниз
+      - Голова опускается на твёрдый пол без подкладки
+      - Локти разъезжаются в стороны
+
+  - slug: wall_hspu
+    title_ru: Отжимания в стойке у стены
+    difficulty_level: 8
+    prev_slug: wall_hspu_negative
+    required_equipment: [[wall]]
+    primary_muscles: [front_delts, triceps]
+    secondary_muscles: [upper_back, side_delts, abs]
+    contraindicated_for: [shoulders, wrists, neck]
+    technique_ru: >-
+      Из стойки у стены опустись до касания макушкой подушки — локти идут немного вперёд, а не в стороны.
+      Выжми себя до прямых рук. Начни с частичной амплитуды, подложив несколько подушек,
+      и постепенно убирай их.
+    common_mistakes_ru:
+      - Прогиб в пояснице при выжимании
+      - Удар головой о пол
+      - Подходы до отказа без запаса

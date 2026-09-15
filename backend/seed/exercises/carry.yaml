@@ -1,0 +1,119 @@
+pattern: carry
+# Carries are measured by time under load: progression_criteria uses hold_seconds.
+exercises:
+  - slug: goblet_carry
+    title_ru: Переноска груза у груди
+    difficulty_level: 1
+    next_slug: farmer_carry
+    needs_floor_space: true
+    required_equipment: [[kettlebell, dumbbell, backpack]]
+    primary_muscles: [abs, upper_back]
+    secondary_muscles: [biceps, forearms, quads]
+    progression_criteria: {sets: 3, hold_seconds: 40}
+    technique_ru: >-
+      Прижми гирю, гантель или рюкзак к груди обеими руками. Иди спокойным шагом,
+      спина прямая, плечи опущены. Дыши ровно, не задерживая дыхание.
+    common_mistakes_ru:
+      - Корпус отклоняется назад с прогибом в пояснице
+      - Груз сползает к животу
+      - Задержка дыхания
+
+  - slug: farmer_carry
+    title_ru: Фермерская прогулка
+    difficulty_level: 2
+    prev_slug: goblet_carry
+    next_slug: suitcase_carry
+    requires_pair: true
+    needs_floor_space: true
+    required_equipment: [[dumbbell, kettlebell]]
+    primary_muscles: [forearms, upper_back]
+    secondary_muscles: [abs, glutes, quads, calves]
+    progression_criteria: {sets: 3, hold_seconds: 45}
+    technique_ru: >-
+      Возьми по снаряду в каждую руку и встань прямо, плечи отведены назад и опущены.
+      Иди короткими быстрыми шагами, не давая снарядам раскачиваться.
+      Ставь снаряды на пол, присев, а не сгибая спину.
+    common_mistakes_ru:
+      - Плечи поднимаются к ушам
+      - Сутулость
+      - Снаряды ставятся на пол с круглой спиной
+
+  - slug: suitcase_carry
+    title_ru: Чемоданная переноска
+    difficulty_level: 3
+    prev_slug: farmer_carry
+    next_slug: front_rack_carry
+    is_unilateral: true
+    needs_floor_space: true
+    required_equipment: [[kettlebell, dumbbell, backpack]]
+    primary_muscles: [obliques, forearms]
+    secondary_muscles: [abs, upper_back, glutes]
+    progression_criteria: {sets: 3, hold_seconds: 40}
+    technique_ru: >-
+      Возьми снаряд в одну руку, как чемодан. Иди, держа корпус строго вертикально, —
+      мышцы боковой поверхности не дают завалиться в сторону груза. Пройди отрезок и смени руку.
+    common_mistakes_ru:
+      - Корпус наклоняется в сторону груза
+      - Свободная рука отставлена для баланса
+      - Разное время на руки
+
+  - slug: front_rack_carry
+    title_ru: Переноска гири в стойке на груди
+    difficulty_level: 4
+    prev_slug: suitcase_carry
+    next_slug: overhead_carry
+    is_unilateral: true
+    needs_floor_space: true
+    required_equipment: [[kettlebell]]
+    primary_muscles: [abs, obliques]
+    secondary_muscles: [upper_back, biceps]
+    progression_criteria: {sets: 3, hold_seconds: 40}
+    technique_ru: >-
+      Возьми гирю на грудь: локоть прижат к корпусу, гиря лежит на предплечье.
+      Иди ровно, корпус не заваливается назад и в сторону. Смени руку.
+    common_mistakes_ru:
+      - Корпус отклоняется назад
+      - Локоть уходит от корпуса
+      - Запястье заламывается
+
+  - slug: overhead_carry
+    title_ru: Переноска над головой
+    difficulty_level: 5
+    prev_slug: front_rack_carry
+    next_slug: mixed_carry
+    is_unilateral: true
+    needs_floor_space: true
+    needs_ceiling_height: true
+    required_equipment: [[kettlebell, dumbbell]]
+    primary_muscles: [side_delts, upper_back]
+    secondary_muscles: [abs, obliques, triceps]
+    contraindicated_for: [shoulders]
+    progression_criteria: {sets: 3, hold_seconds: 30}
+    technique_ru: >-
+      Выжми снаряд над головой и держи на прямой руке, бицепс у уха.
+      Иди медленно, корпус ровный, рёбра не выпирают вперёд.
+      Если рука начинает сгибаться — опусти снаряд и отдохни.
+    common_mistakes_ru:
+      - Прогиб в пояснице
+      - Рука уходит вперёд
+      - Снаряд опускается без контроля
+
+  - slug: mixed_carry
+    title_ru: Смешанная переноска
+    difficulty_level: 6
+    prev_slug: overhead_carry
+    is_unilateral: true
+    requires_pair: true
+    needs_floor_space: true
+    needs_ceiling_height: true
+    required_equipment: [[kettlebell, dumbbell]]
+    primary_muscles: [obliques, upper_back]
+    secondary_muscles: [side_delts, abs, forearms]
+    contraindicated_for: [shoulders]
+    technique_ru: >-
+      Одна гиря над головой на прямой руке, вторая — в опущенной руке сбоку.
+      Иди, удерживая корпус ровным, без наклонов в стороны. Пройди отрезок и поменяй руки.
+    common_mistakes_ru:
+      - Верхняя рука сгибается
+      - Корпус клонится к нижнему грузу
+      - Верхний груз слишком тяжёлый

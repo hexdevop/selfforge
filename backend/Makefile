@@ -1,4 +1,4 @@
-.PHONY: run dev lint format typecheck test migrate revision docker-up docker-down docker-logs
+.PHONY: run dev lint format typecheck test migrate seed revision docker-up docker-down docker-logs
 
 run:
 	uv run uvicorn app.main:app --host 0.0.0.0 --port 8000
@@ -22,6 +22,9 @@ test:
 
 migrate:
 	uv run alembic upgrade head
+
+seed:
+	uv run python -m app.seed
 
 revision:
 	uv run alembic revision --autogenerate -m "$(m)"

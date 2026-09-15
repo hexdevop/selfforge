@@ -1,0 +1,321 @@
+pattern: hinge
+exercises:
+  - slug: glute_bridge
+    title_ru: Ягодичный мостик
+    difficulty_level: 1
+    next_slug: single_leg_glute_bridge
+    lies_on_floor: true
+    primary_muscles: [glutes]
+    secondary_muscles: [hamstrings, lower_back]
+    progression_criteria: {sets: 3, reps: 20}
+    technique_ru: >-
+      Ляг на спину, колени согнуты, стопы на полу на ширине таза.
+      Упираясь пятками, подними таз, пока тело не выпрямится от коленей до плеч.
+      Сожми ягодицы на секунду вверху и опусти таз.
+    common_mistakes_ru:
+      - Прогиб в пояснице вместо работы ягодиц
+      - Колени разваливаются в стороны
+      - Толчок носками, а не пятками
+
+  - slug: hip_thrust
+    title_ru: Ягодичный мост с опорой спиной
+    difficulty_level: 2
+    prev_slug: glute_bridge
+    next_slug: bw_single_leg_rdl
+    required_equipment: [[sofa, bench, chair]]
+    primary_muscles: [glutes]
+    secondary_muscles: [hamstrings, quads]
+    progression_criteria: {sets: 3, reps: 15}
+    technique_ru: >-
+      Сядь на пол спиной к дивану или скамье, лопатки на краю опоры, стопы на полу.
+      Упираясь пятками, подними таз до прямой линии от коленей до плеч.
+      Сожми ягодицы и опусти таз.
+    common_mistakes_ru:
+      - Прогиб в пояснице вверху
+      - Опора сдвигается
+      - Подбородок задран вверх
+
+  - slug: single_leg_glute_bridge
+    title_ru: Ягодичный мостик на одной ноге
+    difficulty_level: 2
+    prev_slug: glute_bridge
+    next_slug: bw_single_leg_rdl
+    is_unilateral: true
+    lies_on_floor: true
+    primary_muscles: [glutes]
+    secondary_muscles: [hamstrings, lower_back]
+    progression_criteria: {sets: 3, reps: 12}
+    technique_ru: >-
+      Из положения мостика подними одну ногу — согнутую в колене или прямую.
+      Упираясь пяткой опорной ноги, подними таз, не давая ему перекоситься. Опусти и повтори,
+      затем смени ногу.
+    common_mistakes_ru:
+      - Таз перекашивается в сторону
+      - Прогиб в пояснице
+      - Разный объём на ноги
+
+  - slug: kb_deadlift
+    title_ru: Становая тяга с гирей
+    difficulty_level: 2
+    prev_slug: glute_bridge
+    next_slug: bw_single_leg_rdl
+    required_equipment: [[kettlebell, dumbbell]]
+    primary_muscles: [glutes, hamstrings]
+    secondary_muscles: [lower_back, quads, forearms]
+    progression_criteria: {sets: 3, reps: 15}
+    technique_ru: >-
+      Поставь гирю между стоп, стопы чуть шире таза. Отведи таз назад, согни колени
+      и возьмись за гирю, спина ровная. Встань, толкаясь ногами и выводя таз вперёд.
+      Опусти гирю тем же путём.
+    common_mistakes_ru:
+      - Спина округляется при подъёме
+      - Гиря стоит далеко впереди
+      - Переразгибание в пояснице вверху
+
+  - slug: bw_single_leg_rdl
+    title_ru: Румынская тяга на одной ноге без веса
+    difficulty_level: 3
+    prev_slug: single_leg_glute_bridge
+    next_slug: hamstring_walkout
+    is_unilateral: true
+    primary_muscles: [hamstrings, glutes]
+    secondary_muscles: [lower_back, adductors]
+    progression_criteria: {sets: 3, reps: 12}
+    technique_ru: >-
+      Встань на одну ногу, колено слегка согнуто. Наклоняйся вперёд из таза, отводя вторую ногу назад,
+      пока корпус и нога не станут почти параллельны полу. Спина ровная, таз не разворачивается.
+      Вернись в стойку.
+    common_mistakes_ru:
+      - Таз разворачивается вслед за поднятой ногой
+      - Спина округляется
+      - Опорное колено сильно сгибается
+
+  - slug: db_rdl
+    title_ru: Румынская тяга с гантелями
+    difficulty_level: 4
+    prev_slug: bw_single_leg_rdl
+    next_slug: single_leg_hip_thrust
+    requires_pair: true
+    required_equipment: [[dumbbell]]
+    primary_muscles: [hamstrings, glutes]
+    secondary_muscles: [lower_back, forearms]
+    contraindicated_for: [lower_back]
+    progression_criteria: {sets: 3, reps: 12}
+    technique_ru: >-
+      Встань с гантелями в опущенных руках, колени слегка согнуты. Отводя таз назад, опускай гантели
+      вдоль ног до середины голени или до растяжения сзади бедра. Спина ровная.
+      Вернись, выводя таз вперёд.
+    common_mistakes_ru:
+      - Спина округляется внизу
+      - Гантели отходят от ног
+      - Приседание вместо наклона из таза
+
+  - slug: kb_swing
+    title_ru: Махи гирей двумя руками
+    difficulty_level: 4
+    prev_slug: bw_single_leg_rdl
+    next_slug: single_leg_hip_thrust
+    required_equipment: [[kettlebell]]
+    primary_muscles: [glutes, hamstrings]
+    secondary_muscles: [lower_back, abs, forearms]
+    contraindicated_for: [lower_back]
+    progression_criteria: {sets: 3, reps: 15}
+    technique_ru: >-
+      Встань, стопы чуть шире плеч, гиря на полу перед тобой. Возьми её двумя руками и отведи назад
+      между ног, наклоняясь из таза. Резко выпрями таз — гиря взлетает до уровня груди за счёт бёдер,
+      а не рук. Дай ей опуститься назад между ног и повтори.
+    common_mistakes_ru:
+      - Гиря поднимается руками и плечами
+      - Приседание вместо наклона из таза
+      - Спина округляется в нижней точке
+
+  - slug: hamstring_walkout
+    title_ru: Шаги в мостике
+    difficulty_level: 4
+    prev_slug: bw_single_leg_rdl
+    next_slug: single_leg_hip_thrust
+    lies_on_floor: true
+    primary_muscles: [hamstrings, glutes]
+    secondary_muscles: [lower_back]
+    progression_criteria: {sets: 3, reps: 8}
+    technique_ru: >-
+      Встань в ягодичный мостик. Удерживая таз поднятым, мелкими шагами уводи пятки вперёд,
+      пока ноги почти не выпрямятся, затем такими же шагами верни их обратно.
+      Таз не опускается весь повтор.
+    common_mistakes_ru:
+      - Таз опускается при выходе вперёд
+      - Слишком большие шаги
+      - Резкие движения — заднюю поверхность бедра может свести
+
+  - slug: one_arm_kb_swing
+    title_ru: Махи гирей одной рукой
+    difficulty_level: 5
+    prev_slug: hamstring_walkout
+    next_slug: sliding_leg_curl
+    is_unilateral: true
+    required_equipment: [[kettlebell]]
+    primary_muscles: [glutes, hamstrings]
+    secondary_muscles: [lower_back, obliques, forearms]
+    contraindicated_for: [lower_back]
+    progression_criteria: {sets: 3, reps: 12}
+    technique_ru: >-
+      Техника та же, что в махах двумя руками, но гиря в одной руке.
+      Корпус не разворачивается за гирей, свободная рука немного в стороне.
+      Сделай подход и смени руку.
+    common_mistakes_ru:
+      - Корпус скручивается
+      - Рывок плечом
+      - Разный объём на руки
+
+  - slug: weighted_single_leg_rdl
+    title_ru: Румынская тяга на одной ноге с весом
+    difficulty_level: 5
+    prev_slug: hamstring_walkout
+    next_slug: sliding_leg_curl
+    is_unilateral: true
+    required_equipment: [[kettlebell, dumbbell]]
+    primary_muscles: [hamstrings, glutes]
+    secondary_muscles: [lower_back, adductors, forearms]
+    progression_criteria: {sets: 3, reps: 10}
+    technique_ru: >-
+      Держи гирю или гантель в руке, противоположной опорной ноге. Наклоняйся из таза,
+      отводя свободную ногу назад, и опусти снаряд к середине голени.
+      Вернись, сжав ягодицу опорной ноги. Затем смени сторону.
+    common_mistakes_ru:
+      - Таз разворачивается
+      - Спина округляется
+      - Снаряд уходит далеко от ноги
+
+  - slug: single_leg_hip_thrust
+    title_ru: Ягодичный мост на одной ноге с опорой спиной
+    difficulty_level: 5
+    prev_slug: hamstring_walkout
+    next_slug: sliding_leg_curl
+    is_unilateral: true
+    required_equipment: [[sofa, bench, chair]]
+    primary_muscles: [glutes]
+    secondary_muscles: [hamstrings, quads]
+    progression_criteria: {sets: 3, reps: 12}
+    technique_ru: >-
+      Обопрись лопатками о диван или скамью и подними одну ногу.
+      Упираясь пяткой опорной ноги, подними таз до прямой линии — таз не перекашивается.
+      Опусти и повтори, затем смени ногу.
+    common_mistakes_ru:
+      - Таз заваливается на сторону поднятой ноги
+      - Прогиб в пояснице
+      - Опора сдвигается
+
+  - slug: sliding_leg_curl
+    title_ru: Сгибания ног лёжа на скольжении
+    difficulty_level: 6
+    prev_slug: single_leg_hip_thrust
+    next_slug: nordic_negative
+    lies_on_floor: true
+    required_equipment: [[towel]]
+    primary_muscles: [hamstrings]
+    secondary_muscles: [glutes, calves]
+    progression_criteria: {sets: 3, reps: 10}
+    technique_ru: >-
+      Ляг на спину на гладком полу, пятки положи на полотенце и подними таз в мостик.
+      Удерживая таз, подтяни пятки к ягодицам и медленно выпрями ноги обратно.
+      Если трудно, опускай таз в конце каждого повтора.
+    common_mistakes_ru:
+      - Таз опускается при сгибании
+      - Ноги выпрямляются быстро и без контроля
+      - Полотенце на ковре — нужен гладкий пол
+
+  - slug: barbell_deadlift
+    title_ru: Становая тяга со штангой
+    difficulty_level: 6
+    prev_slug: single_leg_hip_thrust
+    next_slug: nordic_negative
+    is_quiet: false
+    required_equipment: [[barbell]]
+    primary_muscles: [glutes, hamstrings, lower_back]
+    secondary_muscles: [quads, upper_back, forearms]
+    contraindicated_for: [lower_back]
+    progression_criteria: {sets: 3, reps: 6}
+    technique_ru: >-
+      Стопы на ширине таза, гриф над серединой стопы. Возьмись хватом чуть шире ног,
+      опусти таз, спина ровная, гриф касается голеней. Встань, толкая пол ногами, — гриф идёт вдоль ног.
+      Опусти штангу тем же путём, не бросая.
+    common_mistakes_ru:
+      - Спина округляется
+      - Гриф далеко от ног
+      - Штанга бросается на пол — это шумно и опасно для пола
+
+  - slug: kb_clean
+    title_ru: Взятие гири на грудь
+    difficulty_level: 6
+    prev_slug: single_leg_hip_thrust
+    next_slug: nordic_negative
+    is_unilateral: true
+    required_equipment: [[kettlebell]]
+    primary_muscles: [glutes, hamstrings]
+    secondary_muscles: [upper_back, forearms, abs]
+    progression_criteria: {sets: 3, reps: 8}
+    technique_ru: >-
+      Начни как в махах одной рукой. На подъёме веди гирю близко к корпусу и в конце мягко проведи
+      кисть вокруг рукояти, принимая гирю в стойку на груди: локоть у корпуса, гиря лежит на предплечье.
+      Опусти её в мах и повтори.
+    common_mistakes_ru:
+      - Гиря бьёт по предплечью
+      - Подъём руками вместо таза
+      - Локоть отходит от корпуса в стойке
+
+  - slug: nordic_negative
+    title_ru: Негативные нордические сгибания
+    difficulty_level: 7
+    prev_slug: sliding_leg_curl
+    next_slug: nordic_curl
+    required_equipment: [[sofa, wall_bars, bench]]
+    primary_muscles: [hamstrings]
+    secondary_muscles: [glutes, calves]
+    contraindicated_for: [knees]
+    progression_criteria: {sets: 3, reps: 5}
+    technique_ru: >-
+      Встань на колени на мягкую подложку и зафиксируй пятки под диваном или перекладиной.
+      Корпус прямой от коленей до головы. Медленно наклоняйся вперёд, сопротивляясь задней поверхностью бедра,
+      и в конце поймай себя руками. Оттолкнись руками обратно.
+    common_mistakes_ru:
+      - Сгибание в тазу вместо прямой линии
+      - Быстрое падение вместо медленного опускания
+      - Ненадёжная фиксация пяток
+
+  - slug: kb_snatch
+    title_ru: Рывок гири
+    difficulty_level: 8
+    prev_slug: nordic_negative
+    next_slug: nordic_curl
+    is_unilateral: true
+    needs_ceiling_height: true
+    required_equipment: [[kettlebell]]
+    primary_muscles: [glutes, hamstrings]
+    secondary_muscles: [upper_back, front_delts, forearms, abs]
+    contraindicated_for: [lower_back, shoulders]
+    progression_criteria: {sets: 3, reps: 8}
+    technique_ru: >-
+      Начни как в махах одной рукой. На подъёме ускорь гирю бёдрами, веди её близко к корпусу вверх
+      и в конце проведи кисть под рукоять, фиксируя гирю над головой на прямой руке.
+      Опусти в мах и повтори.
+    common_mistakes_ru:
+      - Гиря бьёт по предплечью наверху
+      - Тяга руками вместо таза
+      - Прогиб в пояснице в фиксации
+
+  - slug: nordic_curl
+    title_ru: Нордические сгибания
+    difficulty_level: 9
+    prev_slug: nordic_negative
+    required_equipment: [[sofa, wall_bars, bench]]
+    primary_muscles: [hamstrings]
+    secondary_muscles: [glutes, calves]
+    contraindicated_for: [knees]
+    technique_ru: >-
+      Из положения на коленях с зафиксированными пятками опустись вперёд как можно ниже под контролем
+      и вернись в вертикаль за счёт задней поверхности бедра, помогая руками по минимуму.
+      Корпус прямой от коленей до головы.
+    common_mistakes_ru:
+      - Сгибание в тазу
+      - Сильный толчок руками
+      - Ненадёжная фиксация пяток

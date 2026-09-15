@@ -1,0 +1,70 @@
+# Skill tree (docs/01-domain.md, goal `skill`): prerequisites to start + lead-up drills.
+
+- slug: first_pullup
+  title_ru: Первое подтягивание
+  description_ru: >-
+    Первый чистый повтор от прямых рук до подбородка над перекладиной.
+    Путь идёт через австралийские подтягивания, резинку и медленные негативы.
+  lead_up_exercise_slugs: [australian_pullup_low, scapular_pullup, band_assisted_pullup, negative_pullup]
+
+- slug: ten_pullups
+  title_ru: 10 подтягиваний
+  description_ru: >-
+    Десять чистых подтягиваний подряд — база для выхода силой, переднего виса и работы с весом.
+  prerequisites:
+    - {exercise_slug: pullup, reps: 1}
+  lead_up_exercise_slugs: [pullup, chin_up, pullup_pause, negative_pullup]
+
+- slug: dips
+  title_ru: Отжимания на брусьях
+  description_ru: >-
+    Отжимания на брусьях с полной амплитудой — до угла в локтях около 90°.
+  prerequisites:
+    - {exercise_slug: pushup, reps: 15}
+  lead_up_exercise_slugs: [bench_dips, chair_dips, decline_pushup]
+
+- slug: muscle_up
+  title_ru: Выход силой
+  description_ru: >-
+    Переход из виса в упор над перекладиной одним движением. Нужны сильная тяга и уверенные брусья.
+  prerequisites:
+    - {exercise_slug: pullup, reps: 10}
+    - {exercise_slug: parallel_bar_dips, reps: 12}
+  lead_up_exercise_slugs: [pullup_pause, weighted_pullup, archer_pullup, parallel_bar_dips]
+
+- slug: pullover
+  title_ru: Подъём переворотом
+  description_ru: >-
+    Из виса подтянуться и перевернуться через перекладину в упор. Главное — сильная тяга
+    и умение подкрутить таз к перекладине.
+  prerequisites:
+    - {exercise_slug: pullup, reps: 5}
+    - {exercise_slug: hanging_knee_raise, reps: 10}
+  lead_up_exercise_slugs: [pullup, hanging_knee_raise, hanging_leg_raise, hollow_hold]
+
+- slug: pistol_squat
+  title_ru: Пистолетик
+  description_ru: >-
+    Полный присед на одной ноге без опоры. Лучший способ нагрузить ноги, когда железа мало.
+  prerequisites:
+    - {exercise_slug: bulgarian_split_squat, reps: 10}
+  lead_up_exercise_slugs: [box_pistol, assisted_pistol, bulgarian_split_squat, split_squat]
+
+- slug: handstand
+  title_ru: Стойка на руках
+  description_ru: >-
+    Сначала уверенная стойка у стены, затем отжимания в ней. Навык требует сильных плеч
+    и умения держать корпус прямым.
+  prerequisites:
+    - {exercise_slug: pike_pushup, reps: 10}
+  lead_up_exercise_slugs: [elevated_pike_pushup, wall_handstand_hold, hollow_hold, plank]
+
+- slug: front_lever
+  title_ru: Передний вис
+  description_ru: >-
+    Удержание горизонтального тела в висе на прямых руках. Начинается с группировки
+    и тяг в ней.
+  prerequisites:
+    - {exercise_slug: pullup, reps: 10}
+    - {exercise_slug: hanging_leg_raise, reps: 10}
+  lead_up_exercise_slugs: [tuck_front_lever_row, hanging_leg_raise, hollow_hold, pullup]

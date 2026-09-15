@@ -1,0 +1,288 @@
+pattern: push_h
+exercises:
+  - slug: wall_pushup
+    title_ru: Отжимания от стены
+    difficulty_level: 1
+    next_slug: incline_pushup
+    required_equipment: [[wall]]
+    primary_muscles: [chest, triceps]
+    secondary_muscles: [front_delts, abs]
+    progression_criteria: {sets: 3, reps: 20}
+    technique_ru: >-
+      Встань в шаге от стены и упрись ладонями на уровне груди чуть шире плеч.
+      Тело прямое от пяток до макушки. Сгибая руки, приблизь грудь к стене — локти идут
+      под углом около 45° к корпусу. Оттолкнись до прямых рук.
+    common_mistakes_ru:
+      - Таз уходит назад, и тело складывается
+      - Локти разводятся в стороны под прямым углом
+      - Короткая амплитуда
+
+  - slug: incline_pushup
+    title_ru: Отжимания от опоры
+    difficulty_level: 2
+    prev_slug: wall_pushup
+    next_slug: knee_pushup
+    primary_muscles: [chest, triceps]
+    secondary_muscles: [front_delts, abs]
+    progression_criteria: {sets: 3, reps: 15}
+    technique_ru: >-
+      Упрись ладонями в устойчивую опору на уровне бёдер — стол, подоконник, скамью.
+      Отойди ногами назад, чтобы тело стало прямой линией. Опусти грудь к краю опоры и оттолкнись.
+      Чем ниже опора, тем тяжелее.
+    common_mistakes_ru:
+      - Опора сдвигается — проверь её до подхода
+      - Провисает поясница
+      - Вниз тянется голова, а не грудь
+
+  - slug: knee_pushup
+    title_ru: Отжимания с колен
+    difficulty_level: 3
+    prev_slug: incline_pushup
+    next_slug: pushup
+    primary_muscles: [chest, triceps]
+    secondary_muscles: [front_delts, abs]
+    progression_criteria: {sets: 3, reps: 15}
+    technique_ru: >-
+      Встань в упор на колени, ладони чуть шире плеч, тело прямое от коленей до макушки.
+      Опусти грудь почти до пола, локти под углом около 45°.
+      Оттолкнись до прямых рук, не сгибаясь в поясе.
+    common_mistakes_ru:
+      - Таз поднят вверх, тело «домиком»
+      - Опускается голова, а не грудь
+      - Локти разведены в стороны
+
+  - slug: bench_dips
+    title_ru: Обратные отжимания от стула
+    difficulty_level: 3
+    prev_slug: incline_pushup
+    next_slug: pushup
+    required_equipment: [[chair, bench, sofa]]
+    primary_muscles: [triceps]
+    secondary_muscles: [chest, front_delts]
+    contraindicated_for: [shoulders]
+    progression_criteria: {sets: 3, reps: 15}
+    technique_ru: >-
+      Сядь на край устойчивого стула или скамьи, упрись ладонями рядом с бёдрами и сдвинь таз вперёд.
+      Сгибая локти назад, опустись до угла около 90° и выжми себя вверх.
+      Чем дальше стоят ноги, тем тяжелее.
+    common_mistakes_ru:
+      - Слишком глубокое опускание, и плечи уходят вперёд
+      - Локти разводятся в стороны
+      - Стул скользит — поставь его спинкой к стене
+
+  - slug: pushup
+    title_ru: Отжимания
+    difficulty_level: 4
+    prev_slug: knee_pushup
+    next_slug: decline_pushup
+    primary_muscles: [chest, triceps]
+    secondary_muscles: [front_delts, abs]
+    progression_criteria: {sets: 3, reps: 15}
+    technique_ru: >-
+      Встань в упор лёжа: ладони чуть шире плеч, тело прямое, ягодицы и пресс напряжены.
+      Опустись, пока грудь почти не коснётся пола, локти под углом около 45° к корпусу.
+      Выжми себя до прямых рук, сохраняя прямую линию.
+    common_mistakes_ru:
+      - Провисает поясница
+      - Неполная амплитуда
+      - Локти разведены под прямым углом, и плечам неудобно
+
+  - slug: single_arm_floor_press
+    title_ru: Жим одной рукой лёжа на полу
+    difficulty_level: 4
+    prev_slug: knee_pushup
+    next_slug: decline_pushup
+    is_unilateral: true
+    lies_on_floor: true
+    required_equipment: [[kettlebell, dumbbell]]
+    primary_muscles: [chest, triceps]
+    secondary_muscles: [front_delts, abs, obliques]
+    progression_criteria: {sets: 3, reps: 12}
+    technique_ru: >-
+      Ляг на спину, колени согнуты, гиря или гантель в руке у плеча, плечо на полу.
+      Выжми снаряд вверх до прямой руки над грудью. Опусти, пока локоть мягко не коснётся пола, и повтори.
+      Затем смени руку.
+    common_mistakes_ru:
+      - Локоть падает на пол с ударом
+      - Запястье заламывается назад
+      - Корпус заваливается на сторону снаряда
+
+  - slug: db_floor_press
+    title_ru: Жим гантелей лёжа на полу
+    difficulty_level: 4
+    prev_slug: knee_pushup
+    next_slug: decline_pushup
+    requires_pair: true
+    lies_on_floor: true
+    required_equipment: [[dumbbell]]
+    primary_muscles: [chest, triceps]
+    secondary_muscles: [front_delts]
+    progression_criteria: {sets: 3, reps: 12}
+    technique_ru: >-
+      Ляг на спину, колени согнуты, гантели над грудью на прямых руках.
+      Опускай их, пока локти, разведённые примерно на 45°, не коснутся пола.
+      Выжми гантели обратно вверх.
+    common_mistakes_ru:
+      - Локти разведены под прямым углом
+      - Гантели опускаются несинхронно
+      - Локти падают на пол с ударом
+
+  - slug: decline_pushup
+    title_ru: Отжимания с ногами на возвышении
+    difficulty_level: 5
+    prev_slug: pushup
+    next_slug: archer_pushup
+    required_equipment: [[chair, sofa, bench, step_box, stairs]]
+    primary_muscles: [chest, front_delts]
+    secondary_muscles: [triceps, abs]
+    progression_criteria: {sets: 3, reps: 12}
+    technique_ru: >-
+      Поставь стопы на стул, диван или ступеньку, ладони на полу чуть шире плеч, тело прямое.
+      Опусти грудь к полу, не роняя таз, и выжми себя вверх.
+      Чем выше опора, тем больше нагрузка на плечи.
+    common_mistakes_ru:
+      - Таз провисает
+      - К полу тянется голова
+      - Опора под ногами скользит
+
+  - slug: db_bench_press
+    title_ru: Жим гантелей лёжа на скамье
+    difficulty_level: 5
+    prev_slug: pushup
+    next_slug: archer_pushup
+    requires_pair: true
+    required_equipment: [[dumbbell], [bench]]
+    primary_muscles: [chest, triceps]
+    secondary_muscles: [front_delts]
+    progression_criteria: {sets: 3, reps: 10}
+    technique_ru: >-
+      Ляг на скамью, стопы на полу, лопатки сведены и прижаты. Гантели над грудью на прямых руках.
+      Опускай их по бокам груди до лёгкого растяжения, локти примерно под 45°. Выжми вверх.
+    common_mistakes_ru:
+      - Таз отрывается от скамьи
+      - Гантели опускаются слишком глубоко
+      - Лопатки расходятся, и плечи уходят вперёд
+
+  - slug: chair_dips
+    title_ru: Отжимания между стульями
+    difficulty_level: 5
+    prev_slug: pushup
+    next_slug: archer_pushup
+    required_equipment: [[chair]]
+    primary_muscles: [chest, triceps]
+    secondary_muscles: [front_delts]
+    contraindicated_for: [shoulders]
+    progression_criteria: {sets: 3, reps: 10}
+    technique_ru: >-
+      Поставь два устойчивых стула параллельно, чуть шире плеч, и упрись ладонями в сиденья.
+      Подогни ноги и опустись, сгибая локти, до угла около 90°, корпус слегка наклонён вперёд.
+      Выжми себя вверх. Проверь, что стулья не разъезжаются.
+    common_mistakes_ru:
+      - Неустойчивые или лёгкие стулья
+      - Слишком глубокое опускание
+      - Плечи поднимаются к ушам
+
+  - slug: archer_pushup
+    title_ru: Отжимания лучника
+    difficulty_level: 6
+    prev_slug: decline_pushup
+    next_slug: one_arm_incline_pushup
+    is_unilateral: true
+    primary_muscles: [chest, triceps]
+    secondary_muscles: [front_delts, abs]
+    contraindicated_for: [shoulders]
+    progression_criteria: {sets: 3, reps: 8}
+    technique_ru: >-
+      Поставь руки очень широко. Опускайся к одной руке, а вторую выпрямляй в сторону — она лишь помогает.
+      Выжми себя и повтори в другую сторону. Повторов на стороны одинаково.
+    common_mistakes_ru:
+      - Прямая рука сгибается и берёт нагрузку
+      - Таз разворачивается
+      - Разное число повторов на стороны
+
+  - slug: weighted_pushup
+    title_ru: Отжимания с рюкзаком
+    difficulty_level: 6
+    prev_slug: decline_pushup
+    next_slug: one_arm_incline_pushup
+    required_equipment: [[backpack, weight_vest]]
+    primary_muscles: [chest, triceps]
+    secondary_muscles: [front_delts, abs]
+    progression_criteria: {sets: 3, reps: 12}
+    technique_ru: >-
+      Надень рюкзак с грузом или жилет и затяни лямки, чтобы груз лежал на лопатках.
+      Отжимайся с полной амплитудой, тело прямое. Если провисает поясница — вес великоват.
+    common_mistakes_ru:
+      - Рюкзак съезжает на шею
+      - Провисает поясница
+      - Неполная амплитуда
+
+  - slug: parallel_bar_dips
+    title_ru: Отжимания на брусьях
+    difficulty_level: 6
+    prev_slug: decline_pushup
+    next_slug: one_arm_incline_pushup
+    required_equipment: [[parallel_bars]]
+    primary_muscles: [chest, triceps]
+    secondary_muscles: [front_delts, abs]
+    contraindicated_for: [shoulders]
+    progression_criteria: {sets: 3, reps: 12}
+    technique_ru: >-
+      Выйди в упор на прямых руках, плечи опущены. Слегка наклони корпус вперёд и опускайся,
+      сгибая локти, до угла около 90°. Выжми себя обратно до прямых рук. Ноги спокойные, без раскачки.
+    common_mistakes_ru:
+      - Слишком глубокое опускание
+      - Плечи поднимаются к ушам
+      - Раскачка ногами
+
+  - slug: barbell_bench_press
+    title_ru: Жим штанги лёжа
+    difficulty_level: 6
+    prev_slug: decline_pushup
+    next_slug: one_arm_incline_pushup
+    required_equipment: [[barbell], [bench], [squat_rack]]
+    primary_muscles: [chest, triceps]
+    secondary_muscles: [front_delts]
+    progression_criteria: {sets: 3, reps: 8}
+    technique_ru: >-
+      Ляг на скамью так, чтобы гриф был над глазами, стопы на полу, лопатки сведены.
+      Сними штангу, опусти её к нижней части груди, локти примерно под 45°, и выжми вверх.
+      Без страхующего работай только в стойках с ограничителями.
+    common_mistakes_ru:
+      - Гриф отбивается от груди
+      - Таз отрывается от скамьи
+      - Работа до отказа без страховки
+
+  - slug: one_arm_incline_pushup
+    title_ru: Отжимания на одной руке от опоры
+    difficulty_level: 7
+    prev_slug: archer_pushup
+    next_slug: one_arm_pushup
+    is_unilateral: true
+    primary_muscles: [chest, triceps]
+    secondary_muscles: [front_delts, obliques, abs]
+    progression_criteria: {sets: 3, reps: 8}
+    technique_ru: >-
+      Упрись одной рукой в устойчивую опору на уровне пояса, ноги широко, свободная рука за спиной.
+      Опусти грудь к опоре, не давая корпусу развернуться, и выжми себя. Постепенно бери опору ниже.
+    common_mistakes_ru:
+      - Корпус скручивается
+      - Ноги стоят узко
+      - Неустойчивая опора
+
+  - slug: one_arm_pushup
+    title_ru: Отжимания на одной руке
+    difficulty_level: 9
+    prev_slug: one_arm_incline_pushup
+    is_unilateral: true
+    primary_muscles: [chest, triceps]
+    secondary_muscles: [front_delts, obliques, abs]
+    contraindicated_for: [shoulders, wrists]
+    technique_ru: >-
+      Встань в упор лёжа, ноги шире плеч, одну руку убери за спину. Рабочая ладонь под грудью.
+      Опустись, удерживая плечи и таз параллельно полу, и выжми себя вверх.
+      Повторов на обе руки одинаково.
+    common_mistakes_ru:
+      - Таз уходит вверх и в сторону
+      - Неполная амплитуда
+      - Разный объём на руки

@@ -1,0 +1,35 @@
+# Equipment catalog. Categories: weights / bars / bands / bench / support / bodyweight.
+# supports_quantity: one piece vs a pair matters (requires_pair filter).
+# supports_weight_list: owned as a set of fixed weights (details in location_equipment).
+
+- {code: dumbbell, title_ru: Гантели, category: weights, supports_quantity: true, supports_weight_list: true}
+- {code: kettlebell, title_ru: Гири, category: weights, supports_quantity: true, supports_weight_list: true}
+- {code: barbell, title_ru: Штанга с блинами, category: weights}
+- {code: weight_vest, title_ru: Жилет-утяжелитель, category: weights}
+- {code: backpack, title_ru: Рюкзак с грузом, category: weights}
+- {code: ankle_weights, title_ru: Утяжелители на ноги, category: weights}
+
+- {code: pullup_bar, title_ru: Турник, category: bars}
+- {code: low_bar, title_ru: Низкий турник, category: bars, is_outdoor: true}
+- {code: parallel_bars, title_ru: Брусья, category: bars, is_outdoor: true}
+- {code: rings, title_ru: Гимнастические кольца, category: bars}
+- {code: wall_bars, title_ru: Шведская стенка, category: bars, is_outdoor: true}
+- {code: monkey_bars, title_ru: Рукоход, category: bars, is_outdoor: true}
+
+- {code: resistance_band, title_ru: Резинки с сопротивлением, category: bands}
+- {code: suspension_trainer, title_ru: Петли TRX, category: bands}
+
+- {code: bench, title_ru: Скамья, category: bench}
+- {code: incline_bench, title_ru: Наклонная скамья, category: bench, is_outdoor: true}
+- {code: step_box, title_ru: Тумба или бревно для зашагиваний, category: bench}
+
+- {code: squat_rack, title_ru: Стойки для штанги, category: support}
+- {code: chair, title_ru: Стул, category: support}
+- {code: sofa, title_ru: Диван, category: support}
+- {code: wall, title_ru: Стена, category: support}
+- {code: stairs, title_ru: Ступеньки, category: support}
+- {code: towel, title_ru: Полотенце, category: support}
+
+- {code: ab_wheel, title_ru: Ролик для пресса, category: bodyweight}
+- {code: fitball, title_ru: Фитбол, category: bodyweight}
+- {code: jump_rope, title_ru: Скакалка, category: bodyweight}

@@ -22,7 +22,9 @@
 ## Справочник
 
 ```
-GET  /exercises                  фильтры: pattern, equipment, difficulty, location_id
+GET  /exercises                  фильтры: pattern, equipment (`none` — без оборудования),
+                                 difficulty_min, difficulty_max, location_id (с Этапа 2);
+                                 весь список без пагинации — справочник маленький
 GET  /exercises/{slug}
 GET  /patterns
 GET  /patterns/{code}/ladder     полная лестница сложности

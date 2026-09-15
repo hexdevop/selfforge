@@ -2,7 +2,7 @@ from typing import Any
 
 from fastapi import APIRouter
 
-from app.api.v1 import auth, users
+from app.api.v1 import auth, catalog, users
 from app.schemas.error import ErrorResponse
 
 # Every error goes through the handlers in `app.main`, so document that single
@@ -15,3 +15,4 @@ _ERROR_RESPONSES: dict[int | str, dict[str, Any]] = {
 router = APIRouter(responses=_ERROR_RESPONSES)
 router.include_router(auth.router)
 router.include_router(users.router)
+router.include_router(catalog.router)

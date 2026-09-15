@@ -22,6 +22,7 @@ make test                            # pytest
 uv run pytest tests/test_auth.py -k test_login_by_email_or_username   # single test
 
 make migrate                         # alembic upgrade head
+make seed                            # upsert the reference catalog from seed/*.yaml
 make revision m="add something"      # alembic revision --autogenerate
 
 make docker-up / make docker-down    # full stack (app + postgres + redis) via docker-compose
@@ -88,6 +89,13 @@ repositories only `flush()`.
   repositories return `Page[SomeORMModel]` internally, which routes then re-validate into
   `Page[SomeReadSchema]` before returning — see `list_users` in `app/api/v1/users.py` for the
   pattern.
+
+- **Catalog** (`app/models/catalog.py`, `seed/`) — patterns, equipment, exercises and skills
+  are reference data: never in migrations, only in `seed/*.yaml`, loaded by `app/seed.py`.
+  `load_catalog()` cross-validates everything (ladder links stay within a pattern and go the
+  right way, equipment codes exist, skills point to real exercises) before upserting by
+  `code`/`slug`. The seed then drops the `catalog:*` Redis prefix; catalog endpoints add an
+  ETag and answer `If-None-Match` with 304.
 
 ## Adding a new domain (e.g. "posts")
 

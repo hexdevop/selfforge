@@ -102,6 +102,7 @@ uv run uvicorn app.main:app --reload
 | `make typecheck` | `mypy` (strict) |
 | `make test` | `pytest` |
 | `make migrate` | `alembic upgrade head` |
+| `make seed` | залить справочник упражнений из `seed/*.yaml` (идемпотентно) |
 | `make revision m="сообщение"` | новая миграция (autogenerate) |
 | `make docker-up` / `make docker-down` | поднять/остановить весь стек в Docker |
 

@@ -1,0 +1,240 @@
+pattern: pull_v
+exercises:
+  - slug: band_pulldown
+    title_ru: Тяга резинки сверху
+    difficulty_level: 1
+    next_slug: australian_pullup_high
+    required_equipment: [[resistance_band]]
+    primary_muscles: [lats]
+    secondary_muscles: [biceps, upper_back, rear_delts]
+    progression_criteria: {sets: 3, reps: 15}
+    technique_ru: >-
+      Закрепи резинку высоко — на турнике или в двери на специальном креплении.
+      Встань на колени лицом к креплению и возьмись за резинку прямыми руками.
+      Сведи лопатки вниз и тяни локти к бокам, пока кисти не окажутся у плеч.
+      Медленно верни руки вверх, не отпуская натяжение.
+    common_mistakes_ru:
+      - Тянешь только руками, а лопатки остаются поднятыми к ушам
+      - Корпус сильно отклоняется назад, и работает поясница
+      - Резинка возвращается рывком вместо плавного движения
+
+  - slug: australian_pullup_high
+    title_ru: Австралийские подтягивания, высокая опора
+    difficulty_level: 2
+    prev_slug: band_pulldown
+    next_slug: australian_pullup_low
+    required_equipment: [[low_bar, rings, suspension_trainer]]
+    primary_muscles: [lats, upper_back]
+    secondary_muscles: [biceps, rear_delts, abs]
+    progression_criteria: {sets: 3, reps: 12}
+    technique_ru: >-
+      Встань под перекладину на уровне груди и возьмись хватом чуть шире плеч.
+      Отступи ногами вперёд, чтобы корпус наклонился назад, тело прямое от пяток до макушки.
+      Подтяни грудь к перекладине, сводя лопатки, и опустись до прямых рук под контролем.
+      Чем вертикальнее корпус, тем легче.
+    common_mistakes_ru:
+      - Таз провисает, и тело ломается в поясе
+      - К перекладине тянется подбородок, а не грудь
+      - Руки не выпрямляются внизу
+
+  - slug: australian_pullup_low
+    title_ru: Австралийские подтягивания, низкая опора
+    difficulty_level: 3
+    prev_slug: australian_pullup_high
+    next_slug: band_assisted_pullup
+    required_equipment: [[low_bar, rings, suspension_trainer]]
+    primary_muscles: [lats, upper_back]
+    secondary_muscles: [biceps, rear_delts, abs]
+    progression_criteria: {sets: 3, reps: 12}
+    technique_ru: >-
+      Опусти перекладину или кольца на уровень пояса, чтобы корпус был почти параллелен полу.
+      Пятки на полу, тело прямое, ягодицы и пресс напряжены.
+      Подтяни грудь к перекладине и в верхней точке задержи сведённые лопатки на секунду.
+      Опускайся медленно до прямых рук.
+    common_mistakes_ru:
+      - Таз опускается раньше груди
+      - Локти разводятся широко в стороны, плечи уходят вперёд
+      - Рывок корпусом вместо тяги спиной
+
+  - slug: scapular_pullup
+    title_ru: Лопаточные подтягивания
+    difficulty_level: 3
+    next_slug: band_assisted_pullup
+    required_equipment: [[pullup_bar]]
+    primary_muscles: [upper_back, lats]
+    secondary_muscles: [forearms]
+    progression_criteria: {sets: 3, reps: 10}
+    technique_ru: >-
+      Повисни на турнике на прямых руках хватом чуть шире плеч.
+      Не сгибая локти, опусти лопатки вниз и слегка сведи их — тело поднимется на несколько сантиметров.
+      Задержись на секунду и плавно вернись в вис. Движение небольшое, работают только лопатки.
+    common_mistakes_ru:
+      - Сгибаются локти, и получается неполное подтягивание
+      - Корпус раскачивается
+      - Резкий сброс из верхней точки
+
+  - slug: band_assisted_pullup
+    title_ru: Подтягивания с резинкой-помощницей
+    difficulty_level: 4
+    prev_slug: australian_pullup_low
+    next_slug: negative_pullup
+    required_equipment: [[pullup_bar], [resistance_band]]
+    primary_muscles: [lats]
+    secondary_muscles: [biceps, upper_back, forearms]
+    progression_criteria: {sets: 3, reps: 8}
+    technique_ru: >-
+      Закрепи резинку петлёй на турнике и поставь в неё колено или стопу.
+      Возьмись хватом чуть шире плеч, сначала опусти лопатки, затем подтянись до подбородка над перекладиной.
+      Локти идут вниз к бокам. Опускайся до прямых рук медленно.
+      Когда становится легко, бери резинку тоньше.
+    common_mistakes_ru:
+      - Резинка выталкивает вверх рывком, без контроля
+      - Руки остаются согнутыми в нижней точке
+      - Стопа стоит в петле ненадёжно — проверяй её перед каждым подходом
+
+  - slug: negative_pullup
+    title_ru: Медленные негативы
+    difficulty_level: 5
+    prev_slug: band_assisted_pullup
+    next_slug: pullup
+    required_equipment: [[pullup_bar]]
+    primary_muscles: [lats, biceps]
+    secondary_muscles: [upper_back, forearms]
+    progression_criteria: {sets: 3, reps: 5}
+    technique_ru: >-
+      Встань на устойчивый стул так, чтобы подбородок оказался над перекладиной.
+      Сними ноги с опоры и опускайся как можно медленнее, 4–5 секунд, до полностью прямых рук.
+      Встань обратно на опору и повтори. Подниматься не нужно — работаешь только на опускании.
+    common_mistakes_ru:
+      - Быстрый сброс во второй половине движения
+      - Прыжок на перекладину с раскачкой
+      - Шаткая опора — проверь стул до подхода
+
+  - slug: pullup
+    title_ru: Подтягивания
+    difficulty_level: 6
+    prev_slug: negative_pullup
+    next_slug: pullup_pause
+    required_equipment: [[pullup_bar]]
+    primary_muscles: [lats, biceps]
+    secondary_muscles: [upper_back, forearms, abs]
+    progression_criteria: {sets: 3, reps: 10}
+    technique_ru: >-
+      Повисни на прямых руках хватом чуть шире плеч, ладони от себя.
+      Опусти лопатки и подтянись, пока подбородок не окажется над перекладиной.
+      Локти ведёшь вниз к рёбрам, ноги спокойные. Опустись до прямых рук под контролем.
+    common_mistakes_ru:
+      - Раскачка и рывок ногами вместо силы спины
+      - Тянется вверх подбородок, а грудь остаётся внизу
+      - Руки не выпрямляются в нижней точке
+
+  - slug: chin_up
+    title_ru: Подтягивания обратным хватом
+    difficulty_level: 6
+    prev_slug: negative_pullup
+    next_slug: pullup_pause
+    required_equipment: [[pullup_bar]]
+    primary_muscles: [lats, biceps]
+    secondary_muscles: [upper_back, forearms]
+    progression_criteria: {sets: 3, reps: 10}
+    technique_ru: >-
+      Возьмись за турник на ширине плеч ладонями к себе.
+      Опусти лопатки и подтянись до подбородка над перекладиной, держа локти близко к корпусу.
+      Опустись до прямых рук медленно. Этот хват обычно даётся чуть легче за счёт бицепса.
+    common_mistakes_ru:
+      - Рывок корпусом
+      - Неполная амплитуда внизу
+      - Запястья заламываются — держи их ровно
+
+  - slug: pullup_pause
+    title_ru: Подтягивания с паузой вверху
+    difficulty_level: 7
+    prev_slug: pullup
+    next_slug: weighted_pullup
+    required_equipment: [[pullup_bar]]
+    primary_muscles: [lats, biceps]
+    secondary_muscles: [upper_back, forearms, abs]
+    progression_criteria: {sets: 3, reps: 8}
+    technique_ru: >-
+      Выполни обычное подтягивание и задержись в верхней точке на 2 секунды —
+      подбородок над перекладиной, лопатки сведены и опущены.
+      Затем опускайся медленно, 2–3 секунды. Пауза убирает инерцию, и каждый повтор становится тяжелее.
+    common_mistakes_ru:
+      - Пауза «на глаз» короче секунды
+      - В паузе плечи поднимаются к ушам
+      - Сброс вниз сразу после паузы
+
+  - slug: weighted_pullup
+    title_ru: Подтягивания с рюкзаком
+    difficulty_level: 8
+    prev_slug: pullup_pause
+    next_slug: towel_one_arm_pullup
+    required_equipment: [[pullup_bar], [backpack, weight_vest]]
+    primary_muscles: [lats, biceps]
+    secondary_muscles: [upper_back, forearms, abs]
+    contraindicated_for: [shoulders]
+    progression_criteria: {sets: 3, reps: 8}
+    technique_ru: >-
+      Надень рюкзак с грузом — книги, бутылки с водой — или жилет и затяни лямки, чтобы груз не болтался.
+      Подтягивайся с той же техникой, что без веса: полный вис внизу, подбородок над перекладиной вверху.
+      Добавляй вес небольшими шагами.
+    common_mistakes_ru:
+      - Груз раскачивается и тянет назад
+      - Ради веса страдает амплитуда
+      - Слишком большой шаг веса за раз
+
+  - slug: archer_pullup
+    title_ru: Подтягивания лучника
+    difficulty_level: 9
+    prev_slug: weighted_pullup
+    next_slug: muscle_up
+    is_unilateral: true
+    required_equipment: [[pullup_bar, rings]]
+    primary_muscles: [lats, biceps]
+    secondary_muscles: [upper_back, forearms, abs]
+    contraindicated_for: [shoulders, elbows]
+    progression_criteria: {sets: 3, reps: 6}
+    technique_ru: >-
+      Возьмись широким хватом. Подтягивайся к одной руке, а вторую выпрямляй вдоль перекладины — она только помогает.
+      Опустись и повтори в другую сторону. Повторов на каждую сторону одинаково.
+    common_mistakes_ru:
+      - Вспомогательная рука сгибается и забирает работу
+      - Разное число повторов на стороны
+      - Корпус скручивается
+
+  - slug: towel_one_arm_pullup
+    title_ru: Подтягивания на одной руке с полотенцем
+    difficulty_level: 9
+    prev_slug: weighted_pullup
+    next_slug: muscle_up
+    is_unilateral: true
+    required_equipment: [[pullup_bar], [towel]]
+    primary_muscles: [lats, biceps]
+    secondary_muscles: [upper_back, forearms, abs]
+    contraindicated_for: [shoulders, elbows]
+    progression_criteria: {sets: 3, reps: 5}
+    technique_ru: >-
+      Перекинь полотенце через турник рядом с рабочей рукой. Рабочая рука держит перекладину,
+      вторая — полотенце: чем ниже хват за полотенце, тем меньше она помогает.
+      Подтягивайся к рабочей руке и опускайся медленно. Повторов на обе стороны одинаково.
+    common_mistakes_ru:
+      - Основную работу делает рука на полотенце
+      - Резкие рывки — локоть и плечо плохо переносят такую нагрузку
+      - Разный объём на стороны
+
+  - slug: muscle_up
+    title_ru: Выход силой
+    difficulty_level: 10
+    prev_slug: towel_one_arm_pullup
+    required_equipment: [[pullup_bar, rings]]
+    primary_muscles: [lats, triceps]
+    secondary_muscles: [chest, biceps, abs, forearms]
+    contraindicated_for: [shoulders, elbows]
+    technique_ru: >-
+      Начни из виса хватом чуть уже обычного. Мощно подтянись к нижней части груди, ведя перекладину к поясу,
+      и в верхней точке переведи кисти над перекладиной, наклоняя корпус вперёд.
+      Дожми руки до прямых, как на брусьях. Опускайся под контролем тем же путём.
+    common_mistakes_ru:
+      - Подтягивание недостаточно высокое, и переход проваливается
+      - Одна рука выходит раньше другой
+      - Сброс сверху прямо в вис

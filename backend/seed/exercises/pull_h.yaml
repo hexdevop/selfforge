@@ -1,0 +1,207 @@
+pattern: pull_h
+# Australian pull-ups live in pull_v: docs/01-domain.md puts them on the road to pull-ups.
+exercises:
+  - slug: band_row
+    title_ru: Тяга резинки к поясу
+    difficulty_level: 1
+    next_slug: towel_door_row
+    required_equipment: [[resistance_band]]
+    primary_muscles: [upper_back, lats]
+    secondary_muscles: [biceps, rear_delts]
+    progression_criteria: {sets: 3, reps: 15}
+    technique_ru: >-
+      Закрепи резинку на уровне пояса или сядь на пол и обведи её вокруг стоп.
+      Спина прямая, руки вытянуты вперёд. Тяни рукоятки к поясу, ведя локти назад вдоль корпуса
+      и сводя лопатки. Плавно верни руки вперёд.
+    common_mistakes_ru:
+      - Корпус отклоняется назад вместо работы рук и лопаток
+      - Плечи поднимаются к ушам
+      - Резинка возвращается без контроля
+
+  - slug: towel_door_row
+    title_ru: Тяга к двери с полотенцем
+    difficulty_level: 2
+    prev_slug: band_row
+    next_slug: ring_row_feet_elevated
+    required_equipment: [[towel]]
+    primary_muscles: [upper_back, lats]
+    secondary_muscles: [biceps, rear_delts, forearms]
+    progression_criteria: {sets: 3, reps: 12}
+    technique_ru: >-
+      Открой дверь, перекинь полотенце через обе дверные ручки и возьмись за концы.
+      Встань лицом к торцу двери, стопы по бокам от него, и отклонись назад на прямых руках.
+      Подтяни грудь к двери, сводя лопатки, и медленно вернись.
+      Прежде чем отклоняться, проверь, что дверь и ручки держат вес.
+    common_mistakes_ru:
+      - Резкий откид назад — дверь сдвигается
+      - Таз провисает
+      - Тяга руками без сведения лопаток
+
+  - slug: one_arm_db_row
+    title_ru: Тяга гантели одной рукой в наклоне
+    difficulty_level: 3
+    prev_slug: towel_door_row
+    next_slug: ring_row_feet_elevated
+    is_unilateral: true
+    required_equipment: [[dumbbell]]
+    primary_muscles: [lats, upper_back]
+    secondary_muscles: [biceps, rear_delts, forearms]
+    progression_criteria: {sets: 3, reps: 12}
+    technique_ru: >-
+      Обопрись свободной рукой и коленом на скамью, стул или диван — спина ровная, почти параллельна полу.
+      Гантель в опущенной руке. Тяни её к поясу, локоть идёт назад вдоль корпуса.
+      Опусти до прямой руки и повтори, затем то же на другую сторону.
+    common_mistakes_ru:
+      - Корпус скручивается, чтобы закинуть вес
+      - Спина округляется
+      - Гантель идёт к груди, а не к поясу
+
+  - slug: kb_row
+    title_ru: Тяга гири в наклоне одной рукой
+    difficulty_level: 3
+    prev_slug: towel_door_row
+    next_slug: ring_row_feet_elevated
+    is_unilateral: true
+    required_equipment: [[kettlebell]]
+    primary_muscles: [lats, upper_back]
+    secondary_muscles: [biceps, rear_delts, forearms]
+    progression_criteria: {sets: 3, reps: 12}
+    technique_ru: >-
+      Встань в разножку и обопрись свободной рукой о бедро или опору, наклонись вперёд с ровной спиной.
+      Гиря висит под плечом. Тяни её к поясу, держа локоть близко к корпусу, и плавно опусти.
+      Сделай все повторы, затем смени руку.
+    common_mistakes_ru:
+      - Рывок корпусом
+      - Округлённая поясница
+      - Плечо тянется к уху
+
+  - slug: bent_over_db_row
+    title_ru: Тяга двух гантелей в наклоне
+    difficulty_level: 4
+    prev_slug: towel_door_row
+    next_slug: archer_ring_row
+    requires_pair: true
+    required_equipment: [[dumbbell]]
+    primary_muscles: [upper_back, lats]
+    secondary_muscles: [biceps, rear_delts, lower_back, hamstrings]
+    contraindicated_for: [lower_back]
+    progression_criteria: {sets: 3, reps: 12}
+    technique_ru: >-
+      Стопы на ширине таза, колени слегка согнуты. Наклонись вперёд из таза примерно до 45°, спина ровная.
+      Тяни гантели к поясу, сводя лопатки, и опускай до прямых рук. Корпус остаётся неподвижным.
+    common_mistakes_ru:
+      - Корпус поднимается с каждым повтором
+      - Поясница округляется
+      - Короткая амплитуда вверху
+
+  - slug: ring_row_feet_elevated
+    title_ru: Горизонтальная тяга с ногами на возвышении
+    difficulty_level: 4
+    prev_slug: towel_door_row
+    next_slug: archer_ring_row
+    required_equipment: [[rings, suspension_trainer, low_bar], [chair, bench, step_box, sofa]]
+    primary_muscles: [upper_back, lats]
+    secondary_muscles: [biceps, rear_delts, abs]
+    progression_criteria: {sets: 3, reps: 12}
+    technique_ru: >-
+      Повисни под низкой перекладиной, кольцами или петлями, пятки положи на стул или скамью.
+      Тело прямое и параллельно полу. Подтяни грудь к рукам, сводя лопатки, задержись на секунду
+      и опустись до прямых рук.
+    common_mistakes_ru:
+      - Таз провисает
+      - Опора под ногами скользит — проверь её до подхода
+      - Неполная амплитуда
+
+  - slug: barbell_row
+    title_ru: Тяга штанги в наклоне
+    difficulty_level: 5
+    prev_slug: ring_row_feet_elevated
+    next_slug: archer_ring_row
+    required_equipment: [[barbell]]
+    primary_muscles: [upper_back, lats]
+    secondary_muscles: [biceps, rear_delts, lower_back, hamstrings]
+    contraindicated_for: [lower_back]
+    progression_criteria: {sets: 3, reps: 10}
+    technique_ru: >-
+      Возьми штангу хватом чуть шире плеч, наклонись из таза примерно до 45°, колени слегка согнуты,
+      спина ровная. Тяни гриф к низу живота, сводя лопатки.
+      Опускай до прямых рук, не меняя наклон корпуса.
+    common_mistakes_ru:
+      - Раскачка корпусом, чтобы поднять вес
+      - Гриф идёт к груди, локти разведены широко
+      - Спина округляется под весом
+
+  - slug: renegade_row
+    title_ru: Тяга в планке
+    difficulty_level: 5
+    prev_slug: ring_row_feet_elevated
+    next_slug: archer_ring_row
+    is_unilateral: true
+    requires_pair: true
+    required_equipment: [[dumbbell, kettlebell]]
+    primary_muscles: [upper_back, lats, abs]
+    secondary_muscles: [chest, triceps, obliques]
+    contraindicated_for: [wrists]
+    progression_criteria: {sets: 3, reps: 8}
+    technique_ru: >-
+      Встань в упор лёжа, держась за две гантели или гири, стопы шире обычного.
+      Удерживая таз неподвижным, подтяни одну гантель к поясу, опусти и повтори другой рукой.
+      Корпус не поворачивается.
+    common_mistakes_ru:
+      - Таз разворачивается вслед за тягой
+      - Стопы стоят слишком узко, и теряется устойчивость
+      - Круглые гантели катятся — лучше шестигранные или гири
+
+  - slug: archer_ring_row
+    title_ru: Тяга лучника на кольцах
+    difficulty_level: 6
+    prev_slug: ring_row_feet_elevated
+    next_slug: one_arm_inverted_row
+    is_unilateral: true
+    required_equipment: [[rings, suspension_trainer, low_bar]]
+    primary_muscles: [upper_back, lats]
+    secondary_muscles: [biceps, rear_delts, abs]
+    progression_criteria: {sets: 3, reps: 8}
+    technique_ru: >-
+      Из положения горизонтальной тяги подтягивайся к одной руке, а вторую держи почти прямой —
+      она только страхует. Опустись и повтори в другую сторону. Повторов на стороны одинаково.
+    common_mistakes_ru:
+      - Вспомогательная рука сгибается и тянет
+      - Корпус разворачивается
+      - Разный объём на стороны
+
+  - slug: one_arm_inverted_row
+    title_ru: Горизонтальная тяга на одной руке
+    difficulty_level: 7
+    prev_slug: archer_ring_row
+    next_slug: tuck_front_lever_row
+    is_unilateral: true
+    required_equipment: [[rings, suspension_trainer, low_bar]]
+    primary_muscles: [upper_back, lats]
+    secondary_muscles: [biceps, obliques, abs]
+    progression_criteria: {sets: 3, reps: 6}
+    technique_ru: >-
+      Возьмись одной рукой, ноги поставь шире обычного для устойчивости, свободная рука на груди.
+      Подтяни себя к рабочей руке, не давая корпусу развернуться, и опустись под контролем.
+      Чем выше корпус, тем легче — начни с высокого положения.
+    common_mistakes_ru:
+      - Корпус скручивается к рабочей руке
+      - Рывок вместо тяги
+      - Ноги стоят узко
+
+  - slug: tuck_front_lever_row
+    title_ru: Тяга в группировке переднего виса
+    difficulty_level: 9
+    prev_slug: one_arm_inverted_row
+    required_equipment: [[pullup_bar, rings]]
+    primary_muscles: [lats, upper_back]
+    secondary_muscles: [abs, rear_delts, biceps]
+    contraindicated_for: [shoulders, elbows]
+    technique_ru: >-
+      Повисни, подтяни колени к груди и откинься назад, чтобы спина стала параллельна полу, —
+      это группировка переднего виса. Удерживая её, подтяни перекладину к нижней части груди
+      и медленно опустись до прямых рук. Если форма ломается — отдохни.
+    common_mistakes_ru:
+      - Таз опускается, и тяга превращается в обычное подтягивание
+      - Руки сгибаются в удержании
+      - Повторы продолжаются после потери формы

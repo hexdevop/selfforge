@@ -1,0 +1,178 @@
+pattern: lunge
+exercises:
+  - slug: step_up
+    title_ru: Зашагивания на ступеньку
+    difficulty_level: 1
+    next_slug: reverse_lunge
+    is_unilateral: true
+    required_equipment: [[stairs, step_box, bench, chair]]
+    primary_muscles: [quads, glutes]
+    secondary_muscles: [hamstrings, calves]
+    progression_criteria: {sets: 3, reps: 12}
+    technique_ru: >-
+      Встань перед ступенькой или низкой устойчивой опорой. Поставь на неё всю стопу одной ноги
+      и поднимись, выпрямляя эту ногу, вторую приставь. Спустись назад той же ногой.
+      Сделай все повторы и смени ногу.
+    common_mistakes_ru:
+      - Толчок задней ногой вместо работы передней
+      - На опоре стоит только носок
+      - Колено заваливается внутрь
+
+  - slug: reverse_lunge
+    title_ru: Обратные выпады
+    difficulty_level: 2
+    prev_slug: step_up
+    next_slug: forward_lunge
+    is_unilateral: true
+    primary_muscles: [quads, glutes]
+    secondary_muscles: [hamstrings, adductors]
+    progression_criteria: {sets: 3, reps: 12}
+    technique_ru: >-
+      Встань прямо. Сделай широкий шаг назад и опустись, пока заднее колено почти не коснётся пола,
+      а переднее колено окажется над стопой. Оттолкнись передней ногой и вернись в стойку.
+      Чередуй ноги или сделай все повторы на одну.
+    common_mistakes_ru:
+      - Слишком короткий шаг
+      - Корпус заваливается вперёд
+      - Колено ударяется о пол
+
+  - slug: lateral_lunge
+    title_ru: Боковые выпады
+    difficulty_level: 3
+    prev_slug: reverse_lunge
+    next_slug: walking_lunge
+    is_unilateral: true
+    primary_muscles: [quads, adductors, glutes]
+    secondary_muscles: [hamstrings]
+    progression_criteria: {sets: 3, reps: 10}
+    technique_ru: >-
+      Из широкой стойки перенеси вес на одну ногу, отводя таз назад и сгибая колено, —
+      вторая нога остаётся прямой. Оттолкнись и вернись в центр. Повторов на обе стороны одинаково.
+    common_mistakes_ru:
+      - Колено уходит внутрь
+      - Пятка рабочей ноги отрывается
+      - Корпус падает вперёд
+
+  - slug: forward_lunge
+    title_ru: Выпады вперёд
+    difficulty_level: 3
+    prev_slug: reverse_lunge
+    next_slug: walking_lunge
+    is_unilateral: true
+    primary_muscles: [quads, glutes]
+    secondary_muscles: [hamstrings, adductors]
+    progression_criteria: {sets: 3, reps: 12}
+    technique_ru: >-
+      Сделай широкий шаг вперёд и опустись, пока оба колена не согнутся примерно под прямым углом.
+      Мощно оттолкнись передней ногой и вернись в исходную стойку. Корпус вертикальный.
+    common_mistakes_ru:
+      - Колено передней ноги уходит далеко за носок
+      - Шаг слишком узкий, и теряется равновесие
+      - Толчок задней ногой
+
+  - slug: goblet_reverse_lunge
+    title_ru: Обратные выпады с весом у груди
+    difficulty_level: 4
+    prev_slug: forward_lunge
+    next_slug: high_step_up
+    is_unilateral: true
+    required_equipment: [[kettlebell, dumbbell]]
+    primary_muscles: [quads, glutes]
+    secondary_muscles: [hamstrings, abs, upper_back]
+    progression_criteria: {sets: 3, reps: 10}
+    technique_ru: >-
+      Держи гирю или гантель у груди. Шагни назад, опустись, пока заднее колено почти не коснётся пола,
+      и вернись за счёт передней ноги. Груз у груди помогает держать корпус ровно.
+    common_mistakes_ru:
+      - Снаряд отходит от груди
+      - Короткий шаг
+      - Разный объём на ноги
+
+  - slug: walking_lunge
+    title_ru: Выпады в движении
+    difficulty_level: 4
+    prev_slug: forward_lunge
+    next_slug: high_step_up
+    is_unilateral: true
+    needs_floor_space: true
+    primary_muscles: [quads, glutes]
+    secondary_muscles: [hamstrings, adductors, calves]
+    progression_criteria: {sets: 3, reps: 12}
+    technique_ru: >-
+      Сделай выпад вперёд и, вставая, сразу шагни следующей ногой в новый выпад. Двигайся по прямой.
+      Нужно место на 8–10 шагов или разворот в конце.
+    common_mistakes_ru:
+      - Шаги становятся короче к концу подхода
+      - Колено передней ноги заваливается внутрь
+      - Корпус раскачивается
+
+  - slug: high_step_up
+    title_ru: Зашагивания на высокую опору
+    difficulty_level: 5
+    prev_slug: walking_lunge
+    next_slug: deficit_reverse_lunge
+    is_unilateral: true
+    required_equipment: [[bench, step_box, chair]]
+    primary_muscles: [quads, glutes]
+    secondary_muscles: [hamstrings, calves]
+    progression_criteria: {sets: 3, reps: 10}
+    technique_ru: >-
+      Выбери устойчивую опору высотой до колена. Поставь стопу целиком и поднимись только за счёт
+      этой ноги, не отталкиваясь задней. Спустись медленно, контролируя движение. Смени ногу.
+    common_mistakes_ru:
+      - Толчок нижней ногой
+      - Неустойчивая опора
+      - Спуск прыжком
+
+  - slug: weighted_step_up
+    title_ru: Зашагивания с весом
+    difficulty_level: 6
+    prev_slug: high_step_up
+    next_slug: jumping_lunge
+    is_unilateral: true
+    required_equipment: [[dumbbell, kettlebell], [bench, step_box, chair]]
+    primary_muscles: [quads, glutes]
+    secondary_muscles: [hamstrings, forearms]
+    progression_criteria: {sets: 3, reps: 10}
+    technique_ru: >-
+      Возьми гантели в опущенные руки или гирю у груди. Зашагивай на опору высотой до колена,
+      поднимаясь за счёт передней ноги, и спускайся под контролем.
+    common_mistakes_ru:
+      - Груз раскачивается
+      - Толчок задней ногой
+      - Опора слишком высокая, чтобы контролировать движение
+
+  - slug: deficit_reverse_lunge
+    title_ru: Обратные выпады с возвышения
+    difficulty_level: 6
+    prev_slug: high_step_up
+    next_slug: jumping_lunge
+    is_unilateral: true
+    required_equipment: [[stairs, step_box]]
+    primary_muscles: [quads, glutes]
+    secondary_muscles: [hamstrings, adductors]
+    progression_criteria: {sets: 3, reps: 10}
+    technique_ru: >-
+      Встань на низкую ступеньку или платформу. Шагни назад вниз с неё и опустись в глубокий выпад —
+      амплитуда больше обычной. Вернись на платформу за счёт передней ноги.
+    common_mistakes_ru:
+      - Передняя стопа соскальзывает с края
+      - Платформа слишком высокая
+      - Корпус падает вперёд
+
+  - slug: jumping_lunge
+    title_ru: Выпады со сменой ног в прыжке
+    difficulty_level: 7
+    prev_slug: deficit_reverse_lunge
+    is_unilateral: true
+    is_quiet: false
+    primary_muscles: [quads, glutes]
+    secondary_muscles: [calves, hamstrings]
+    contraindicated_for: [knees]
+    technique_ru: >-
+      Встань в выпад. Мощно выпрыгни вверх, в воздухе смени ноги и мягко приземлись в выпад
+      на другую ногу. Не подходит, если внизу соседи.
+    common_mistakes_ru:
+      - Жёсткое приземление
+      - Колено заваливается внутрь
+      - Выпад становится коротким к концу подхода

@@ -17,15 +17,20 @@ PostgreSQL. Первичные ключи — UUID. У всех таблиц `cr
 
 ### `exercises`
 `slug` (уникальный, стабильный — по нему идёт идемпотентный seed),
-`title_ru`, `pattern_code` (FK), `difficulty_level` (int, позиция в лестнице паттерна),
+`title_ru`, `pattern_code` (FK), `difficulty_level` (int, позиция на единой шкале
+паттерна; варианты на другом оборудовании стоят на уровне своей ступени),
 `is_unilateral`, `requires_pair`, `is_quiet` (подходит для бесшумного режима),
-`needs_floor_space`, `needs_ceiling_height`,
-`required_equipment` (JSONB: список условий, поддерживает «или»),
+`needs_floor_space` (нужно место за пределами коврика: выпады в движении, переноски),
+`needs_ceiling_height` (жим над головой стоя), `lies_on_floor` (лёжа на полу — отсекается
+покрытием площадки),
+`required_equipment` (JSONB: «И» из групп «ИЛИ» — `[["pullup_bar", "rings"], ["backpack"]]`;
+`[]` — только вес тела),
 `primary_muscles` / `secondary_muscles` (массивы),
 `technique_ru`, `common_mistakes_ru` (массив),
 `media` (JSONB: ключи в объектном хранилище для видео, превью, SVG-схемы),
 `prev_slug` / `next_slug` (ссылки по лестнице),
-`progression_criteria` (JSONB: что нужно выполнить для перехода на следующую ступень),
+`progression_criteria` (JSONB: что нужно выполнить для перехода на следующую ступень —
+`{"sets": 3, "reps": 12}` или `{"sets": 3, "hold_seconds": 30}` для статики и переносок),
 `contraindicated_for` (массив тегов здоровья).
 
 ### `skills`

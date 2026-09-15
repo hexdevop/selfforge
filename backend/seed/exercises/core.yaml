@@ -1,0 +1,196 @@
+pattern: core
+exercises:
+  - slug: dead_bug
+    title_ru: «Мёртвый жук»
+    difficulty_level: 1
+    next_slug: plank
+    lies_on_floor: true
+    primary_muscles: [abs]
+    secondary_muscles: [obliques, hip_flexors]
+    progression_criteria: {sets: 3, reps: 10}
+    technique_ru: >-
+      Ляг на спину, руки вытяни вверх, ноги согни под прямым углом в коленях и тазу. Прижми поясницу к полу.
+      Медленно опусти к полу противоположные руку и ногу, не отрывая поясницу, вернись и смени стороны.
+    common_mistakes_ru:
+      - Поясница отрывается от пола
+      - Слишком быстрый темп
+      - Задержка дыхания
+
+  - slug: plank
+    title_ru: Планка
+    difficulty_level: 2
+    prev_slug: dead_bug
+    next_slug: hollow_hold
+    primary_muscles: [abs]
+    secondary_muscles: [obliques, front_delts, glutes]
+    progression_criteria: {sets: 3, hold_seconds: 45}
+    technique_ru: >-
+      Упрись предплечьями в пол, локти под плечами, тело прямое от пяток до макушки.
+      Напряги пресс и ягодицы, будто подтягиваешь пупок к позвоночнику. Держи положение и дыши ровно.
+    common_mistakes_ru:
+      - Таз провисает
+      - Таз задран вверх
+      - Задержка дыхания
+
+  - slug: side_plank
+    title_ru: Боковая планка
+    difficulty_level: 3
+    prev_slug: plank
+    next_slug: ab_wheel_kneeling
+    is_unilateral: true
+    primary_muscles: [obliques]
+    secondary_muscles: [abs, glutes, side_delts]
+    progression_criteria: {sets: 3, hold_seconds: 30}
+    technique_ru: >-
+      Ляг на бок, упрись предплечьем в пол под плечом, ноги вытянуты одна на другой.
+      Подними таз, чтобы тело стало прямой линией. Держи, затем смени сторону.
+    common_mistakes_ru:
+      - Таз провисает к полу
+      - Таз уходит назад
+      - Разное время на стороны
+
+  - slug: pallof_press
+    title_ru: Паллоф-жим с резинкой
+    difficulty_level: 3
+    prev_slug: plank
+    next_slug: ab_wheel_kneeling
+    is_unilateral: true
+    required_equipment: [[resistance_band]]
+    primary_muscles: [obliques, abs]
+    secondary_muscles: [glutes]
+    progression_criteria: {sets: 3, reps: 12}
+    technique_ru: >-
+      Закрепи резинку на уровне груди и встань к ней боком. Держи рукоять у груди обеими руками
+      и выпрями руки вперёд, не давая корпусу развернуться к креплению. Верни руки к груди. Смени сторону.
+    common_mistakes_ru:
+      - Корпус разворачивается за резинкой
+      - Стоишь слишком близко, и натяжения нет
+      - Плечи поднимаются
+
+  - slug: hollow_hold
+    title_ru: Лодочка на спине
+    difficulty_level: 3
+    prev_slug: plank
+    next_slug: ab_wheel_kneeling
+    lies_on_floor: true
+    primary_muscles: [abs]
+    secondary_muscles: [hip_flexors, obliques]
+    progression_criteria: {sets: 3, hold_seconds: 30}
+    technique_ru: >-
+      Ляг на спину и прижми поясницу к полу. Подними плечи и прямые ноги на несколько сантиметров,
+      руки вытяни за голову — тело образует плавную дугу. Держи, не отрывая поясницу.
+      Проще — с согнутыми коленями.
+    common_mistakes_ru:
+      - Поясница отрывается
+      - Шея напряжена, подбородок задран
+      - Ноги подняты слишком высоко
+
+  - slug: ab_wheel_kneeling
+    title_ru: Раскатка ролика с колен
+    difficulty_level: 4
+    prev_slug: hollow_hold
+    next_slug: hanging_knee_raise
+    required_equipment: [[ab_wheel]]
+    primary_muscles: [abs]
+    secondary_muscles: [lats, obliques, front_delts]
+    contraindicated_for: [lower_back]
+    progression_criteria: {sets: 3, reps: 10}
+    technique_ru: >-
+      Встань на колени на мягкую подложку, ролик под плечами. Напряги пресс и медленно выкатывай ролик
+      вперёд, пока можешь держать спину ровной. Вернись, подтягивая ролик к коленям.
+      Начни с короткой амплитуды.
+    common_mistakes_ru:
+      - Поясница провисает в дальней точке
+      - Слишком длинная амплитуда на старте
+      - Возврат тазом, а не прессом
+
+  - slug: turkish_getup
+    title_ru: Турецкий подъём
+    difficulty_level: 5
+    prev_slug: ab_wheel_kneeling
+    next_slug: hanging_leg_raise
+    is_unilateral: true
+    lies_on_floor: true
+    needs_ceiling_height: true
+    required_equipment: [[kettlebell, dumbbell]]
+    primary_muscles: [abs, obliques, front_delts]
+    secondary_muscles: [glutes, quads, upper_back]
+    contraindicated_for: [shoulders]
+    progression_criteria: {sets: 3, reps: 3}
+    technique_ru: >-
+      Ляг на спину с гирей на прямой руке над плечом, нога на этой стороне согнута.
+      Поочерёдно: упор на локоть, на ладонь, подъём таза, свободная нога заводится назад на колено,
+      корпус выпрямляется, подъём в стойку. Гиря всё время над плечом. Спустись в обратном порядке.
+      Сначала выучи движение без веса.
+    common_mistakes_ru:
+      - Рука с гирей сгибается или уходит в сторону
+      - Спешка между этапами
+      - Сразу слишком тяжёлый вес
+
+  - slug: hanging_knee_raise
+    title_ru: Подъёмы коленей в висе
+    difficulty_level: 5
+    prev_slug: ab_wheel_kneeling
+    next_slug: hanging_leg_raise
+    required_equipment: [[pullup_bar, parallel_bars, wall_bars]]
+    primary_muscles: [abs]
+    secondary_muscles: [hip_flexors, forearms, obliques]
+    progression_criteria: {sets: 3, reps: 12}
+    technique_ru: >-
+      Повисни на турнике или выйди в упор на брусьях. Подтяни колени к груди, подкручивая таз вверх,
+      и медленно опусти. Не раскачивайся — если корпус качается, сделай паузу внизу.
+    common_mistakes_ru:
+      - Раскачка корпусом
+      - Колени поднимаются только до пояса, без подкрутки таза
+      - Быстрое опускание
+
+  - slug: l_sit
+    title_ru: Уголок в упоре
+    difficulty_level: 6
+    prev_slug: hanging_knee_raise
+    next_slug: ab_wheel_standing
+    required_equipment: [[parallel_bars, chair]]
+    primary_muscles: [abs, hip_flexors]
+    secondary_muscles: [triceps, quads]
+    progression_criteria: {sets: 3, hold_seconds: 20}
+    technique_ru: >-
+      Упрись руками в брусья или сиденья двух устойчивых стульев, выпрями руки и опусти плечи.
+      Подними прямые ноги вперёд до параллели с полом и держи. Проще — с согнутыми коленями.
+    common_mistakes_ru:
+      - Плечи поднимаются к ушам
+      - Ноги опускаются ниже параллели
+      - Руки сгибаются
+
+  - slug: hanging_leg_raise
+    title_ru: Подъёмы прямых ног в висе
+    difficulty_level: 6
+    prev_slug: hanging_knee_raise
+    next_slug: ab_wheel_standing
+    required_equipment: [[pullup_bar, wall_bars]]
+    primary_muscles: [abs]
+    secondary_muscles: [hip_flexors, forearms, obliques]
+    progression_criteria: {sets: 3, reps: 10}
+    technique_ru: >-
+      Из виса подними прямые ноги до уровня турника или хотя бы до параллели с полом, подкручивая таз.
+      Опусти медленно, без раскачки.
+    common_mistakes_ru:
+      - Раскачка
+      - Ноги сгибаются в коленях
+      - Ноги бросаются вниз
+
+  - slug: ab_wheel_standing
+    title_ru: Раскатка ролика стоя
+    difficulty_level: 8
+    prev_slug: hanging_leg_raise
+    required_equipment: [[ab_wheel]]
+    primary_muscles: [abs]
+    secondary_muscles: [lats, obliques, front_delts]
+    contraindicated_for: [lower_back]
+    technique_ru: >-
+      Встань, наклонись и поставь ролик на пол перед стопами. Выкатывай его вперёд до почти горизонтального
+      положения тела, удерживая спину ровной, и вернись. Начинай, выкатывая ролик к стене, —
+      она ограничит амплитуду.
+    common_mistakes_ru:
+      - Поясница провисает
+      - Слишком длинная амплитуда без подготовки
+      - Возврат тазом

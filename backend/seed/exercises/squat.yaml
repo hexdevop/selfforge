@@ -1,0 +1,294 @@
+pattern: squat
+exercises:
+  - slug: box_squat
+    title_ru: Присед на стул
+    difficulty_level: 1
+    next_slug: air_squat
+    required_equipment: [[chair, bench, sofa]]
+    primary_muscles: [quads, glutes]
+    secondary_muscles: [hamstrings, adductors]
+    progression_criteria: {sets: 3, reps: 15}
+    technique_ru: >-
+      Встань перед стулом спиной к нему, стопы чуть шире таза.
+      Отводя таз назад, сядь на край стула под контролем, не плюхаясь, и сразу встань,
+      отталкиваясь всей стопой. Колени смотрят туда же, куда носки.
+    common_mistakes_ru:
+      - Падение на стул без контроля
+      - Колени заваливаются внутрь
+      - Пятки отрываются от пола
+
+  - slug: air_squat
+    title_ru: Приседания с весом тела
+    difficulty_level: 2
+    prev_slug: box_squat
+    next_slug: pause_squat
+    primary_muscles: [quads, glutes]
+    secondary_muscles: [hamstrings, adductors]
+    progression_criteria: {sets: 3, reps: 20}
+    technique_ru: >-
+      Стопы на ширине плеч, носки немного развёрнуты. Отведи таз назад и опустись,
+      пока бёдра не станут параллельны полу или чуть ниже, спина ровная.
+      Встань, толкаясь всей стопой. Колени идут по линии носков.
+    common_mistakes_ru:
+      - Колени сводятся внутрь
+      - Пятки отрываются
+      - Спина округляется внизу
+
+  - slug: wall_sit
+    title_ru: Стульчик у стены
+    difficulty_level: 2
+    prev_slug: box_squat
+    next_slug: pause_squat
+    required_equipment: [[wall]]
+    primary_muscles: [quads]
+    secondary_muscles: [glutes]
+    progression_criteria: {sets: 3, hold_seconds: 45}
+    technique_ru: >-
+      Прислонись спиной к стене и сползи вниз, пока бёдра не станут параллельны полу, колени над стопами.
+      Держи положение и дыши ровно. Встань, опираясь спиной на стену.
+    common_mistakes_ru:
+      - Колени выходят далеко за носки
+      - Руки упираются в бёдра
+      - Задержка дыхания
+
+  - slug: pause_squat
+    title_ru: Приседания с паузой внизу
+    difficulty_level: 3
+    prev_slug: air_squat
+    next_slug: split_squat
+    primary_muscles: [quads, glutes]
+    secondary_muscles: [hamstrings, adductors]
+    progression_criteria: {sets: 3, reps: 15}
+    technique_ru: >-
+      Присядь как обычно и задержись в нижней точке на 2–3 секунды, сохраняя напряжение и ровную спину.
+      Встань без рывка. Пауза убирает отскок, и повтор становится тяжелее.
+    common_mistakes_ru:
+      - В паузе мышцы расслабляются, и корпус проваливается
+      - Колени уходят внутрь при подъёме
+      - Пауза слишком короткая
+
+  - slug: goblet_squat
+    title_ru: Гоблет-присед
+    difficulty_level: 3
+    prev_slug: air_squat
+    next_slug: split_squat
+    required_equipment: [[kettlebell, dumbbell]]
+    primary_muscles: [quads, glutes]
+    secondary_muscles: [adductors, abs, upper_back]
+    progression_criteria: {sets: 3, reps: 15}
+    technique_ru: >-
+      Держи гирю за рожки или гантель вертикально у груди, локти вниз. Стопы чуть шире плеч.
+      Опустись между коленями как можно глубже при ровной спине и встань.
+      Груз у груди помогает держать корпус вертикально.
+    common_mistakes_ru:
+      - Снаряд отходит от груди
+      - Колени заваливаются внутрь
+      - Спина округляется внизу
+
+  - slug: split_squat
+    title_ru: Сплит-присед
+    difficulty_level: 4
+    prev_slug: pause_squat
+    next_slug: bulgarian_split_squat
+    is_unilateral: true
+    primary_muscles: [quads, glutes]
+    secondary_muscles: [hamstrings, adductors]
+    progression_criteria: {sets: 3, reps: 12}
+    technique_ru: >-
+      Встань в длинный шаг: одна нога впереди, вторая сзади на носке.
+      Опускайся вертикально вниз, пока заднее колено почти не коснётся пола, и поднимись за счёт передней ноги.
+      Сделай все повторы и смени ногу.
+    common_mistakes_ru:
+      - Шаг слишком короткий, и колено уходит далеко вперёд
+      - Корпус заваливается вперёд
+      - Разное число повторов на ноги
+
+  - slug: jump_squat
+    title_ru: Приседания с выпрыгиванием
+    difficulty_level: 4
+    prev_slug: pause_squat
+    next_slug: bulgarian_split_squat
+    is_quiet: false
+    primary_muscles: [quads, glutes]
+    secondary_muscles: [calves, hamstrings]
+    contraindicated_for: [knees]
+    progression_criteria: {sets: 3, reps: 12}
+    technique_ru: >-
+      Присядь до параллели и мощно выпрыгни вверх, выпрямляя ноги.
+      Приземлись мягко на переднюю часть стопы и сразу переходи в следующий присед.
+      Не подходит, если внизу соседи.
+    common_mistakes_ru:
+      - Жёсткое приземление на прямые ноги
+      - Колени сводятся внутрь при приземлении
+      - Техника приседа теряется ради высоты прыжка
+
+  - slug: overhead_squat_single
+    title_ru: Присед с гантелью над головой
+    difficulty_level: 5
+    prev_slug: split_squat
+    next_slug: box_pistol
+    needs_ceiling_height: true
+    required_equipment: [[dumbbell, kettlebell]]
+    primary_muscles: [quads, glutes]
+    secondary_muscles: [side_delts, obliques, upper_back]
+    contraindicated_for: [shoulders]
+    progression_criteria: {sets: 3, reps: 10}
+    technique_ru: >-
+      Выжми гантель одной рукой и держи её на прямой руке над плечом.
+      Присядь как можно глубже, сохраняя руку вертикальной, а корпус ровным, и встань.
+      Груз с одной стороны заставляет работать мышцы корпуса. Меняй руку между подходами.
+    common_mistakes_ru:
+      - Рука уходит вперёд
+      - Корпус наклоняется в сторону груза
+      - Вес слишком тяжёлый для удержания над головой
+
+  - slug: double_kb_front_squat
+    title_ru: Фронтальный присед с двумя гирями
+    difficulty_level: 5
+    prev_slug: split_squat
+    next_slug: box_pistol
+    requires_pair: true
+    required_equipment: [[kettlebell]]
+    primary_muscles: [quads, glutes]
+    secondary_muscles: [abs, upper_back]
+    progression_criteria: {sets: 3, reps: 10}
+    technique_ru: >-
+      Возьми гири в стойку на груди: рукояти у ключиц, локти вниз и прижаты.
+      Присядь до параллели или ниже, держа грудь поднятой, и встань, толкаясь всей стопой.
+    common_mistakes_ru:
+      - Локти опускаются, и гири тянут вперёд
+      - Спина округляется
+      - Колени сводятся внутрь
+
+  - slug: bulgarian_split_squat
+    title_ru: Болгарский сплит-присед
+    difficulty_level: 5
+    prev_slug: split_squat
+    next_slug: box_pistol
+    is_unilateral: true
+    required_equipment: [[chair, bench, sofa, step_box]]
+    primary_muscles: [quads, glutes]
+    secondary_muscles: [hamstrings, adductors]
+    contraindicated_for: [knees]
+    progression_criteria: {sets: 3, reps: 12}
+    technique_ru: >-
+      Встань в шаге перед стулом или скамьёй и положи на неё подъём задней стопы.
+      Опускайся, пока бедро передней ноги не станет параллельно полу, корпус чуть наклонён вперёд.
+      Поднимись за счёт передней ноги. Сделай все повторы и смени ногу.
+    common_mistakes_ru:
+      - Передняя нога стоит слишком близко к опоре
+      - Колено передней ноги заваливается внутрь
+      - Толчок задней ногой
+
+  - slug: weighted_bulgarian_split_squat
+    title_ru: Болгарский сплит-присед с весом
+    difficulty_level: 6
+    prev_slug: bulgarian_split_squat
+    next_slug: assisted_pistol
+    is_unilateral: true
+    required_equipment: [[dumbbell, kettlebell], [chair, bench, sofa, step_box]]
+    primary_muscles: [quads, glutes]
+    secondary_muscles: [hamstrings, adductors, forearms]
+    contraindicated_for: [knees]
+    progression_criteria: {sets: 3, reps: 10}
+    technique_ru: >-
+      Возьми гантели в опущенные руки или одну гирю у груди. Выполняй болгарский сплит-присед
+      с той же техникой: задняя стопа на опоре, опускание до параллели передним бедром.
+      Все повторы на одну ногу, затем на другую.
+    common_mistakes_ru:
+      - Груз тянет корпус вперёд
+      - Короткая амплитуда
+      - Разный объём на ноги
+
+  - slug: barbell_back_squat
+    title_ru: Присед со штангой на спине
+    difficulty_level: 6
+    prev_slug: bulgarian_split_squat
+    next_slug: assisted_pistol
+    required_equipment: [[barbell], [squat_rack]]
+    primary_muscles: [quads, glutes]
+    secondary_muscles: [hamstrings, lower_back, adductors, abs]
+    contraindicated_for: [lower_back]
+    progression_criteria: {sets: 3, reps: 8}
+    technique_ru: >-
+      Положи гриф на верх трапеций, сними со стоек и отступи на шаг. Стопы на ширине плеч.
+      Опустись до параллели или ниже, держа спину ровной, и встань.
+      Работай в стойках с ограничителями — без них подходы у отказа опасны.
+    common_mistakes_ru:
+      - Спина округляется внизу
+      - Колени сводятся внутрь
+      - Подход до отказа без страховочных ограничителей
+
+  - slug: box_pistol
+    title_ru: Пистолетик на стул
+    difficulty_level: 6
+    prev_slug: bulgarian_split_squat
+    next_slug: assisted_pistol
+    is_unilateral: true
+    required_equipment: [[chair, bench, sofa]]
+    primary_muscles: [quads, glutes]
+    secondary_muscles: [adductors, abs]
+    contraindicated_for: [knees]
+    progression_criteria: {sets: 3, reps: 8}
+    technique_ru: >-
+      Встань перед стулом на одну ногу, вторую вытяни вперёд. Медленно опустись на стул на одной ноге,
+      коснись сиденья и встань, не раскачиваясь. Со временем бери опору ниже.
+    common_mistakes_ru:
+      - Падение на стул в конце движения
+      - Раскачка корпусом для подъёма
+      - Колено уходит внутрь
+
+  - slug: assisted_pistol
+    title_ru: Пистолетик с опорой рукой
+    difficulty_level: 7
+    prev_slug: box_pistol
+    next_slug: pistol_squat
+    is_unilateral: true
+    primary_muscles: [quads, glutes]
+    secondary_muscles: [adductors, abs]
+    contraindicated_for: [knees]
+    progression_criteria: {sets: 3, reps: 8}
+    technique_ru: >-
+      Встань боком к дверному косяку или стойке турника и держись рукой.
+      Опустись на одной ноге в полный присед, вторая нога вытянута вперёд.
+      Встань, помогая себе рукой как можно меньше.
+    common_mistakes_ru:
+      - Тянешь себя рукой вместо работы ноги
+      - Пятка отрывается от пола
+      - Колено заваливается внутрь
+
+  - slug: pistol_squat
+    title_ru: Пистолетик
+    difficulty_level: 8
+    prev_slug: assisted_pistol
+    next_slug: weighted_pistol
+    is_unilateral: true
+    primary_muscles: [quads, glutes]
+    secondary_muscles: [adductors, hamstrings, abs]
+    contraindicated_for: [knees]
+    progression_criteria: {sets: 3, reps: 8}
+    technique_ru: >-
+      Встань на одну ногу, вторую вытяни вперёд, руки перед собой для баланса.
+      Опустись в полный присед на опорной ноге, не отрывая пятку, и встань.
+      Повторов на обе ноги одинаково.
+    common_mistakes_ru:
+      - Спина округляется внизу
+      - Пятка отрывается
+      - Разный объём на ноги
+
+  - slug: weighted_pistol
+    title_ru: Пистолетик с весом
+    difficulty_level: 9
+    prev_slug: pistol_squat
+    is_unilateral: true
+    required_equipment: [[kettlebell, dumbbell, backpack]]
+    primary_muscles: [quads, glutes]
+    secondary_muscles: [adductors, hamstrings, abs]
+    contraindicated_for: [knees]
+    technique_ru: >-
+      Держи гирю или гантель у груди либо надень рюкзак — груз впереди даже помогает балансу.
+      Выполняй пистолетик с полной амплитудой. Добавляй вес небольшими шагами.
+    common_mistakes_ru:
+      - Глубина теряется ради веса
+      - Колено заваливается внутрь
+      - Рывок из нижней точки
