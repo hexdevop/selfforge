@@ -16,6 +16,8 @@ _pwd_context = CryptContext(schemes=["argon2"], deprecated="auto")
 class TokenType(StrEnum):
     ACCESS = "access"
     REFRESH = "refresh"
+    EMAIL_VERIFY = "email_verify"
+    PASSWORD_RESET = "password_reset"
 
 
 def hash_password(password: str) -> str:
@@ -48,8 +50,40 @@ def hash_refresh_token(raw_token: str) -> str:
     return hashlib.sha256(raw_token.encode()).hexdigest()
 
 
-def _encode_token(subject: UUID, token_type: TokenType, expires_at: datetime) -> str:
+def create_action_token(subject: UUID, token_type: TokenType, ttl: timedelta, **claims: str) -> str:
+    """Signed single-purpose token for links sent by email (verify, reset).
+
+    Stateless: extra `claims` bind it to the current state of the account (email,
+    password fingerprint), so it stops working once that state changes.
+    """
+    return _encode_token(subject, token_type, datetime.now(UTC) + ttl, claims)
+
+
+def decode_token(token: str, token_type: TokenType) -> dict[str, Any] | None:
+    """Return the payload of a valid token of `token_type` with a UUID `sub`, else None."""
+    try:
+        payload: dict[str, Any] = jwt.decode(
+            token, settings.SECRET_KEY, algorithms=[settings.JWT_ALGORITHM]
+        )
+        payload["sub"] = UUID(payload["sub"])
+    except (JWTError, KeyError, ValueError, TypeError):
+        return None
+
+    return payload if payload.get("type") == token_type.value else None
+
+
+def password_fingerprint(hashed_password: str) -> str:
+    return hashlib.sha256(hashed_password.encode()).hexdigest()[:16]
+
+
+def _encode_token(
+    subject: UUID,
+    token_type: TokenType,
+    expires_at: datetime,
+    claims: dict[str, str] | None = None,
+) -> str:
     payload: dict[str, Any] = {
+        **(claims or {}),
         "sub": str(subject),
         "type": token_type.value,
         "exp": expires_at,
@@ -61,19 +95,5 @@ def _encode_token(subject: UUID, token_type: TokenType, expires_at: datetime) ->
 
 def decode_access_token(token: str) -> UUID | None:
     """Return the user id encoded in an access token, or None if invalid/expired/wrong type."""
-    try:
-        payload = jwt.decode(token, settings.SECRET_KEY, algorithms=[settings.JWT_ALGORITHM])
-    except JWTError:
-        return None
-
-    if payload.get("type") != TokenType.ACCESS.value:
-        return None
-
-    subject = payload.get("sub")
-    if subject is None:
-        return None
-
-    try:
-        return UUID(subject)
-    except ValueError:
-        return None
+    payload = decode_token(token, TokenType.ACCESS)
+    return payload["sub"] if payload else None

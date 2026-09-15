@@ -1,4 +1,5 @@
 from collections.abc import AsyncGenerator
+from email.message import EmailMessage
 
 import asyncpg
 import fakeredis.aioredis
@@ -64,6 +65,26 @@ async def fake_redis(monkeypatch: pytest.MonkeyPatch) -> AsyncGenerator[None]:
     monkeypatch.setattr("app.dependencies.rate_limit.redis_client", client)
     yield
     await client.aclose()
+
+
+@pytest.fixture(autouse=True)
+def outbox(monkeypatch: pytest.MonkeyPatch) -> list[EmailMessage]:
+    """Captures outgoing emails instead of talking to an SMTP server."""
+    sent: list[EmailMessage] = []
+
+    class FakeSMTP:
+        def __init__(self, *args: object, **kwargs: object) -> None: ...
+        def __enter__(self) -> "FakeSMTP":
+            return self
+
+        def __exit__(self, *args: object) -> None: ...
+        def starttls(self) -> None: ...
+        def login(self, *args: object) -> None: ...
+        def send_message(self, message: EmailMessage) -> None:
+            sent.append(message)
+
+    monkeypatch.setattr("app.core.email.smtplib.SMTP", FakeSMTP)
+    return sent
 
 
 @pytest_asyncio.fixture

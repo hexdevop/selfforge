@@ -15,6 +15,8 @@ class User(UUIDPrimaryKeyMixin, TimestampMixin, Base):
 
     is_active: Mapped[bool] = mapped_column(Boolean, default=True)
     is_superuser: Mapped[bool] = mapped_column(Boolean, default=False)
+    # Soft verification: unverified users can use the app, the UI nudges them.
+    is_verified: Mapped[bool] = mapped_column(Boolean, default=False, server_default="false")
 
     def __repr__(self) -> str:
         return f"User(id={self.id!r}, username={self.username!r})"

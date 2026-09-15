@@ -34,6 +34,14 @@ services:
       timeout: 5s
       retries: 10
 
+  # Catches all outgoing email in dev. Web UI: http://localhost:8025
+  mailpit:
+    image: axllent/mailpit:latest
+    restart: unless-stopped
+    ports:
+      - "1025:1025"
+      - "8025:8025"
+
   app:
     build: .
     restart: unless-stopped
@@ -45,6 +53,8 @@ services:
       POSTGRES_PORT: 5432
       REDIS_HOST: redis
       REDIS_PORT: 6379
+      SMTP_HOST: mailpit
+      SMTP_PORT: 1025
     ports:
       - "8000:8000"
     volumes:

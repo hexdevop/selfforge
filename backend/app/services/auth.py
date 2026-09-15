@@ -9,10 +9,13 @@ from app.core.exceptions import (
     InvalidTokenException,
 )
 from app.core.security import (
+    TokenType,
     create_access_token,
     create_refresh_token_pair,
+    decode_token,
     hash_password,
     hash_refresh_token,
+    password_fingerprint,
     verify_password,
 )
 from app.models.user import User
@@ -76,6 +79,34 @@ class AuthService:
         tokens = await self._issue_tokens(stored_token.user_id)
         await self.session.commit()
         return tokens
+
+    async def verify_email(self, token: str) -> None:
+        payload = decode_token(token, TokenType.EMAIL_VERIFY)
+        user = await self.users.get(payload["sub"]) if payload else None
+        if payload is None or user is None or payload.get("email") != user.email:
+            raise InvalidTokenException("Ссылка устарела или уже не действует")
+        if not user.is_verified:
+            await self.users.update(user, is_verified=True)
+            await self.session.commit()
+
+    async def find_for_password_reset(self, email: str) -> User | None:
+        user = await self.users.get_by_email(email)
+        return user if user is not None and user.is_active else None
+
+    async def reset_password(self, token: str, new_password: str) -> None:
+        payload = decode_token(token, TokenType.PASSWORD_RESET)
+        user = await self.users.get(payload["sub"]) if payload else None
+        if (
+            payload is None
+            or user is None
+            or payload.get("pwd") != password_fingerprint(user.hashed_password)
+        ):
+            raise InvalidTokenException("Ссылка устарела или уже использована")
+
+        # Following the link proves ownership of the address, so it counts as verified.
+        await self.users.update(user, hashed_password=hash_password(new_password), is_verified=True)
+        await self.refresh_tokens.revoke_all_for_user(user.id)
+        await self.session.commit()
 
     async def logout(self, raw_refresh_token: str) -> None:
         token_hash = hash_refresh_token(raw_refresh_token)

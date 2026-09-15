@@ -60,6 +60,8 @@ class UserService:
 
         if data.password:
             values["hashed_password"] = hash_password(data.password)
+        if data.email and data.email != user.email:
+            values["is_verified"] = False
 
         user = await self.users.update(user, **values)
         await self.session.commit()

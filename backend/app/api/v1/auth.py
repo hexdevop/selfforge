@@ -1,15 +1,23 @@
 from typing import Annotated
 
-from fastapi import APIRouter, Cookie, Depends, Response, status
+from fastapi import APIRouter, BackgroundTasks, Cookie, Depends, Response, status
 
 from app.core.config import settings
+from app.core.email import send_email
 from app.core.exceptions import InvalidTokenException
 from app.dependencies.auth import CurrentActiveUser
 from app.dependencies.db import DbSession
 from app.dependencies.rate_limit import rate_limit
-from app.schemas.auth import LoginRequest, TokenResponse
+from app.schemas.auth import (
+    LoginRequest,
+    PasswordResetConfirm,
+    PasswordResetRequest,
+    TokenResponse,
+    VerifyEmailRequest,
+)
 from app.schemas.user import UserCreate, UserRead
 from app.services.auth import AuthService, IssuedTokens
+from app.services.emails import password_reset_email, verification_email
 
 router = APIRouter(prefix="/auth", tags=["auth"])
 
@@ -40,9 +48,44 @@ def _set_refresh_cookie(response: Response, tokens: IssuedTokens) -> TokenRespon
     status_code=status.HTTP_201_CREATED,
     dependencies=[Depends(rate_limit("register", limit=10, window_seconds=3600))],
 )
-async def register(data: UserCreate, session: DbSession) -> UserRead:
+async def register(data: UserCreate, session: DbSession, background: BackgroundTasks) -> UserRead:
     user = await AuthService(session).register(data)
+    background.add_task(send_email, verification_email(user))
     return UserRead.model_validate(user)
+
+
+@router.post("/verify-email", status_code=status.HTTP_204_NO_CONTENT)
+async def verify_email(data: VerifyEmailRequest, session: DbSession) -> None:
+    await AuthService(session).verify_email(data.token)
+
+
+@router.post(
+    "/verify-email/resend",
+    status_code=status.HTTP_202_ACCEPTED,
+    dependencies=[Depends(rate_limit("verify_resend", limit=5, window_seconds=3600))],
+)
+async def resend_verification(user: CurrentActiveUser, background: BackgroundTasks) -> None:
+    if not user.is_verified:
+        background.add_task(send_email, verification_email(user))
+
+
+@router.post(
+    "/password-reset/request",
+    status_code=status.HTTP_202_ACCEPTED,
+    dependencies=[Depends(rate_limit("password_reset", limit=5, window_seconds=3600))],
+)
+async def request_password_reset(
+    data: PasswordResetRequest, session: DbSession, background: BackgroundTasks
+) -> None:
+    # Same response whether or not the address is registered — no account enumeration.
+    user = await AuthService(session).find_for_password_reset(data.email)
+    if user is not None:
+        background.add_task(send_email, password_reset_email(user))
+
+
+@router.post("/password-reset/confirm", status_code=status.HTTP_204_NO_CONTENT)
+async def confirm_password_reset(data: PasswordResetConfirm, session: DbSession) -> None:
+    await AuthService(session).reset_password(data.token, data.password)
 
 
 @router.post(

@@ -38,6 +38,17 @@ class Settings(BaseSettings):
 
     BACKEND_CORS_ORIGINS: list[str] = []
 
+    # Base URL of the web app — links in emails point there.
+    FRONTEND_URL: str = "http://localhost:5173"
+
+    # Any SMTP provider; defaults match the Mailpit container from docker-compose.
+    SMTP_HOST: str = "localhost"
+    SMTP_PORT: int = 1025
+    SMTP_USER: str = ""
+    SMTP_PASSWORD: str = ""
+    SMTP_STARTTLS: bool = False
+    EMAIL_FROM: str = "Self Forge <noreply@selfforge.local>"
+
     @property
     def DATABASE_URL(self) -> str:  # noqa: N802 (kept uppercase to match the settings fields)
         return (
