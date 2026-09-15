@@ -46,6 +46,18 @@ async def get_current_active_user(user: CurrentUser) -> User:
 CurrentActiveUser = Annotated[User, Depends(get_current_active_user)]
 
 
+async def get_optional_user(
+    session: DbSession, token: Annotated[str | None, Depends(_oauth2_scheme)]
+) -> User | None:
+    """For public endpoints that personalise when a user is signed in."""
+    if token is None:
+        return None
+    return await get_current_active_user(await get_current_user(session, token))
+
+
+OptionalUser = Annotated[User | None, Depends(get_optional_user)]
+
+
 async def get_current_superuser(user: CurrentActiveUser) -> User:
     if not user.is_superuser:
         raise PermissionDeniedException()

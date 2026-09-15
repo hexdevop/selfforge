@@ -43,8 +43,12 @@ PATCH /profile
 POST  /profile/assessment        ответы на поведенческие вопросы → pattern_levels
 GET   /profile/pattern-levels
 PATCH /profile/pattern-levels    ручная корректировка
-POST  /profile/disclaimer        фиксация принятия медицинского дисклеймера
+POST  /profile/disclaimer        стартовый фильтр здоровья + принятие дисклеймера
+POST  /profile/onboarding/complete  завершить онбординг; 409 со списком незаполненных шагов
 ```
+
+`GET /exercises?location_id=` требует входа: учитываются инвентарь, ограничения локации и
+теги здоровья пользователя.
 
 ## Локации и инвентарь
 

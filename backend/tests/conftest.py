@@ -92,3 +92,26 @@ async def client() -> AsyncGenerator[AsyncClient]:
     transport = ASGITransport(app=app)
     async with AsyncClient(transport=transport, base_url="http://test") as ac:
         yield ac
+
+
+@pytest_asyncio.fixture
+async def catalog(db_session: AsyncSession) -> None:
+    """The real reference catalog from seed/*.yaml."""
+    from app.seed import load_catalog, seed
+
+    await seed(db_session, load_catalog())
+
+
+async def signed_in(client: AsyncClient, username: str = "alice") -> AsyncClient:
+    payload = {"email": f"{username}@example.com", "username": username, "password": "pass-1234"}
+    await client.post("/api/v1/auth/register", json=payload)
+    login = await client.post(
+        "/api/v1/auth/login", json={"login": username, "password": "pass-1234"}
+    )
+    client.headers["Authorization"] = f"Bearer {login.json()['access_token']}"
+    return client
+
+
+@pytest_asyncio.fixture
+async def user_client(client: AsyncClient) -> AsyncClient:
+    return await signed_in(client)

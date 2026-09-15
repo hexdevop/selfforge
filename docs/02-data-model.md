@@ -42,15 +42,20 @@ PostgreSQL. Первичные ключи — UUID. У всех таблиц `cr
 Из шаблона: email, username, хеш пароля, активность, верификация.
 
 ### `profiles`
-`user_id` (FK, 1:1), `sex`, `birth_date`, `height_cm`, `goal_primary`, `goal_secondary`,
+`user_id` (FK, 1:1, он же PK), `sex`, `birth_year` (только год — нужен для возрастного
+флага), `height_cm`, `goal_primary`, `goal_secondary`,
 `days_per_week`, `session_minutes`, `guidance_level` (verbose / normal / quiet),
-`health_flags` (массив), `medical_disclaimer_accepted_at`, `units` (metric / imperial),
-`timezone`.
+`health_flags` (массив тегов), `needs_medical_clearance` (итог стартового фильтра: сердце,
+беременность, свежая травма или возраст 60+; сами ответы не хранятся),
+`medical_disclaimer_accepted_at`, `units` (metric / imperial), `timezone`,
+`onboarding_completed_at`.
 
 ### `pattern_levels`
 Уровень пользователя по каждому паттерну — ключевая таблица.
 `user_id`, `pattern_code`, `current_exercise_slug`, `estimated_level` (int),
-`assessment_source` (onboarding / performance), `updated_at`.
+`assessment_source` (onboarding / performance / manual), `updated_at`.
+`current_exercise_slug` — ступень главной линии лестницы; конкретное упражнение под локацию
+подбирает движок.
 Уникальность по паре (user_id, pattern_code).
 
 ### `body_metrics`
@@ -79,7 +84,8 @@ PostgreSQL. Первичные ключи — UUID. У всех таблиц `cr
 { "type": "adjustable", "bar_kg": 2.0,
   "plates": [{"kg": 1.25, "count": 4}, {"kg": 2.5, "count": 4}, {"kg": 5, "count": 2}] }
 
-{ "type": "fixed", "weights_kg": [8, 12, 16] }
+{ "type": "fixed", "weights_kg": [8, 12, 16] }        // по записи на каждый снаряд:
+                                                     // две гири по 16 — [16, 16]
 
 { "resistances": ["light", "medium", "heavy"] }
 ```

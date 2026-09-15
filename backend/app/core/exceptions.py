@@ -32,6 +32,20 @@ class AlreadyExistsException(AppException):
     message = "Такая запись уже есть"
 
 
+class ValidationFailedException(AppException):
+    """Business-rule validation that pydantic alone can't express (needs the DB or catalog)."""
+
+    status_code = status.HTTP_422_UNPROCESSABLE_CONTENT
+    code = "validation_error"
+    message = "Проверь введённые данные"
+
+
+class OnboardingIncompleteException(AppException):
+    status_code = status.HTTP_409_CONFLICT
+    code = "onboarding_incomplete"
+    message = "Осталось заполнить несколько шагов"
+
+
 class InvalidCredentialsException(AppException):
     status_code = status.HTTP_401_UNAUTHORIZED
     code = "invalid_credentials"

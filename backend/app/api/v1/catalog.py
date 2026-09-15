@@ -1,9 +1,12 @@
 import hashlib
 import json
+import uuid
 from typing import Annotated, Any
 
 from fastapi import APIRouter, Query, Request, Response, status
 
+from app.core.exceptions import InvalidTokenException
+from app.dependencies.auth import OptionalUser
 from app.dependencies.db import DbSession
 from app.schemas.catalog import (
     EquipmentRead,
@@ -15,6 +18,7 @@ from app.schemas.catalog import (
     SkillRead,
 )
 from app.services.catalog import CatalogService
+from app.services.location import LocationService
 
 # Public reference data: no auth, Redis-cached in the service, ETag for clients.
 router = APIRouter(tags=["catalog"])
@@ -45,6 +49,11 @@ async def list_exercises(
     ] = None,
     difficulty_min: Annotated[int | None, Query(ge=1)] = None,
     difficulty_max: Annotated[int | None, Query(ge=1)] = None,
+    location_id: Annotated[
+        uuid.UUID | None,
+        Query(description="Only what's doable at this location of the signed-in user"),
+    ] = None,
+    user: OptionalUser = None,
 ) -> Response:
     payload = await CatalogService(session).list_exercises(
         pattern=pattern,
@@ -52,6 +61,12 @@ async def list_exercises(
         difficulty_min=difficulty_min,
         difficulty_max=difficulty_max,
     )
+    if location_id is not None:
+        if user is None:
+            raise InvalidTokenException("Нужно войти")
+        available = await LocationService(session, user).available_exercises(location_id)
+        slugs = {e.slug for e in available}
+        payload = [e for e in payload if e["slug"] in slugs]
     return _etag_response(request, payload)
 
 

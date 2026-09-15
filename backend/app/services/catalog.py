@@ -4,6 +4,8 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.cache.decorator import cached
 from app.core.exceptions import NotFoundException
+from app.engine.types import CatalogExercise
+from app.models.catalog import Exercise
 from app.repositories.catalog import CatalogRepository
 from app.schemas.catalog import (
     EquipmentRead,
@@ -22,11 +24,32 @@ _TTL = 24 * 3600
 _PATTERN_ORDER = list(PatternCode)
 
 
+def to_engine_exercise(e: Exercise) -> CatalogExercise:
+    return CatalogExercise(
+        slug=e.slug,
+        pattern=e.pattern_code,
+        level=e.difficulty_level,
+        required_equipment=tuple(tuple(group) for group in e.required_equipment),
+        requires_pair=e.requires_pair,
+        is_unilateral=e.is_unilateral,
+        is_quiet=e.is_quiet,
+        needs_floor_space=e.needs_floor_space,
+        needs_ceiling_height=e.needs_ceiling_height,
+        lies_on_floor=e.lies_on_floor,
+        contraindicated_for=frozenset(e.contraindicated_for),
+        prev_slug=e.prev_slug,
+        next_slug=e.next_slug,
+    )
+
+
 class CatalogService:
     """Read-only reference data. Methods return JSON-ready dicts so they can be cached."""
 
     def __init__(self, session: AsyncSession) -> None:
         self.repo = CatalogRepository(session)
+
+    async def engine_exercises(self) -> list[CatalogExercise]:
+        return [to_engine_exercise(e) for e in await self.repo.list_exercises()]
 
     @cached(key_prefix=f"{CACHE_PREFIX}:patterns", ttl=_TTL)
     async def list_patterns(self) -> list[dict[str, Any]]:
