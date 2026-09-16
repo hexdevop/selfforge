@@ -72,6 +72,11 @@ class SetLogRepository(BaseRepository[SetLog]):
         )
         return (await self.session.scalars(stmt)).all()
 
+    async def for_user(self, user_id: uuid.UUID) -> Sequence[SetLog]:
+        """The whole history of one person, oldest first — what analytics reads."""
+        stmt = select(SetLog).where(SetLog.user_id == user_id).order_by(SetLog.performed_at)
+        return (await self.session.scalars(stmt)).all()
+
     async def for_sessions(self, session_ids: Sequence[uuid.UUID]) -> Sequence[SetLog]:
         if not session_ids:
             return []
