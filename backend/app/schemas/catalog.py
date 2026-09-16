@@ -75,6 +75,12 @@ class SkillPrerequisite(BaseModel):
     reps: int | None = Field(default=None, ge=1)
     hold_seconds: int | None = Field(default=None, ge=1)
 
+    @model_validator(mode="after")
+    def _reps_or_hold(self) -> Self:
+        if (self.reps is None) == (self.hold_seconds is None):
+            raise ValueError("exactly one of reps / hold_seconds is required")
+        return self
+
 
 class PatternRead(BaseModel):
     model_config = ConfigDict(from_attributes=True)

@@ -3,6 +3,7 @@ exercises:
   - slug: wall_pushup
     title_ru: Отжимания от стены
     difficulty_level: 1
+    bodyweight_share: 0.2
     next_slug: incline_pushup
     required_equipment: [[wall]]
     primary_muscles: [chest, triceps]
@@ -20,6 +21,7 @@ exercises:
   - slug: incline_pushup
     title_ru: Отжимания от опоры
     difficulty_level: 2
+    bodyweight_share: 0.45
     prev_slug: wall_pushup
     next_slug: knee_pushup
     primary_muscles: [chest, triceps]
@@ -37,6 +39,7 @@ exercises:
   - slug: knee_pushup
     title_ru: Отжимания с колен
     difficulty_level: 3
+    bodyweight_share: 0.5
     prev_slug: incline_pushup
     next_slug: pushup
     primary_muscles: [chest, triceps]
@@ -54,6 +57,7 @@ exercises:
   - slug: bench_dips
     title_ru: Обратные отжимания от стула
     difficulty_level: 3
+    bodyweight_share: 0.5
     prev_slug: incline_pushup
     next_slug: pushup
     required_equipment: [[chair, bench, sofa]]
@@ -73,6 +77,7 @@ exercises:
   - slug: pushup
     title_ru: Отжимания
     difficulty_level: 4
+    bodyweight_share: 0.65
     prev_slug: knee_pushup
     next_slug: decline_pushup
     primary_muscles: [chest, triceps]
@@ -130,6 +135,7 @@ exercises:
   - slug: decline_pushup
     title_ru: Отжимания с ногами на возвышении
     difficulty_level: 5
+    bodyweight_share: 0.72
     prev_slug: pushup
     next_slug: archer_pushup
     required_equipment: [[chair, sofa, bench, step_box, stairs]]
@@ -166,6 +172,7 @@ exercises:
   - slug: chair_dips
     title_ru: Отжимания между стульями
     difficulty_level: 5
+    bodyweight_share: 0.55
     prev_slug: pushup
     next_slug: archer_pushup
     required_equipment: [[chair]]
@@ -185,6 +192,7 @@ exercises:
   - slug: archer_pushup
     title_ru: Отжимания лучника
     difficulty_level: 6
+    bodyweight_share: 0.65
     prev_slug: decline_pushup
     next_slug: one_arm_incline_pushup
     is_unilateral: true
@@ -203,6 +211,7 @@ exercises:
   - slug: weighted_pushup
     title_ru: Отжимания с рюкзаком
     difficulty_level: 6
+    bodyweight_share: 0.65
     prev_slug: decline_pushup
     next_slug: one_arm_incline_pushup
     required_equipment: [[backpack, weight_vest]]
@@ -220,6 +229,7 @@ exercises:
   - slug: parallel_bar_dips
     title_ru: Отжимания на брусьях
     difficulty_level: 6
+    bodyweight_share: 0.95
     prev_slug: decline_pushup
     next_slug: one_arm_incline_pushup
     required_equipment: [[parallel_bars]]
@@ -256,6 +266,7 @@ exercises:
   - slug: one_arm_incline_pushup
     title_ru: Отжимания на одной руке от опоры
     difficulty_level: 7
+    bodyweight_share: 0.45
     prev_slug: archer_pushup
     next_slug: one_arm_pushup
     is_unilateral: true
@@ -273,6 +284,7 @@ exercises:
   - slug: one_arm_pushup
     title_ru: Отжимания на одной руке
     difficulty_level: 9
+    bodyweight_share: 0.65
     prev_slug: one_arm_incline_pushup
     is_unilateral: true
     primary_muscles: [chest, triceps]

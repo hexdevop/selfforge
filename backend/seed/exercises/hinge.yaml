@@ -3,6 +3,7 @@ exercises:
   - slug: glute_bridge
     title_ru: Ягодичный мостик
     difficulty_level: 1
+    bodyweight_share: 0.3
     next_slug: single_leg_glute_bridge
     lies_on_floor: true
     primary_muscles: [glutes]
@@ -20,6 +21,7 @@ exercises:
   - slug: hip_thrust
     title_ru: Ягодичный мост с опорой спиной
     difficulty_level: 2
+    bodyweight_share: 0.3
     prev_slug: glute_bridge
     next_slug: bw_single_leg_rdl
     required_equipment: [[sofa, bench, chair]]
@@ -38,6 +40,7 @@ exercises:
   - slug: single_leg_glute_bridge
     title_ru: Ягодичный мостик на одной ноге
     difficulty_level: 2
+    bodyweight_share: 0.3
     prev_slug: glute_bridge
     next_slug: bw_single_leg_rdl
     is_unilateral: true
@@ -75,6 +78,7 @@ exercises:
   - slug: bw_single_leg_rdl
     title_ru: Румынская тяга на одной ноге без веса
     difficulty_level: 3
+    bodyweight_share: 0.5
     prev_slug: single_leg_glute_bridge
     next_slug: hamstring_walkout
     is_unilateral: true
@@ -132,6 +136,7 @@ exercises:
   - slug: hamstring_walkout
     title_ru: Шаги в мостике
     difficulty_level: 4
+    bodyweight_share: 0.3
     prev_slug: bw_single_leg_rdl
     next_slug: single_leg_hip_thrust
     lies_on_floor: true
@@ -170,6 +175,7 @@ exercises:
   - slug: weighted_single_leg_rdl
     title_ru: Румынская тяга на одной ноге с весом
     difficulty_level: 5
+    bodyweight_share: 0.5
     prev_slug: hamstring_walkout
     next_slug: sliding_leg_curl
     is_unilateral: true
@@ -189,6 +195,7 @@ exercises:
   - slug: single_leg_hip_thrust
     title_ru: Ягодичный мост на одной ноге с опорой спиной
     difficulty_level: 5
+    bodyweight_share: 0.3
     prev_slug: hamstring_walkout
     next_slug: sliding_leg_curl
     is_unilateral: true
@@ -208,6 +215,7 @@ exercises:
   - slug: sliding_leg_curl
     title_ru: Сгибания ног лёжа на скольжении
     difficulty_level: 6
+    bodyweight_share: 0.3
     prev_slug: single_leg_hip_thrust
     next_slug: nordic_negative
     lies_on_floor: true
@@ -266,6 +274,7 @@ exercises:
   - slug: nordic_negative
     title_ru: Негативные нордические сгибания
     difficulty_level: 7
+    bodyweight_share: 0.6
     prev_slug: sliding_leg_curl
     next_slug: nordic_curl
     required_equipment: [[sofa, wall_bars, bench]]
@@ -306,6 +315,7 @@ exercises:
   - slug: nordic_curl
     title_ru: Нордические сгибания
     difficulty_level: 9
+    bodyweight_share: 0.6
     prev_slug: nordic_negative
     required_equipment: [[sofa, wall_bars, bench]]
     primary_muscles: [hamstrings]

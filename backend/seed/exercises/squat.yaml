@@ -3,6 +3,7 @@ exercises:
   - slug: box_squat
     title_ru: Присед на стул
     difficulty_level: 1
+    bodyweight_share: 0.7
     next_slug: air_squat
     required_equipment: [[chair, bench, sofa]]
     primary_muscles: [quads, glutes]
@@ -20,6 +21,7 @@ exercises:
   - slug: air_squat
     title_ru: Приседания с весом тела
     difficulty_level: 2
+    bodyweight_share: 0.7
     prev_slug: box_squat
     next_slug: pause_squat
     primary_muscles: [quads, glutes]
@@ -54,6 +56,7 @@ exercises:
   - slug: pause_squat
     title_ru: Приседания с паузой внизу
     difficulty_level: 3
+    bodyweight_share: 0.7
     prev_slug: air_squat
     next_slug: split_squat
     primary_muscles: [quads, glutes]
@@ -70,6 +73,7 @@ exercises:
   - slug: goblet_squat
     title_ru: Гоблет-присед
     difficulty_level: 3
+    bodyweight_share: 0.7
     prev_slug: air_squat
     next_slug: split_squat
     required_equipment: [[kettlebell, dumbbell]]
@@ -88,6 +92,7 @@ exercises:
   - slug: split_squat
     title_ru: Сплит-присед
     difficulty_level: 4
+    bodyweight_share: 0.8
     prev_slug: pause_squat
     next_slug: bulgarian_split_squat
     is_unilateral: true
@@ -106,6 +111,7 @@ exercises:
   - slug: jump_squat
     title_ru: Приседания с выпрыгиванием
     difficulty_level: 4
+    bodyweight_share: 0.7
     prev_slug: pause_squat
     next_slug: bulgarian_split_squat
     is_quiet: false
@@ -125,6 +131,7 @@ exercises:
   - slug: overhead_squat_single
     title_ru: Присед с гантелью над головой
     difficulty_level: 5
+    bodyweight_share: 0.7
     prev_slug: split_squat
     next_slug: box_pistol
     needs_ceiling_height: true
@@ -145,6 +152,7 @@ exercises:
   - slug: double_kb_front_squat
     title_ru: Фронтальный присед с двумя гирями
     difficulty_level: 5
+    bodyweight_share: 0.7
     prev_slug: split_squat
     next_slug: box_pistol
     requires_pair: true
@@ -163,6 +171,7 @@ exercises:
   - slug: bulgarian_split_squat
     title_ru: Болгарский сплит-присед
     difficulty_level: 5
+    bodyweight_share: 0.8
     prev_slug: split_squat
     next_slug: box_pistol
     is_unilateral: true
@@ -183,6 +192,7 @@ exercises:
   - slug: weighted_bulgarian_split_squat
     title_ru: Болгарский сплит-присед с весом
     difficulty_level: 6
+    bodyweight_share: 0.8
     prev_slug: bulgarian_split_squat
     next_slug: assisted_pistol
     is_unilateral: true
@@ -203,6 +213,7 @@ exercises:
   - slug: barbell_back_squat
     title_ru: Присед со штангой на спине
     difficulty_level: 6
+    bodyweight_share: 0.7
     prev_slug: bulgarian_split_squat
     next_slug: assisted_pistol
     required_equipment: [[barbell], [squat_rack]]
@@ -222,6 +233,7 @@ exercises:
   - slug: box_pistol
     title_ru: Пистолетик на стул
     difficulty_level: 6
+    bodyweight_share: 0.8
     prev_slug: bulgarian_split_squat
     next_slug: assisted_pistol
     is_unilateral: true
@@ -241,6 +253,7 @@ exercises:
   - slug: assisted_pistol
     title_ru: Пистолетик с опорой рукой
     difficulty_level: 7
+    bodyweight_share: 0.8
     prev_slug: box_pistol
     next_slug: pistol_squat
     is_unilateral: true
@@ -260,6 +273,7 @@ exercises:
   - slug: pistol_squat
     title_ru: Пистолетик
     difficulty_level: 8
+    bodyweight_share: 0.8
     prev_slug: assisted_pistol
     next_slug: weighted_pistol
     is_unilateral: true
@@ -279,6 +293,7 @@ exercises:
   - slug: weighted_pistol
     title_ru: Пистолетик с весом
     difficulty_level: 9
+    bodyweight_share: 0.8
     prev_slug: pistol_squat
     is_unilateral: true
     required_equipment: [[kettlebell, dumbbell, backpack]]

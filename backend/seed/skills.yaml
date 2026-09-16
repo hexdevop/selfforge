@@ -1,7 +1,10 @@
 # Skill tree (docs/01-domain.md, goal `skill`): prerequisites to start + lead-up drills.
+# `goal` is the result that counts as the skill achieved, checked against logged sets;
+# a skill with no exercise of its own in the catalog has no goal and is marked by hand.
 
 - slug: first_pullup
   title_ru: Первое подтягивание
+  goal: {exercise_slug: pullup, reps: 1}
   description_ru: >-
     Первый чистый повтор от прямых рук до подбородка над перекладиной.
     Путь идёт через австралийские подтягивания, резинку и медленные негативы.
@@ -9,6 +12,7 @@
 
 - slug: ten_pullups
   title_ru: 10 подтягиваний
+  goal: {exercise_slug: pullup, reps: 10}
   description_ru: >-
     Десять чистых подтягиваний подряд — база для выхода силой, переднего виса и работы с весом.
   prerequisites:
@@ -17,6 +21,7 @@
 
 - slug: dips
   title_ru: Отжимания на брусьях
+  goal: {exercise_slug: parallel_bar_dips, reps: 5}
   description_ru: >-
     Отжимания на брусьях с полной амплитудой — до угла в локтях около 90°.
   prerequisites:
@@ -25,6 +30,7 @@
 
 - slug: muscle_up
   title_ru: Выход силой
+  goal: {exercise_slug: muscle_up, reps: 1}
   description_ru: >-
     Переход из виса в упор над перекладиной одним движением. Нужны сильная тяга и уверенные брусья.
   prerequisites:
@@ -44,6 +50,7 @@
 
 - slug: pistol_squat
   title_ru: Пистолетик
+  goal: {exercise_slug: pistol_squat, reps: 5}
   description_ru: >-
     Полный присед на одной ноге без опоры. Лучший способ нагрузить ноги, когда железа мало.
   prerequisites:
@@ -52,6 +59,7 @@
 
 - slug: handstand
   title_ru: Стойка на руках
+  goal: {exercise_slug: wall_handstand_hold, hold_seconds: 30}
   description_ru: >-
     Сначала уверенная стойка у стены, затем отжимания в ней. Навык требует сильных плеч
     и умения держать корпус прямым.

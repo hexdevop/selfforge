@@ -1,5 +1,7 @@
 """The real seed catalog as engine input, shared by engine tests."""
 
+from decimal import Decimal
+
 from app.engine.types import CatalogExercise, is_timed
 from app.seed import load_catalog
 
@@ -10,6 +12,7 @@ CATALOG = [
         level=ex.difficulty_level,
         title=ex.title_ru,
         timed=is_timed(pattern, ex.progression_criteria and ex.progression_criteria.model_dump()),
+        bodyweight_share=Decimal(str(ex.bodyweight_share)),
         required_equipment=tuple(tuple(g) for g in ex.required_equipment),
         requires_pair=ex.requires_pair,
         is_unilateral=ex.is_unilateral,

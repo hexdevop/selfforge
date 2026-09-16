@@ -21,6 +21,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.cache.decorator import invalidate_prefix
 from app.db.base import Base
 from app.db.session import async_session_factory
+from app.engine.types import is_timed
 from app.models.catalog import EquipmentItem, Exercise, MovementPattern, Skill
 from app.schemas.catalog import (
     EquipmentCategory,
@@ -61,6 +62,8 @@ class ExerciseSeed(_Strict):
     slug: str = Field(pattern=_SLUG, max_length=64)
     title_ru: str = Field(min_length=1, max_length=150)
     difficulty_level: int = Field(ge=1)
+    # Share of body mass lifted per rep, for tonnage; 0 where the body doesn't travel.
+    bodyweight_share: float = Field(default=0, ge=0, le=1)
     is_unilateral: bool = False
     requires_pair: bool = False
     is_quiet: bool = True
@@ -88,6 +91,7 @@ class SkillSeed(_Strict):
     slug: str = Field(pattern=_SLUG)
     title_ru: str = Field(min_length=1)
     description_ru: str = Field(min_length=1)
+    goal: SkillPrerequisite | None = None
     prerequisites: list[SkillPrerequisite] = []
     lead_up_exercise_slugs: list[str] = Field(min_length=1)
 
@@ -102,6 +106,11 @@ class Catalog:
 
 def _read(path: Path) -> Any:
     return yaml.safe_load(path.read_text(encoding="utf-8"))
+
+
+def _timed(pattern: PatternCode, ex: ExerciseSeed) -> bool:
+    criteria = ex.progression_criteria
+    return is_timed(pattern, criteria.model_dump() if criteria else None)
 
 
 def load_catalog(seed_dir: Path = SEED_DIR) -> Catalog:
@@ -134,6 +143,9 @@ def load_catalog(seed_dir: Path = SEED_DIR) -> Catalog:
                 problems.append(f"{slug}: empty equipment group")
             for unknown in set(group) - equipment_codes:
                 problems.append(f"{slug}: unknown equipment {unknown!r}")
+        timed = _timed(pattern, ex)
+        if timed and ex.bodyweight_share:
+            problems.append(f"{slug}: timed work has no tonnage, bodyweight_share must be 0")
         if ex.requires_pair and not ex.required_equipment:
             problems.append(f"{slug}: requires_pair without equipment")
         for link, must_be_harder in ((ex.prev_slug, False), (ex.next_slug, True)):
@@ -148,9 +160,22 @@ def load_catalog(seed_dir: Path = SEED_DIR) -> Catalog:
                 problems.append(f"{slug}: ladder link {link!r} goes the wrong way")
 
     for skill in skills:
-        referenced = skill.lead_up_exercise_slugs + [p.exercise_slug for p in skill.prerequisites]
+        goal = [skill.goal] if skill.goal else []
+        referenced = skill.lead_up_exercise_slugs + [
+            p.exercise_slug for p in [*skill.prerequisites, *goal]
+        ]
         for slug in set(referenced) - exercises.keys():
             problems.append(f"skill {skill.slug}: unknown exercise {slug!r}")
+        for result in [*skill.prerequisites, *goal]:
+            if result.exercise_slug not in exercises:
+                continue
+            pattern, ex = exercises[result.exercise_slug]
+            timed = _timed(pattern, ex)
+            if timed != (result.hold_seconds is not None):
+                problems.append(
+                    f"skill {skill.slug}: {result.exercise_slug!r} is measured in "
+                    f"{'seconds' if timed else 'reps'}"
+                )
 
     if problems:
         raise ValueError("Invalid seed data:\n  " + "\n  ".join(sorted(problems)))

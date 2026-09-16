@@ -61,6 +61,46 @@ exercises:
     assert "hard: ladder link to unknown 'ghost'" in message
 
 
+def test_load_catalog_checks_tonnage_shares_and_skill_goals(tmp_path: Path) -> None:
+    (tmp_path / "exercises").mkdir()
+    (tmp_path / "patterns.yaml").write_text(
+        "- {code: core, title_ru: К, description_ru: К}", encoding="utf-8"
+    )
+    (tmp_path / "equipment.yaml").write_text("[]", encoding="utf-8")
+    (tmp_path / "skills.yaml").write_text(
+        """
+- {slug: hold, title_ru: H, description_ru: d, lead_up_exercise_slugs: [plank],
+   goal: {exercise_slug: plank, reps: 10}}
+""",
+        encoding="utf-8",
+    )
+    (tmp_path / "exercises" / "core.yaml").write_text(
+        """
+pattern: core
+exercises:
+  - {slug: plank, title_ru: P, difficulty_level: 1, bodyweight_share: 0.5,
+     progression_criteria: {sets: 3, hold_seconds: 30}, primary_muscles: [abs],
+     technique_ru: t, common_mistakes_ru: [a, b]}
+""",
+        encoding="utf-8",
+    )
+
+    with pytest.raises(ValueError) as exc:
+        load_catalog(tmp_path)
+
+    message = str(exc.value)
+    assert "plank: timed work has no tonnage" in message
+    assert "skill hold: 'plank' is measured in seconds" in message
+
+
+def test_every_skill_with_an_exercise_of_its_own_has_a_goal() -> None:
+    goals = {s.slug: s.goal for s in CATALOG.skills}
+    assert goals["ten_pullups"] is not None and goals["ten_pullups"].reps == 10
+    assert goals["handstand"] is not None and goals["handstand"].hold_seconds == 30
+    # No such exercise in the catalog: these are marked achieved by hand.
+    assert goals["pullover"] is None and goals["front_lever"] is None
+
+
 async def test_seed_is_idempotent(db_session: AsyncSession) -> None:
     await seed(db_session, CATALOG)
     await seed(db_session, CATALOG)

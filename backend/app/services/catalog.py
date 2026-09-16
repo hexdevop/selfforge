@@ -31,6 +31,7 @@ def to_engine_exercise(e: Exercise) -> CatalogExercise:
         level=e.difficulty_level,
         title=e.title_ru,
         timed=is_timed(e.pattern_code, e.progression_criteria),
+        bodyweight_share=e.bodyweight_share,
         required_equipment=tuple(tuple(group) for group in e.required_equipment),
         requires_pair=e.requires_pair,
         is_unilateral=e.is_unilateral,

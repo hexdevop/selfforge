@@ -21,6 +21,7 @@ exercises:
   - slug: towel_door_row
     title_ru: Тяга к двери с полотенцем
     difficulty_level: 2
+    bodyweight_share: 0.5
     prev_slug: band_row
     next_slug: ring_row_feet_elevated
     required_equipment: [[towel]]
@@ -97,6 +98,7 @@ exercises:
   - slug: ring_row_feet_elevated
     title_ru: Горизонтальная тяга с ногами на возвышении
     difficulty_level: 4
+    bodyweight_share: 0.7
     prev_slug: towel_door_row
     next_slug: archer_ring_row
     required_equipment: [[rings, suspension_trainer, low_bar], [chair, bench, step_box, sofa]]
@@ -155,6 +157,7 @@ exercises:
   - slug: archer_ring_row
     title_ru: Тяга лучника на кольцах
     difficulty_level: 6
+    bodyweight_share: 0.6
     prev_slug: ring_row_feet_elevated
     next_slug: one_arm_inverted_row
     is_unilateral: true
@@ -173,6 +176,7 @@ exercises:
   - slug: one_arm_inverted_row
     title_ru: Горизонтальная тяга на одной руке
     difficulty_level: 7
+    bodyweight_share: 0.6
     prev_slug: archer_ring_row
     next_slug: tuck_front_lever_row
     is_unilateral: true
@@ -192,6 +196,7 @@ exercises:
   - slug: tuck_front_lever_row
     title_ru: Тяга в группировке переднего виса
     difficulty_level: 9
+    bodyweight_share: 0.95
     prev_slug: one_arm_inverted_row
     required_equipment: [[pullup_bar, rings]]
     primary_muscles: [lats, upper_back]

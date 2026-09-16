@@ -61,6 +61,8 @@ class CatalogExercise:
     title: str = ""
     # Measured in seconds of work (planks, carries, cardio), not in reps.
     timed: bool = False
+    # Share of body mass lifted per rep, for tonnage; 0 where the body doesn't travel.
+    bodyweight_share: Decimal = Decimal(0)
     # AND of OR-groups of equipment codes; empty means bodyweight only.
     required_equipment: tuple[tuple[str, ...], ...] = ()
     requires_pair: bool = False

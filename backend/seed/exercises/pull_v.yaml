@@ -21,6 +21,7 @@ exercises:
   - slug: australian_pullup_high
     title_ru: Австралийские подтягивания, высокая опора
     difficulty_level: 2
+    bodyweight_share: 0.45
     prev_slug: band_pulldown
     next_slug: australian_pullup_low
     required_equipment: [[low_bar, rings, suspension_trainer]]
@@ -40,6 +41,7 @@ exercises:
   - slug: australian_pullup_low
     title_ru: Австралийские подтягивания, низкая опора
     difficulty_level: 3
+    bodyweight_share: 0.6
     prev_slug: australian_pullup_high
     next_slug: band_assisted_pullup
     required_equipment: [[low_bar, rings, suspension_trainer]]
@@ -59,6 +61,7 @@ exercises:
   - slug: scapular_pullup
     title_ru: Лопаточные подтягивания
     difficulty_level: 3
+    bodyweight_share: 0.95
     next_slug: band_assisted_pullup
     required_equipment: [[pullup_bar]]
     primary_muscles: [upper_back, lats]
@@ -76,6 +79,7 @@ exercises:
   - slug: band_assisted_pullup
     title_ru: Подтягивания с резинкой-помощницей
     difficulty_level: 4
+    bodyweight_share: 0.7
     prev_slug: australian_pullup_low
     next_slug: negative_pullup
     required_equipment: [[pullup_bar], [resistance_band]]
@@ -95,6 +99,7 @@ exercises:
   - slug: negative_pullup
     title_ru: Медленные негативы
     difficulty_level: 5
+    bodyweight_share: 0.95
     prev_slug: band_assisted_pullup
     next_slug: pullup
     required_equipment: [[pullup_bar]]
@@ -113,6 +118,7 @@ exercises:
   - slug: pullup
     title_ru: Подтягивания
     difficulty_level: 6
+    bodyweight_share: 0.95
     prev_slug: negative_pullup
     next_slug: pullup_pause
     required_equipment: [[pullup_bar]]
@@ -131,6 +137,7 @@ exercises:
   - slug: chin_up
     title_ru: Подтягивания обратным хватом
     difficulty_level: 6
+    bodyweight_share: 0.95
     prev_slug: negative_pullup
     next_slug: pullup_pause
     required_equipment: [[pullup_bar]]
@@ -149,6 +156,7 @@ exercises:
   - slug: pullup_pause
     title_ru: Подтягивания с паузой вверху
     difficulty_level: 7
+    bodyweight_share: 0.95
     prev_slug: pullup
     next_slug: weighted_pullup
     required_equipment: [[pullup_bar]]
@@ -167,6 +175,7 @@ exercises:
   - slug: weighted_pullup
     title_ru: Подтягивания с рюкзаком
     difficulty_level: 8
+    bodyweight_share: 0.95
     prev_slug: pullup_pause
     next_slug: towel_one_arm_pullup
     required_equipment: [[pullup_bar], [backpack, weight_vest]]
@@ -186,6 +195,7 @@ exercises:
   - slug: archer_pullup
     title_ru: Подтягивания лучника
     difficulty_level: 9
+    bodyweight_share: 0.95
     prev_slug: weighted_pullup
     next_slug: muscle_up
     is_unilateral: true
@@ -205,6 +215,7 @@ exercises:
   - slug: towel_one_arm_pullup
     title_ru: Подтягивания на одной руке с полотенцем
     difficulty_level: 9
+    bodyweight_share: 0.95
     prev_slug: weighted_pullup
     next_slug: muscle_up
     is_unilateral: true
@@ -225,6 +236,7 @@ exercises:
   - slug: muscle_up
     title_ru: Выход силой
     difficulty_level: 10
+    bodyweight_share: 0.95
     prev_slug: towel_one_arm_pullup
     required_equipment: [[pullup_bar, rings]]
     primary_muscles: [lats, triceps]

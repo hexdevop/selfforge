@@ -1,9 +1,10 @@
 """Reference data shared by all users (docs/02-data-model.md). Filled only by the
 idempotent seed (`python -m app.seed`), never by migrations or the API."""
 
+from decimal import Decimal
 from typing import Any
 
-from sqlalchemy import Boolean, ForeignKey, Index, Integer, String, Text
+from sqlalchemy import Boolean, ForeignKey, Index, Integer, Numeric, String, Text
 from sqlalchemy.dialects.postgresql import ARRAY, JSONB
 from sqlalchemy.orm import Mapped, mapped_column
 
@@ -42,6 +43,10 @@ class Exercise(UUIDPrimaryKeyMixin, TimestampMixin, Base):
     pattern_code: Mapped[str] = mapped_column(ForeignKey("movement_patterns.code"))
     # Position on the pattern's single difficulty scale; variants share their step's level.
     difficulty_level: Mapped[int] = mapped_column(Integer)
+    # Share of body mass lifted per rep; tonnage of bodyweight work (docs/03-engine.md §7).
+    bodyweight_share: Mapped[Decimal] = mapped_column(
+        Numeric(3, 2), default=Decimal(0), server_default="0"
+    )
 
     is_unilateral: Mapped[bool] = mapped_column(Boolean)
     requires_pair: Mapped[bool] = mapped_column(Boolean)
@@ -72,5 +77,8 @@ class Skill(TimestampMixin, Base):
     slug: Mapped[str] = mapped_column(String(64), primary_key=True)
     title_ru: Mapped[str] = mapped_column(String(150))
     description_ru: Mapped[str] = mapped_column(Text)
+    # {"exercise_slug", "reps" | "hold_seconds"}: the result that counts as achieved;
+    # null for a skill with no exercise of its own, marked by hand.
+    goal: Mapped[dict[str, Any] | None] = mapped_column(JSONB, default=None)
     prerequisites: Mapped[list[dict[str, Any]]] = mapped_column(JSONB)
     lead_up_exercise_slugs: Mapped[list[str]] = mapped_column(ARRAY(String(64)))
