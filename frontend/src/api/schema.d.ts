@@ -709,6 +709,243 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/body/metrics": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List Metrics */
+        get: operations["list_metrics_api_v1_body_metrics_get"];
+        put?: never;
+        /** Add Metric */
+        post: operations["add_metric_api_v1_body_metrics_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/body/metrics/{metric_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /** Delete Metric */
+        delete: operations["delete_metric_api_v1_body_metrics__metric_id__delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/body/photos": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List Photos */
+        get: operations["list_photos_api_v1_body_photos_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/body/photos/upload-url": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Photo Upload Url
+         * @description The file goes straight to storage with the returned form, never through the API.
+         */
+        post: operations["photo_upload_url_api_v1_body_photos_upload_url_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/body/photos/{photo_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /** Delete Photo */
+        delete: operations["delete_photo_api_v1_body_photos__photo_id__delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/progress/summary": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Summary
+         * @description Week streak, this week's volume and records within reach.
+         */
+        get: operations["summary_api_v1_progress_summary_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/progress/patterns/{code}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Pattern
+         * @description One point per workout: the hardest step of the ladder done and its best set.
+         */
+        get: operations["pattern_api_v1_progress_patterns__code__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/progress/exercises/{slug}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Exercise */
+        get: operations["exercise_api_v1_progress_exercises__slug__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/progress/tonnage": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Tonnage */
+        get: operations["tonnage_api_v1_progress_tonnage_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/progress/records": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Records */
+        get: operations["records_api_v1_progress_records_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/progress/balance": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Balance
+         * @description One-sided exercises where one side lags over 15% on average across four weeks.
+         */
+        get: operations["balance_api_v1_progress_balance_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/progress/skills": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Skills */
+        get: operations["skills_api_v1_progress_skills_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/progress/skills/{slug}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /**
+         * Mark Skill
+         * @description Mark a skill achieved by hand — for skills the catalog has no exercise to check.
+         */
+        put: operations["mark_skill_api_v1_progress_skills__slug__put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -762,6 +999,68 @@ export interface components {
              * @default []
              */
             exercises: components["schemas"]["PlannedExerciseRead"][];
+        };
+        /** BodyMetricIn */
+        BodyMetricIn: {
+            /**
+             * Measured At
+             * @description Now if omitted
+             */
+            measured_at?: string | null;
+            /** Weight Kg */
+            weight_kg?: number | string | null;
+            /** Waist Cm */
+            waist_cm?: number | string | null;
+            /** Chest Cm */
+            chest_cm?: number | string | null;
+            /** Hip Cm */
+            hip_cm?: number | string | null;
+            /** Arm Cm */
+            arm_cm?: number | string | null;
+            /** Thigh Cm */
+            thigh_cm?: number | string | null;
+            /** Note */
+            note?: string | null;
+        };
+        /** BodyMetricRead */
+        BodyMetricRead: {
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /**
+             * Measured At
+             * Format: date-time
+             */
+            measured_at: string;
+            /** Weight Kg */
+            weight_kg: string | null;
+            /** Waist Cm */
+            waist_cm: string | null;
+            /** Chest Cm */
+            chest_cm: string | null;
+            /** Hip Cm */
+            hip_cm: string | null;
+            /** Arm Cm */
+            arm_cm: string | null;
+            /** Thigh Cm */
+            thigh_cm: string | null;
+            /** Note */
+            note: string | null;
+        };
+        /** BodyMetrics */
+        BodyMetrics: {
+            /**
+             * Items
+             * @description Raw measurements, newest first
+             */
+            items: components["schemas"]["BodyMetricRead"][];
+            /**
+             * Weight Trend
+             * @description 7-day moving average — the weight line to show, not the raw values
+             */
+            weight_trend: components["schemas"]["TrendPoint"][];
         };
         /** Constraints */
         "Constraints-Input": {
@@ -924,6 +1223,30 @@ export interface components {
         ErrorResponse: {
             detail: components["schemas"]["ErrorDetail"];
         };
+        /** ExercisePoint */
+        ExercisePoint: {
+            /**
+             * Day
+             * Format: date
+             */
+            day: string;
+            /** Session Id */
+            session_id: string;
+            best: components["schemas"]["ResultRead"] | null;
+            /** Top Weight Kg */
+            top_weight_kg: string | null;
+            /** Working Sets */
+            working_sets: number;
+            /** Tonnage Kg */
+            tonnage_kg: string;
+        };
+        /** ExerciseProgress */
+        ExerciseProgress: {
+            /** Exercise Slug */
+            exercise_slug: string;
+            /** Points */
+            points: components["schemas"]["ExercisePoint"][];
+        };
         /** ExerciseRead */
         ExerciseRead: {
             /** Slug */
@@ -939,6 +1262,11 @@ export interface components {
             requires_pair: boolean;
             /** Is Quiet */
             is_quiet: boolean;
+            /**
+             * Timed
+             * @description reps are seconds of work: planks, carries, holds
+             */
+            timed: boolean;
             /**
              * Required Equipment
              * @description AND of OR-groups of equipment codes; empty means bodyweight only
@@ -986,6 +1314,11 @@ export interface components {
             /** Is Quiet */
             is_quiet: boolean;
             /**
+             * Timed
+             * @description reps are seconds of work: planks, carries, holds
+             */
+            timed: boolean;
+            /**
              * Required Equipment
              * @description AND of OR-groups of equipment codes; empty means bodyweight only
              */
@@ -1014,6 +1347,24 @@ export interface components {
          * @enum {string}
          */
         HealthTag: "knees" | "shoulders" | "lower_back" | "wrists" | "neck" | "elbows";
+        /** ImbalanceRead */
+        ImbalanceRead: {
+            /** Exercise Slug */
+            exercise_slug: string;
+            /** Weaker Side */
+            weaker_side: string;
+            /** Left Avg */
+            left_avg: string;
+            /** Right Avg */
+            right_avg: string;
+            /**
+             * Gap
+             * @description Share of the stronger side: 0.2 is 20%
+             */
+            gap: string;
+            /** Advice Ru */
+            advice_ru: string;
+        };
         /** LadderRead */
         LadderRead: {
             pattern: components["schemas"]["PatternRead"];
@@ -1133,6 +1484,15 @@ export interface components {
          * @enum {string}
          */
         Muscle: "chest" | "front_delts" | "side_delts" | "rear_delts" | "triceps" | "biceps" | "forearms" | "lats" | "upper_back" | "lower_back" | "abs" | "obliques" | "glutes" | "quads" | "hamstrings" | "adductors" | "calves" | "hip_flexors";
+        /** NearRecordRead */
+        NearRecordRead: {
+            /** Exercise Slug */
+            exercise_slug: string;
+            record: components["schemas"]["ResultRead"];
+            last: components["schemas"]["ResultRead"];
+            /** Text Ru */
+            text_ru: string;
+        };
         /**
          * Overall
          * @enum {string}
@@ -1199,6 +1559,31 @@ export interface components {
             /** Estimated Level */
             estimated_level: number;
         };
+        /** PatternPoint */
+        PatternPoint: {
+            /**
+             * Day
+             * Format: date
+             */
+            day: string;
+            /** Session Id */
+            session_id: string;
+            /** Exercise Slug */
+            exercise_slug: string;
+            /**
+             * Level
+             * @description Step on the pattern's difficulty scale
+             */
+            level: number;
+            /** @description null when no set could be compared */
+            result: components["schemas"]["ResultRead"] | null;
+        };
+        /** PatternProgress */
+        PatternProgress: {
+            pattern_code: components["schemas"]["PatternCode"];
+            /** Points */
+            points: components["schemas"]["PatternPoint"][];
+        };
         /** PatternRead */
         PatternRead: {
             code: components["schemas"]["PatternCode"];
@@ -1209,6 +1594,11 @@ export interface components {
             /** Is Bilateral Default */
             is_bilateral_default: boolean;
         };
+        /**
+         * Period
+         * @enum {string}
+         */
+        Period: "week" | "month";
         /** PersonalRecordRead */
         PersonalRecordRead: {
             /** Exercise Slug */
@@ -1222,6 +1612,46 @@ export interface components {
              * Format: date-time
              */
             achieved_at: string;
+        };
+        /**
+         * PhotoAngle
+         * @enum {string}
+         */
+        PhotoAngle: "front" | "side" | "back";
+        /** PhotoRead */
+        PhotoRead: {
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /**
+             * Taken At
+             * Format: date-time
+             */
+            taken_at: string;
+            angle: components["schemas"]["PhotoAngle"];
+            /**
+             * Url
+             * @description Short-lived link to view the photo
+             */
+            url: string;
+        };
+        /** PhotoUpload */
+        PhotoUpload: {
+            photo: components["schemas"]["PhotoRead"];
+            upload: components["schemas"]["UploadForm"];
+        };
+        /** PhotoUploadRequest */
+        PhotoUploadRequest: {
+            angle: components["schemas"]["PhotoAngle"];
+            /**
+             * Taken At
+             * @description Now if omitted
+             */
+            taken_at?: string | null;
+            /** Content Type */
+            content_type: string;
         };
         /**
          * Pistol
@@ -1468,6 +1898,18 @@ export interface components {
          * @enum {string}
          */
         RecordKind: "max_weight" | "max_reps" | "est_1rm" | "max_volume";
+        /**
+         * ResultKind
+         * @enum {string}
+         */
+        ResultKind: "est_1rm" | "reps" | "seconds";
+        /** ResultRead */
+        ResultRead: {
+            /** @description est_1rm is kilograms; reps and seconds are counts */
+            kind: components["schemas"]["ResultKind"];
+            /** Value */
+            value: string;
+        };
         /** SessionBlockRead */
         SessionBlockRead: {
             kind: components["schemas"]["BlockKind"];
@@ -1667,6 +2109,11 @@ export interface components {
          * @enum {string}
          */
         Side: "both" | "left" | "right";
+        /** SkillMark */
+        SkillMark: {
+            /** Achieved */
+            achieved: boolean;
+        };
         /** SkillPrerequisite */
         SkillPrerequisite: {
             /** Exercise Slug */
@@ -1675,6 +2122,26 @@ export interface components {
             reps?: number | null;
             /** Hold Seconds */
             hold_seconds?: number | null;
+        };
+        /** SkillProgressRead */
+        SkillProgressRead: {
+            /** Skill Slug */
+            skill_slug: string;
+            /** Title Ru */
+            title_ru: string;
+            /** Description Ru */
+            description_ru: string;
+            status: components["schemas"]["SkillStatus"];
+            /** @description null: no exercise to check, marked by hand */
+            goal: components["schemas"]["TargetRead"] | null;
+            /** Prerequisites */
+            prerequisites: components["schemas"]["TargetRead"][];
+            /** Lead Up Exercise Slugs */
+            lead_up_exercise_slugs: string[];
+            /** Current Lead Up Slug */
+            current_lead_up_slug: string;
+            /** Achieved At */
+            achieved_at: string | null;
         };
         /** SkillRead */
         SkillRead: {
@@ -1689,6 +2156,11 @@ export interface components {
             /** Lead Up Exercise Slugs */
             lead_up_exercise_slugs: string[];
         };
+        /**
+         * SkillStatus
+         * @enum {string}
+         */
+        SkillStatus: "locked" | "in_progress" | "achieved";
         /**
          * Squats
          * @enum {string}
@@ -1723,11 +2195,45 @@ export interface components {
          * @enum {string}
          */
         SubstitutionReason: "equipment_busy" | "pain" | "too_hard" | "too_easy" | "disliked";
+        /** Summary */
+        Summary: {
+            /**
+             * Week Streak
+             * @description Weeks in a row with a workout; this week may be empty
+             */
+            week_streak: number;
+            this_week: components["schemas"]["WeekRead"];
+            /** Last Workout At */
+            last_workout_at: string | null;
+            /** Near Records */
+            near_records: components["schemas"]["NearRecordRead"][];
+            /**
+             * Imbalances
+             * @description One-sided exercises with a gap over 15%
+             */
+            imbalances: number;
+        };
         /**
          * Surface
          * @enum {string}
          */
         Surface: "rubber" | "sand" | "asphalt";
+        /** TargetRead */
+        TargetRead: {
+            /** Exercise Slug */
+            exercise_slug: string;
+            /** Reps */
+            reps: number | null;
+            /** Hold Seconds */
+            hold_seconds: number | null;
+            /**
+             * Best
+             * @description Best single working set so far, reps or seconds
+             */
+            best: number | null;
+            /** Met */
+            met: boolean;
+        };
         /**
          * TokenResponse
          * @description Access token only — the refresh token is set as an httpOnly cookie.
@@ -1741,10 +2247,42 @@ export interface components {
              */
             token_type?: string;
         };
+        /** TonnagePoint */
+        TonnagePoint: {
+            /**
+             * Starts On
+             * Format: date
+             */
+            starts_on: string;
+            /** Tonnage Kg */
+            tonnage_kg: string;
+        };
+        /** TrendPoint */
+        TrendPoint: {
+            /**
+             * Day
+             * Format: date
+             */
+            day: string;
+            /** Weight Kg */
+            weight_kg: string;
+        };
         /** TrimRequest */
         TrimRequest: {
             /** Minutes Left */
             minutes_left: number;
+        };
+        /** UploadForm */
+        UploadForm: {
+            /** Url */
+            url: string;
+            /**
+             * Fields
+             * @description Send as multipart form fields, file last
+             */
+            fields: {
+                [key: string]: unknown;
+            };
         };
         /** UserCreate */
         UserCreate: {
@@ -1809,6 +2347,18 @@ export interface components {
          * @enum {string}
          */
         WeekKind: "accumulation" | "deload";
+        /** WeekRead */
+        WeekRead: {
+            /**
+             * Starts On
+             * Format: date
+             */
+            starts_on: string;
+            /** Workouts */
+            workouts: number;
+            /** Tonnage Kg */
+            tonnage_kg: string;
+        };
         /** WeightGrid */
         WeightGrid: {
             /** Equipment Code */
@@ -3736,6 +4286,562 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["WorkoutSessionRead"];
+                };
+            };
+            /** @description Unprocessable Entity */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Client Error */
+            "4XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    list_metrics_api_v1_body_metrics_get: {
+        parameters: {
+            query?: {
+                from?: string | null;
+                to?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["BodyMetrics"];
+                };
+            };
+            /** @description Unprocessable Entity */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Client Error */
+            "4XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    add_metric_api_v1_body_metrics_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["BodyMetricIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["BodyMetricRead"];
+                };
+            };
+            /** @description Unprocessable Entity */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Client Error */
+            "4XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    delete_metric_api_v1_body_metrics__metric_id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                metric_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Unprocessable Entity */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Client Error */
+            "4XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    list_photos_api_v1_body_photos_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PhotoRead"][];
+                };
+            };
+            /** @description Unprocessable Entity */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Client Error */
+            "4XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    photo_upload_url_api_v1_body_photos_upload_url_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PhotoUploadRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PhotoUpload"];
+                };
+            };
+            /** @description Unprocessable Entity */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Client Error */
+            "4XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    delete_photo_api_v1_body_photos__photo_id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                photo_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Unprocessable Entity */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Client Error */
+            "4XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    summary_api_v1_progress_summary_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Summary"];
+                };
+            };
+            /** @description Unprocessable Entity */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Client Error */
+            "4XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    pattern_api_v1_progress_patterns__code__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                code: components["schemas"]["PatternCode"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PatternProgress"];
+                };
+            };
+            /** @description Unprocessable Entity */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Client Error */
+            "4XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    exercise_api_v1_progress_exercises__slug__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                slug: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ExerciseProgress"];
+                };
+            };
+            /** @description Unprocessable Entity */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Client Error */
+            "4XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    tonnage_api_v1_progress_tonnage_get: {
+        parameters: {
+            query?: {
+                period?: components["schemas"]["Period"];
+                pattern?: components["schemas"]["PatternCode"] | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TonnagePoint"][];
+                };
+            };
+            /** @description Unprocessable Entity */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Client Error */
+            "4XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    records_api_v1_progress_records_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PersonalRecordRead"][];
+                };
+            };
+            /** @description Unprocessable Entity */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Client Error */
+            "4XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    balance_api_v1_progress_balance_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ImbalanceRead"][];
+                };
+            };
+            /** @description Unprocessable Entity */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Client Error */
+            "4XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    skills_api_v1_progress_skills_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SkillProgressRead"][];
+                };
+            };
+            /** @description Unprocessable Entity */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Client Error */
+            "4XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    mark_skill_api_v1_progress_skills__slug__put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                slug: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["SkillMark"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SkillProgressRead"];
                 };
             };
             /** @description Unprocessable Entity */

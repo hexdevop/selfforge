@@ -37,9 +37,10 @@ function AuthedLayout() {
           </Link>
           <nav
             aria-label="Разделы"
-            className="order-last flex w-full gap-1 sm:order-none sm:w-auto sm:grow"
+            className="order-last flex w-full gap-1 overflow-x-auto [scrollbar-width:none] sm:order-none sm:w-auto sm:grow"
           >
             <NavLink to="/program">Программа</NavLink>
+            <NavLink to="/progress">Прогресс</NavLink>
             <NavLink to="/exercises">Упражнения</NavLink>
             <NavLink to="/locations">Места</NavLink>
           </nav>
@@ -60,13 +61,13 @@ function NavLink({
   to,
   children,
 }: {
-  to: '/program' | '/exercises' | '/locations'
+  to: '/program' | '/progress' | '/exercises' | '/locations'
   children: string
 }) {
   return (
     <Link
       to={to}
-      className="flex h-11 items-center rounded-lg px-2 text-base hover:bg-secondary sm:px-3"
+      className="flex h-11 shrink-0 items-center rounded-lg px-2 text-base whitespace-nowrap hover:bg-secondary sm:px-3"
       activeProps={{ className: 'font-semibold', 'aria-current': 'page' }}
     >
       {children}

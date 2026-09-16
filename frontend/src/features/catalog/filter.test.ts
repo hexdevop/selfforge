@@ -10,6 +10,7 @@ const exercise = (overrides: Partial<ExerciseSummary>): ExerciseSummary => ({
   is_unilateral: false,
   requires_pair: false,
   is_quiet: true,
+  timed: false,
   required_equipment: [],
   primary_muscles: ['quads'],
   ...overrides,

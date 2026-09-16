@@ -16,6 +16,7 @@ import { Route as RegisterRouteImport } from './routes/register'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as VerifyEmailRouteImport } from './routes/verify-email'
 import { Route as AuthedIndexRouteImport } from './routes/_authed/index'
+import { Route as AuthedBodyRouteImport } from './routes/_authed/body'
 import { Route as AuthedLocationsRouteImport } from './routes/_authed/locations'
 import { Route as AuthedOnboardingRouteImport } from './routes/_authed/onboarding'
 import { Route as AuthedWorkoutRouteImport } from './routes/_authed/workout'
@@ -24,6 +25,8 @@ import { Route as AuthedExercisesSlugRouteImport } from './routes/_authed/exerci
 import { Route as AuthedPatternsCodeRouteImport } from './routes/_authed/patterns/$code'
 import { Route as AuthedProgramIndexRouteImport } from './routes/_authed/program/index'
 import { Route as AuthedProgramNewRouteImport } from './routes/_authed/program/new'
+import { Route as AuthedProgressIndexRouteImport } from './routes/_authed/progress/index'
+import { Route as AuthedProgressSkillsRouteImport } from './routes/_authed/progress/skills'
 
 const AuthedRoute = AuthedRouteImport.update({
   id: '/_authed',
@@ -57,6 +60,11 @@ const VerifyEmailRoute = VerifyEmailRouteImport.update({
 const AuthedIndexRoute = AuthedIndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => AuthedRoute,
+} as any)
+const AuthedBodyRoute = AuthedBodyRouteImport.update({
+  id: '/body',
+  path: '/body',
   getParentRoute: () => AuthedRoute,
 } as any)
 const AuthedLocationsRoute = AuthedLocationsRouteImport.update({
@@ -99,6 +107,16 @@ const AuthedProgramNewRoute = AuthedProgramNewRouteImport.update({
   path: '/program/new',
   getParentRoute: () => AuthedRoute,
 } as any)
+const AuthedProgressIndexRoute = AuthedProgressIndexRouteImport.update({
+  id: '/progress/',
+  path: '/progress/',
+  getParentRoute: () => AuthedRoute,
+} as any)
+const AuthedProgressSkillsRoute = AuthedProgressSkillsRouteImport.update({
+  id: '/progress/skills',
+  path: '/progress/skills',
+  getParentRoute: () => AuthedRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof AuthedIndexRoute
@@ -107,14 +125,17 @@ export interface FileRoutesByFullPath {
   '/register': typeof RegisterRoute
   '/reset-password': typeof ResetPasswordRoute
   '/verify-email': typeof VerifyEmailRoute
+  '/body': typeof AuthedBodyRoute
   '/locations': typeof AuthedLocationsRoute
   '/onboarding': typeof AuthedOnboardingRoute
   '/workout': typeof AuthedWorkoutRoute
   '/exercises/$slug': typeof AuthedExercisesSlugRoute
   '/patterns/$code': typeof AuthedPatternsCodeRoute
   '/program/new': typeof AuthedProgramNewRoute
+  '/progress/skills': typeof AuthedProgressSkillsRoute
   '/exercises/': typeof AuthedExercisesIndexRoute
   '/program/': typeof AuthedProgramIndexRoute
+  '/progress/': typeof AuthedProgressIndexRoute
 }
 export interface FileRoutesByTo {
   '/forgot-password': typeof ForgotPasswordRoute
@@ -122,6 +143,7 @@ export interface FileRoutesByTo {
   '/register': typeof RegisterRoute
   '/reset-password': typeof ResetPasswordRoute
   '/verify-email': typeof VerifyEmailRoute
+  '/body': typeof AuthedBodyRoute
   '/locations': typeof AuthedLocationsRoute
   '/onboarding': typeof AuthedOnboardingRoute
   '/workout': typeof AuthedWorkoutRoute
@@ -129,8 +151,10 @@ export interface FileRoutesByTo {
   '/exercises/$slug': typeof AuthedExercisesSlugRoute
   '/patterns/$code': typeof AuthedPatternsCodeRoute
   '/program/new': typeof AuthedProgramNewRoute
+  '/progress/skills': typeof AuthedProgressSkillsRoute
   '/exercises': typeof AuthedExercisesIndexRoute
   '/program': typeof AuthedProgramIndexRoute
+  '/progress': typeof AuthedProgressIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -140,6 +164,7 @@ export interface FileRoutesById {
   '/register': typeof RegisterRoute
   '/reset-password': typeof ResetPasswordRoute
   '/verify-email': typeof VerifyEmailRoute
+  '/_authed/body': typeof AuthedBodyRoute
   '/_authed/locations': typeof AuthedLocationsRoute
   '/_authed/onboarding': typeof AuthedOnboardingRoute
   '/_authed/workout': typeof AuthedWorkoutRoute
@@ -147,8 +172,10 @@ export interface FileRoutesById {
   '/_authed/exercises/$slug': typeof AuthedExercisesSlugRoute
   '/_authed/patterns/$code': typeof AuthedPatternsCodeRoute
   '/_authed/program/new': typeof AuthedProgramNewRoute
+  '/_authed/progress/skills': typeof AuthedProgressSkillsRoute
   '/_authed/exercises/': typeof AuthedExercisesIndexRoute
   '/_authed/program/': typeof AuthedProgramIndexRoute
+  '/_authed/progress/': typeof AuthedProgressIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -159,14 +186,17 @@ export interface FileRouteTypes {
     | '/register'
     | '/reset-password'
     | '/verify-email'
+    | '/body'
     | '/locations'
     | '/onboarding'
     | '/workout'
     | '/exercises/$slug'
     | '/patterns/$code'
     | '/program/new'
+    | '/progress/skills'
     | '/exercises/'
     | '/program/'
+    | '/progress/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/forgot-password'
@@ -174,6 +204,7 @@ export interface FileRouteTypes {
     | '/register'
     | '/reset-password'
     | '/verify-email'
+    | '/body'
     | '/locations'
     | '/onboarding'
     | '/workout'
@@ -181,8 +212,10 @@ export interface FileRouteTypes {
     | '/exercises/$slug'
     | '/patterns/$code'
     | '/program/new'
+    | '/progress/skills'
     | '/exercises'
     | '/program'
+    | '/progress'
   id:
     | '__root__'
     | '/_authed'
@@ -191,6 +224,7 @@ export interface FileRouteTypes {
     | '/register'
     | '/reset-password'
     | '/verify-email'
+    | '/_authed/body'
     | '/_authed/locations'
     | '/_authed/onboarding'
     | '/_authed/workout'
@@ -198,8 +232,10 @@ export interface FileRouteTypes {
     | '/_authed/exercises/$slug'
     | '/_authed/patterns/$code'
     | '/_authed/program/new'
+    | '/_authed/progress/skills'
     | '/_authed/exercises/'
     | '/_authed/program/'
+    | '/_authed/progress/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -262,6 +298,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthedIndexRouteImport
       parentRoute: typeof AuthedRoute
     }
+    '/_authed/body': {
+      id: '/_authed/body'
+      path: '/body'
+      fullPath: '/body'
+      preLoaderRoute: typeof AuthedBodyRouteImport
+      parentRoute: typeof AuthedRoute
+    }
     '/_authed/locations': {
       id: '/_authed/locations'
       path: '/locations'
@@ -318,10 +361,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthedProgramNewRouteImport
       parentRoute: typeof AuthedRoute
     }
+    '/_authed/progress/': {
+      id: '/_authed/progress/'
+      path: '/progress'
+      fullPath: '/progress/'
+      preLoaderRoute: typeof AuthedProgressIndexRouteImport
+      parentRoute: typeof AuthedRoute
+    }
+    '/_authed/progress/skills': {
+      id: '/_authed/progress/skills'
+      path: '/progress/skills'
+      fullPath: '/progress/skills'
+      preLoaderRoute: typeof AuthedProgressSkillsRouteImport
+      parentRoute: typeof AuthedRoute
+    }
   }
 }
 
 interface AuthedRouteChildren {
+  AuthedBodyRoute: typeof AuthedBodyRoute
   AuthedLocationsRoute: typeof AuthedLocationsRoute
   AuthedOnboardingRoute: typeof AuthedOnboardingRoute
   AuthedWorkoutRoute: typeof AuthedWorkoutRoute
@@ -329,11 +387,14 @@ interface AuthedRouteChildren {
   AuthedExercisesSlugRoute: typeof AuthedExercisesSlugRoute
   AuthedPatternsCodeRoute: typeof AuthedPatternsCodeRoute
   AuthedProgramNewRoute: typeof AuthedProgramNewRoute
+  AuthedProgressSkillsRoute: typeof AuthedProgressSkillsRoute
   AuthedExercisesIndexRoute: typeof AuthedExercisesIndexRoute
   AuthedProgramIndexRoute: typeof AuthedProgramIndexRoute
+  AuthedProgressIndexRoute: typeof AuthedProgressIndexRoute
 }
 
 const AuthedRouteChildren: AuthedRouteChildren = {
+  AuthedBodyRoute: AuthedBodyRoute,
   AuthedLocationsRoute: AuthedLocationsRoute,
   AuthedOnboardingRoute: AuthedOnboardingRoute,
   AuthedWorkoutRoute: AuthedWorkoutRoute,
@@ -341,8 +402,10 @@ const AuthedRouteChildren: AuthedRouteChildren = {
   AuthedExercisesSlugRoute: AuthedExercisesSlugRoute,
   AuthedPatternsCodeRoute: AuthedPatternsCodeRoute,
   AuthedProgramNewRoute: AuthedProgramNewRoute,
+  AuthedProgressSkillsRoute: AuthedProgressSkillsRoute,
   AuthedExercisesIndexRoute: AuthedExercisesIndexRoute,
   AuthedProgramIndexRoute: AuthedProgramIndexRoute,
+  AuthedProgressIndexRoute: AuthedProgressIndexRoute,
 }
 
 const AuthedRouteWithChildren =
