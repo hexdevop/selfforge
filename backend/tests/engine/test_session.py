@@ -3,6 +3,7 @@ from decimal import Decimal
 import pytest
 
 from app.engine.goals import Goal
+from app.engine.inventory import is_available
 from app.engine.mesocycle import BlockKind, PlannedDay, ProgramInput, build_mesocycle
 from app.engine.progression import Performance, Prescription
 from app.engine.session import (
@@ -14,6 +15,7 @@ from app.engine.session import (
     matched_reps,
     prepare_session,
     substitute_exercise,
+    swap_location,
     trim_session,
 )
 from app.engine.types import Constraints, Equipment, Location, Surface
@@ -388,3 +390,109 @@ def test_every_exercise_remembers_the_plan_slot_it_fills() -> None:
         current, SubstitutionReason.TOO_EASY, location, CATALOG, Goal.HYPERTROPHY
     )
     assert swap is not None and swap.planned_slug == current.planned_slug
+
+
+# --- swapping places ------------------------------------------------------------------
+
+
+def test_a_park_day_moved_home_keeps_the_patterns_with_home_equipment() -> None:
+    park_day = prepare(PARK)
+    # «Подтягивания на площадке → тяга резинки» (docs/01-domain.md): a band covers the pull.
+    home_place = home(KB16, DUMBBELLS, Equipment("resistance_band"))
+
+    moved = swap_location(park_day, home_place, CATALOG, Goal.HYPERTROPHY)
+
+    before, after = all_exercises(park_day), all_exercises(moved)
+    assert all(is_available(BY_SLUG[e.exercise], home_place) for e in after)
+    assert {e.pattern for e in after} == {e.pattern for e in before}
+    assert [e.planned_slug for e in after] == [e.planned_slug for e in before]
+    assert [e.sets for e in after] == [e.sets for e in before]
+    assert "Тренировка собрана под «Дом»" in moved.notes_ru[-1]
+    assert any("Вместо" in e.hint_ru for e in after)
+
+
+def test_what_the_new_place_can_host_stays_as_it_was() -> None:
+    session = prepare(home(KB16, DUMBBELLS))
+    same = swap_location(session, home(KB16, DUMBBELLS), CATALOG, Goal.HYPERTROPHY)
+    assert all_exercises(same) == all_exercises(session)
+    assert same.notes_ru == session.notes_ru
+
+
+def test_a_replacement_gets_a_weight_that_exists_at_the_new_place() -> None:
+    session = prepare(home(DUMBBELLS))
+    loaded = next(e for e in all_exercises(session) if e.weight_kg is not None)
+    heavy = replace_weight(session, loaded.exercise, D(16))
+    kettlebell_home = home(Equipment("kettlebell", weights_kg=(D(12),)))
+
+    moved = swap_location(heavy, kettlebell_home, CATALOG, Goal.HYPERTROPHY)
+
+    for e in all_exercises(moved):
+        grid = (
+            [D(12)]
+            if any("kettlebell" in group for group in BY_SLUG[e.exercise].required_equipment)
+            else []
+        )
+        assert e.weight_kg in (grid[0] if grid else None, None)
+
+
+def test_nothing_to_do_it_with_drops_the_exercise_and_says_so() -> None:
+    session = prepare(home(DUMBBELLS))
+    bare = Location("bare", {}, Constraints(surface=Surface.ASPHALT), title="Пустырь")
+    moved = swap_location(session, bare, CATALOG, Goal.HYPERTROPHY)
+    assert len(all_exercises(moved)) <= len(all_exercises(session))
+    assert all(is_available(BY_SLUG[e.exercise], bare) for e in all_exercises(moved))
+    if len(all_exercises(moved)) < len(all_exercises(session)):
+        assert "нечем заменить" in moved.notes_ru[-1]
+
+
+def test_exercises_already_done_are_left_alone() -> None:
+    park_day = prepare(PARK)
+    first = all_exercises(park_day)[0]
+    moved = swap_location(park_day, home(KB16), CATALOG, Goal.HYPERTROPHY, done={first.exercise})
+    assert all_exercises(moved)[0] == first
+
+
+def test_starting_the_plan_somewhere_else_adapts_the_exercises() -> None:
+    park_plan = plan(PARK)
+    home_place = home(KB16)
+    session = prepare_session(park_plan, {}, Readiness(), home_place, CATALOG, Goal.HYPERTROPHY)
+    assert all(is_available(BY_SLUG[e.exercise], home_place) for e in all_exercises(session))
+
+
+def test_progression_ignores_a_slot_done_elsewhere() -> None:
+    """Done at home in the rain: back at the park, the home exercise must not come back."""
+    park_plan = plan(PARK)
+    slot = [e for b in park_plan.blocks for e in b.exercises][0]
+    home_version = next(
+        e
+        for e in CATALOG
+        if e.pattern == slot.pattern
+        and not is_available(e, PARK)
+        and is_available(e, home(DUMBBELLS))
+    )
+    done_at_home = Performance(
+        Prescription(home_version.slug, slot.sets, slot.target, slot.rest_seconds, D(8)),
+        (slot.target[1],) * slot.sets,
+    )
+    session = prepare_session(
+        park_plan, {slot.exercise: [done_at_home]}, Readiness(), PARK, CATALOG, Goal.HYPERTROPHY
+    )
+    assert all(is_available(BY_SLUG[e.exercise], PARK) for e in all_exercises(session))
+
+
+def replace_weight(session: Session, slug: str, weight: Decimal) -> Session:
+    from dataclasses import replace as dc_replace
+
+    return dc_replace(
+        session,
+        blocks=tuple(
+            dc_replace(
+                b,
+                exercises=tuple(
+                    dc_replace(e, weight_kg=weight) if e.exercise == slug else e
+                    for e in b.exercises
+                ),
+            )
+            for b in session.blocks
+        ),
+    )

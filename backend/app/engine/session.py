@@ -205,7 +205,9 @@ def prepare_session(
             blocks.append(SessionBlock(block.kind, _minutes(exercises), exercises))
 
     scaled = _scale_volume(blocks, multiplier, goal)
-    return Session(tuple(scaled), multiplier, _readiness_notes(readiness))
+    prepared = Session(tuple(scaled), multiplier, _readiness_notes(readiness))
+    # The plan names exercises for the place it was built for; today may be somewhere else.
+    return swap_location(prepared, location, catalog, goal, health_flags)
 
 
 def _scale_volume(
@@ -295,6 +297,14 @@ def _prepare(
     weight: Decimal | None = None
     hint = ""
 
+    # A performance of an exercise this place can't host (the slot was done elsewhere, at
+    # home in the rain) can't drive progression here: it would prescribe that exercise again.
+    past = [
+        perf
+        for perf in past
+        if (done := by_slug.get(perf.prescription.exercise)) is not None
+        and is_available(done, location, health_flags)
+    ]
     if past:
         decision = next_progression(past, goal, location, catalog, health_flags)
         p = decision.prescription
@@ -492,3 +502,95 @@ def _trim_note(dropped: int, cut_sets: int, minutes_left: int) -> str:
         f"Уложил остаток в {minutes_left} минут: {listing(what)}. "
         "Главные движения дня остались на месте — тренировка засчитана."
     )
+
+
+def swap_location(
+    session: Session,
+    location: Location,
+    catalog: Sequence[CatalogExercise],
+    goal: Goal,
+    health_flags: Collection[str] = (),
+    done: Collection[str] = (),
+) -> Session:
+    """The same session at another place: the same patterns, other equipment.
+
+    What this place can host stays; everything else becomes the closest step of the same
+    pattern that can be done here. `done` — exercises with sets already logged — stay as
+    they are: what was done is history, not a plan to rebuild.
+    """
+    by_slug = {e.slug: e for e in catalog}
+    here = [e for e in catalog if is_available(e, location, health_flags)]
+    used = {e.exercise for b in session.blocks for e in b.exercises}
+    swapped: list[tuple[str, str]] = []
+    dropped: list[str] = []
+
+    def rebuild(current: SessionExercise) -> SessionExercise | None:
+        exercise = by_slug[current.exercise]
+        if current.exercise in done or exercise in here:
+            weight = _snap(current.weight_kg, load_grid(exercise, location))
+            return replace(current, weight_kg=weight) if current.exercise not in done else current
+        options = [e for e in here if e.pattern == exercise.pattern and e.slug not in used]
+        if not options:
+            dropped.append(exercise.title or exercise.slug)
+            return None
+        # Closest in difficulty; on a tie the easier one — unfamiliar equipment is enough.
+        pick = min(options, key=lambda e: (abs(e.level - exercise.level), e.level, e.slug))
+        used.add(pick.slug)
+        swapped.append((exercise.title or exercise.slug, pick.title or pick.slug))
+        target = current.target
+        if pick.timed != current.timed:
+            target = GOALS[goal].hold_seconds if pick.timed else GOALS[goal].main.reps
+        return replace(
+            current,
+            exercise=pick.slug,
+            pattern=pick.pattern,
+            target=target,
+            timed=pick.timed,
+            unilateral=pick.is_unilateral,
+            weight_kg=_snap(current.weight_kg, load_grid(pick, location)),
+            tempo=None,
+            hint_ru=(
+                f"Вместо «{exercise.title or exercise.slug}» — то же движение под то, "
+                f"что есть здесь."
+            ),
+        )
+
+    blocks: list[SessionBlock] = []
+    for block in session.blocks:
+        if not block.exercises:
+            blocks.append(block)
+            continue
+        kept = [e for e in (rebuild(x) for x in block.exercises) if e is not None]
+        if kept:
+            blocks.append(_rebuild(block, kept))
+
+    if not swapped and not dropped:
+        return replace(session, blocks=tuple(blocks))
+    return Session(
+        tuple(blocks),
+        session.volume_multiplier,
+        (*session.notes_ru, _swap_note(location, swapped, dropped)),
+    )
+
+
+def _snap(weight: Decimal | None, grid: Sequence[Decimal]) -> Decimal | None:
+    """The heaviest weight here not above the one planned; the lightest if all are above."""
+    if not grid:
+        return None
+    if weight is None:
+        return grid[0]
+    lighter = [w for w in grid if w <= weight]
+    return lighter[-1] if lighter else grid[0]
+
+
+def _swap_note(location: Location, swapped: list[tuple[str, str]], dropped: list[str]) -> str:
+    place = f"«{location.title}»" if location.title else "это место"
+    parts = [f"Тренировка собрана под {place}."]
+    if swapped:
+        parts.append("Заменил: " + "; ".join(f"{was} → {now}" for was, now in swapped) + ".")
+    if dropped:
+        parts.append(
+            f"Здесь нечем заменить: {listing(dropped)} — сегодня без них, "
+            "остальная тренировка на месте."
+        )
+    return " ".join(parts)
