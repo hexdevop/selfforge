@@ -16,6 +16,7 @@ from app.repositories.catalog import CatalogRepository
 from app.repositories.location import LocationRepository
 from app.repositories.profile import PatternLevelRepository
 from app.repositories.program import ProgramRepository
+from app.repositories.workout import WorkoutSessionRepository
 from app.schemas.program import ProgramDraft, ProgramRead, ProgramRequest, ProgramStatus
 from app.services.catalog import CatalogService
 from app.services.location import to_engine_location
@@ -73,6 +74,31 @@ class ProgramService:
         if program is None:
             raise NotFoundException("Такой программы нет")
         return ProgramRead.model_validate(program)
+
+    async def planned_session(self, planned_session_id: uuid.UUID) -> PlannedSession:
+        """A day of one of this person's own programs."""
+        program = await self.programs.get_by_planned_session(planned_session_id, self.user.id)
+        if program is None:
+            raise NotFoundException("Такого дня в программе нет")
+        return next(
+            day for week in program.weeks for day in week.sessions if day.id == planned_session_id
+        )
+
+    async def next_planned_session(self) -> PlannedSession:
+        """The first day of the active program that has no completed workout yet.
+
+        Days are ordinal, not tied to weekdays: a missed day is simply the next one up.
+        """
+        program = await self._active()
+        if program is None:
+            raise ValidationFailedException("Сначала собери программу")
+        days = [day for week in program.weeks for day in week.sessions]
+        if not days:
+            raise NotFoundException("В программе нет ни одного дня")
+        done = await WorkoutSessionRepository(self.session).completed_planned_ids(
+            day.id for day in days
+        )
+        return next((day for day in days if day.id not in done), days[-1])
 
     async def _active(self) -> Program | None:
         return await self.programs.get_by(user_id=self.user.id, status=ProgramStatus.ACTIVE.value)

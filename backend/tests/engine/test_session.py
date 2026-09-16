@@ -374,3 +374,17 @@ def test_a_trimmed_session_fits_the_window_it_was_given(minutes_left: int) -> No
 @pytest.mark.parametrize(("left", "right", "counted"), [(8, 8, 8), (8, 6, 6), (5, 9, 5), (0, 4, 0)])
 def test_both_sides_count_as_the_weaker_one(left: int, right: int, counted: int) -> None:
     assert matched_reps(left, right) == counted
+
+
+def test_every_exercise_remembers_the_plan_slot_it_fills() -> None:
+    location = home(KB16, DUMBBELLS)
+    session = prepare(location)
+    day = plan(location)
+    planned = [e.exercise for b in day.blocks for e in b.exercises]
+    assert [e.planned_slug for e in all_exercises(session)] == planned
+
+    current = block(session, BlockKind.MAIN)[0]
+    swap = substitute_exercise(
+        current, SubstitutionReason.TOO_EASY, location, CATALOG, Goal.HYPERTROPHY
+    )
+    assert swap is not None and swap.planned_slug == current.planned_slug

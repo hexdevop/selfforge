@@ -79,6 +79,9 @@ class SessionExercise:
     weight_kg: Decimal | None = None
     tempo: str | None = None
     hint_ru: str = ""  # why this weight and this target
+    # The slot this fills: the slug the plan was generated with. Progression follows the
+    # slot, so a lever that moves a slot up the ladder keeps its history.
+    planned_slug: str = ""
 
     @property
     def seconds(self) -> int:
@@ -323,6 +326,7 @@ def _prepare(
         weight_kg=weight,
         tempo=tempo,
         hint_ru=hint,
+        planned_slug=planned.exercise,
     )
 
 
@@ -399,6 +403,7 @@ def substitute_exercise(
         weight_kg=weight,
         tempo=None,
         hint_ru=_substitution_hint(reason, pick),
+        planned_slug=current.planned_slug,
     )
 
 

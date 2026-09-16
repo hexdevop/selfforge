@@ -6,6 +6,7 @@ from app.models.profile import PatternLevel, Profile
 from app.models.program import PlannedSession, Program, ProgramWeek
 from app.models.refresh_token import RefreshToken
 from app.models.user import User
+from app.models.workout import PersonalRecord, SetLog, WorkoutSession
 
 __all__ = [
     "EquipmentItem",
@@ -14,11 +15,14 @@ __all__ = [
     "LocationEquipment",
     "MovementPattern",
     "PatternLevel",
+    "PersonalRecord",
     "PlannedSession",
     "Profile",
     "Program",
     "ProgramWeek",
     "RefreshToken",
+    "SetLog",
     "Skill",
     "User",
+    "WorkoutSession",
 ]
