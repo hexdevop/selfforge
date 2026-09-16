@@ -181,4 +181,10 @@ async def test_workout_tonnage_counts_body_mass_once_weighed(user_client: AsyncC
     assert float(accepted["total_tonnage_kg"]) == pytest.approx(expected)
 
 
-_SHARES = {"air_squat": 0.7, "box_squat": 0.7, "knee_pushup": 0.5, "pushup": 0.65, "glute_bridge": 0.3}
+_SHARES = {
+    "air_squat": 0.7,
+    "box_squat": 0.7,
+    "knee_pushup": 0.5,
+    "pushup": 0.65,
+    "glute_bridge": 0.3,
+}
