@@ -8,6 +8,7 @@ from pydantic import BaseModel, ConfigDict, Field
 from app.engine.mesocycle import BlockKind
 from app.engine.session import Feeling, SubstitutionReason
 from app.schemas.catalog import PatternCode
+from app.schemas.pagination import PageParams
 from app.schemas.types import WeightKg
 
 
@@ -150,7 +151,11 @@ class WorkoutSessionRead(_Model):
 
 class SessionStart(BaseModel):
     planned_session_id: uuid.UUID | None = Field(
-        default=None, description="Omit for an unplanned workout at the given place"
+        default=None, description="A day of the program; the next unfinished one if omitted"
+    )
+    unplanned: bool = Field(
+        default=False,
+        description="A one-off full-body workout at `location_id`, outside the program",
     )
     location_id: uuid.UUID | None = Field(
         default=None, description="Defaults to the place the plan names, then the default one"
@@ -179,3 +184,9 @@ class TrimRequest(BaseModel):
 
 class SessionFinish(BaseModel):
     note: str | None = Field(default=None, max_length=1000)
+
+
+class SessionFilters(PageParams):
+    status: SessionStatus | None = Field(
+        default=None, description="`in_progress` finds a workout left open to resume"
+    )

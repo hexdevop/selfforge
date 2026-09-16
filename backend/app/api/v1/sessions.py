@@ -1,12 +1,13 @@
 import uuid
+from typing import Annotated
 
-from fastapi import APIRouter, status
+from fastapi import APIRouter, Query, status
 
 from app.dependencies.auth import CurrentActiveUser
 from app.dependencies.db import DbSession
-from app.dependencies.pagination import Pagination
 from app.schemas.pagination import Page
 from app.schemas.workout import (
+    SessionFilters,
     SessionFinish,
     SessionStart,
     SetsAccepted,
@@ -30,9 +31,12 @@ async def start_session(
 
 @router.get("", response_model=Page[WorkoutSessionRead])
 async def list_sessions(
-    user: CurrentActiveUser, session: DbSession, pagination: Pagination
+    user: CurrentActiveUser,
+    session: DbSession,
+    filters: Annotated[SessionFilters, Query()],
 ) -> Page[WorkoutSessionRead]:
-    return await WorkoutService(session, user).history(pagination)
+    """Newest first."""
+    return await WorkoutService(session, user).history(filters, filters.status)
 
 
 @router.get("/{session_id}", response_model=WorkoutSessionRead)

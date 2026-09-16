@@ -27,10 +27,13 @@ class WorkoutSessionRepository(BaseRepository[WorkoutSession]):
         )
         return (await self.session.scalars(stmt)).first()
 
-    async def history(self, user_id: uuid.UUID, pagination: PageParams) -> Page[WorkoutSession]:
-        return await self.list(
-            {"user_id": user_id}, pagination, order_by=WorkoutSession.started_at.desc()
-        )
+    async def history(
+        self, user_id: uuid.UUID, pagination: PageParams, status: str | None = None
+    ) -> Page[WorkoutSession]:
+        filters: dict[str, Any] = {"user_id": user_id}
+        if status is not None:
+            filters["status"] = status
+        return await self.list(filters, pagination, order_by=WorkoutSession.started_at.desc())
 
     async def completed_planned_ids(self, planned_ids: Iterable[uuid.UUID]) -> set[uuid.UUID]:
         ids = list(planned_ids)

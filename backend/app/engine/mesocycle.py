@@ -549,3 +549,17 @@ def build_mesocycle(
     `locations` must contain every id in `inp.day_locations`.
     """
     return _Planner(inp, locations, catalog, equipment_titles or {}).build()
+
+
+def build_one_off_day(
+    inp: ProgramInput, location: Location, catalog: Sequence[CatalogExercise]
+) -> PlannedDay:
+    """A single full-body day at one place, outside any program.
+
+    The same picking rules as a program day, so an unplanned workout isn't a different
+    kind of training — just one that isn't tied to the cycle.
+    """
+    program = build_mesocycle(
+        replace(inp, day_locations=(location.id,)), {location.id: location}, catalog
+    )
+    return program.weeks[0].days[0]

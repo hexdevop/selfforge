@@ -13,6 +13,7 @@ from app.engine.mesocycle import (
     Structure,
     WeekKind,
     build_mesocycle,
+    build_one_off_day,
 )
 from app.engine.types import Constraints, Equipment, Location, Surface
 from app.seed import load_catalog
@@ -285,3 +286,25 @@ def test_short_sessions_say_what_did_not_fit() -> None:
 def test_medical_clearance_is_mentioned() -> None:
     assert "врачом" in build(home(KB16), home(KB16), clearance=True).rationale_ru
     assert "врачом" not in build(home(KB16), home(KB16)).rationale_ru
+
+
+@pytest.mark.parametrize("minutes", [20, 45, 60])
+@pytest.mark.parametrize("location", [home(KB16), PARK], ids=["home", "park"])
+def test_a_one_off_day_is_a_full_workout_at_that_place(location: Location, minutes: int) -> None:
+    inp = ProgramInput(
+        goal=Goal.HYPERTROPHY,
+        secondary_goal=None,
+        session_minutes=minutes,
+        levels=INTERMEDIATE,
+        day_locations=("ignored", "ignored"),
+    )
+    day = build_one_off_day(inp, location, CATALOG)
+
+    assert day.location_id == location.id
+    assert day.minutes <= minutes
+    kinds = [b.kind for b in day.blocks]
+    assert kinds[0] is BlockKind.WARMUP and kinds[-1] is BlockKind.COOLDOWN
+    exercises = [e for b in day.blocks for e in b.exercises]
+    assert exercises
+    assert all(is_available(BY_SLUG[e.exercise], location) for e in exercises)
+    assert len({e.pattern for e in exercises}) >= (3 if minutes >= 45 else 2)

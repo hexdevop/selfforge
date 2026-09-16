@@ -241,21 +241,27 @@ class WorkoutService:
 
     async def start(self, data: SessionStart) -> WorkoutSessionRead:
         programs = ProgramService(self.session, self.user)
-        planned = (
-            await programs.planned_session(data.planned_session_id)
-            if data.planned_session_id
-            else await programs.next_planned_session()
-        )
-        location_id = data.location_id or planned.location_id
-        location = (
-            await LocationRepository(self.session).get_for_user(location_id, self.user.id)
-            if location_id
-            else None
-        )
+        planned: PlannedSession | None = None
+        if not data.unplanned:
+            planned = (
+                await programs.planned_session(data.planned_session_id)
+                if data.planned_session_id
+                else await programs.next_planned_session()
+            )
+
+        places = LocationRepository(self.session)
+        location_id = data.location_id or (planned.location_id if planned else None)
+        if location_id is not None:
+            location = await places.get_for_user(location_id, self.user.id)
+        else:
+            # The default place is listed first.
+            location = next(iter(await places.list_for_user(self.user.id)), None)
         if location is None:
             raise ValidationFailedException(
                 "Выбери место, где будешь тренироваться", {"location_id": "Такого места нет"}
             )
+
+        day = _planned_day(planned) if planned else await programs.one_off_day(location)
 
         profile = await ProfileService(self.session, self.user).get()
         if profile.goal_primary is None:
@@ -270,7 +276,7 @@ class WorkoutService:
         logs = await self.set_logs.for_sessions([s.id for s in past.items])
 
         prepared = prepare_session(
-            _planned_day(planned),
+            day,
             _history(past.items, logs),
             Readiness(data.readiness.sleep, data.readiness.stress, data.readiness.soreness),
             to_engine_location(location),
@@ -288,7 +294,7 @@ class WorkoutService:
 
         workout = await self.sessions.create(
             user_id=self.user.id,
-            planned_session_id=planned.id,
+            planned_session_id=planned.id if planned else None,
             location_id=location.id,
             started_at=datetime.now(UTC),
             status=SessionStatus.IN_PROGRESS.value,
@@ -301,8 +307,10 @@ class WorkoutService:
     async def get(self, session_id: uuid.UUID) -> WorkoutSessionRead:
         return await self._read(await self._own(session_id))
 
-    async def history(self, pagination: PageParams) -> Page[WorkoutSessionRead]:
-        page = await self.sessions.history(self.user.id, pagination)
+    async def history(
+        self, pagination: PageParams, status: SessionStatus | None = None
+    ) -> Page[WorkoutSessionRead]:
+        page = await self.sessions.history(self.user.id, pagination, status)
         items = [await self._read(workout) for workout in page.items]
         return Page[WorkoutSessionRead](
             items=items, total=page.total, page=page.page, size=page.size, pages=page.pages

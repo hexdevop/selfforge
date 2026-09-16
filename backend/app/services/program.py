@@ -10,6 +10,8 @@ from app.core.exceptions import (
 )
 from app.engine import mesocycle
 from app.engine.goals import Goal
+from app.models.location import Location
+from app.models.profile import Profile
 from app.models.program import PlannedSession, Program, ProgramWeek
 from app.models.user import User
 from app.repositories.catalog import CatalogRepository
@@ -42,6 +44,23 @@ def _block(block: mesocycle.Block) -> dict[str, object]:
             for e in block.exercises
         ],
     }
+
+
+def _program_input(
+    profile: Profile, levels: dict[str, int], day_locations: list[str]
+) -> mesocycle.ProgramInput:
+    if profile.goal_primary is None:
+        raise OnboardingIncompleteException("Сначала пройди онбординг до конца")
+    return mesocycle.ProgramInput(
+        goal=Goal(profile.goal_primary),
+        secondary_goal=Goal(profile.goal_secondary) if profile.goal_secondary else None,
+        # A profile finishes onboarding only with these set; the fallback is for type safety.
+        session_minutes=profile.session_minutes or 45,
+        levels=levels,
+        day_locations=tuple(day_locations),
+        health_flags=frozenset(profile.health_flags),
+        needs_medical_clearance=profile.needs_medical_clearance,
+    )
 
 
 class ProgramService:
@@ -100,6 +119,23 @@ class ProgramService:
         )
         return next((day for day in days if day.id not in done), days[-1])
 
+    async def one_off_day(self, location: Location) -> mesocycle.PlannedDay:
+        """A full-body day at `location` for a workout outside the program."""
+        profile = await ProfileService(self.session, self.user).get()
+        if profile.onboarding_completed_at is None or not profile.goal_primary:
+            raise OnboardingIncompleteException("Сначала пройди онбординг до конца")
+        return mesocycle.build_one_off_day(
+            _program_input(profile, await self._levels(), [str(location.id)]),
+            to_engine_location(location),
+            await CatalogService(self.session).engine_exercises(),
+        )
+
+    async def _levels(self) -> dict[str, int]:
+        return {
+            level.pattern_code: level.estimated_level
+            for level in await PatternLevelRepository(self.session).list_for_user(self.user.id)
+        }
+
     async def _active(self) -> Program | None:
         return await self.programs.get_by(user_id=self.user.id, status=ProgramStatus.ACTIVE.value)
 
@@ -129,24 +165,13 @@ class ProgramService:
         if any(loc_id not in locations for loc_id in day_locations):
             raise ValidationFailedException(fields={"day_locations": "Такого места нет"})
 
-        levels = {
-            level.pattern_code: level.estimated_level
-            for level in await PatternLevelRepository(self.session).list_for_user(self.user.id)
-        }
+        levels = await self._levels()
         used = {loc_id: locations[loc_id] for loc_id in dict.fromkeys(day_locations)}
         titles = {
             e.code: e.title_ru for e in await CatalogRepository(self.session).list_equipment()
         }
         program = mesocycle.build_mesocycle(
-            mesocycle.ProgramInput(
-                goal=Goal(goal),
-                secondary_goal=Goal(profile.goal_secondary) if profile.goal_secondary else None,
-                session_minutes=minutes,
-                levels=levels,
-                day_locations=tuple(day_locations),
-                health_flags=frozenset(profile.health_flags),
-                needs_medical_clearance=profile.needs_medical_clearance,
-            ),
+            _program_input(profile, levels, day_locations),
             {loc_id: to_engine_location(loc) for loc_id, loc in used.items()},
             await CatalogService(self.session).engine_exercises(),
             titles,

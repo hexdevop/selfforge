@@ -381,3 +381,63 @@ async def test_history_lists_workouts_newest_first(user_client: AsyncClient) -> 
 
     assert page["total"] == 2
     assert [item["id"] for item in page["items"]] == [second["id"], first["id"]]
+
+
+# --- unplanned workouts and resuming --------------------------------------------------
+
+
+async def test_an_unplanned_workout_is_a_full_day_at_the_chosen_place(
+    user_client: AsyncClient,
+) -> None:
+    program = await with_program(user_client)
+    park = next(
+        s["location_id"]
+        for w in program["weeks"]
+        for s in w["sessions"]
+        if s["location_id"] != program["weeks"][0]["sessions"][0]["location_id"]
+    )
+
+    workout = await start(user_client, unplanned=True, location_id=park)
+
+    assert workout["planned_session_id"] is None
+    assert workout["location_id"] == park
+    kinds = [b["kind"] for b in workout["blocks"]]
+    assert kinds[0] == "warmup" and "main" in kinds and kinds[-1] == "cooldown"
+    catalog = {
+        e["slug"]: e
+        for e in (await user_client.get(f"/api/v1/exercises?location_id={park}")).json()
+    }
+    assert all(e["exercise_slug"] in catalog for e in exercises(workout))
+
+
+async def test_an_unplanned_workout_does_not_move_the_program_on(
+    user_client: AsyncClient,
+) -> None:
+    await with_program(user_client)
+    before = (await user_client.get("/api/v1/programs/active/next-session")).json()
+
+    workout = await start(user_client, unplanned=True)
+    await user_client.post(f"/api/v1/sessions/{workout['id']}/finish", json={})
+
+    after = (await user_client.get("/api/v1/programs/active/next-session")).json()
+    assert after["id"] == before["id"]
+
+
+async def test_an_unplanned_workout_needs_no_program(user_client: AsyncClient) -> None:
+    home, _ = await onboard(user_client)
+
+    workout = await start(user_client, unplanned=True)
+
+    assert workout["location_id"] == home
+    assert exercises(workout, "main")
+
+
+async def test_a_workout_left_open_can_be_found_to_resume(user_client: AsyncClient) -> None:
+    await with_program(user_client)
+    done = await start(user_client)
+    await user_client.post(f"/api/v1/sessions/{done['id']}/finish", json={})
+    running = await start(user_client)
+
+    page = (await user_client.get("/api/v1/sessions?status=in_progress")).json()
+
+    assert [item["id"] for item in page["items"]] == [running["id"]]
