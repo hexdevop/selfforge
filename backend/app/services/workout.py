@@ -7,6 +7,7 @@ from typing import Any
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.exceptions import NotFoundException, ValidationFailedException
+from app.engine.analytics import LoggedSet, body_mass_at, set_tonnage
 from app.engine.goals import Goal
 from app.engine.mesocycle import Block, BlockKind, PlannedDay, PlannedExercise
 from app.engine.progression import Performance, Prescription
@@ -24,6 +25,7 @@ from app.engine.session import (
 from app.models.program import PlannedSession
 from app.models.user import User
 from app.models.workout import PersonalRecord, SetLog, WorkoutSession
+from app.repositories.body import BodyMetricRepository
 from app.repositories.location import LocationRepository
 from app.repositories.workout import (
     PersonalRecordRepository,
@@ -47,6 +49,7 @@ from app.schemas.workout import (
 from app.schemas.workout import (
     Readiness as ReadinessIn,
 )
+from app.services.body import body_weights
 from app.services.catalog import CatalogService
 from app.services.location import to_engine_location
 from app.services.profile import ProfileService
@@ -151,6 +154,20 @@ def _planned_day(planned: PlannedSession) -> PlannedDay:
             )
             for b in planned.blocks
         ),
+    )
+
+
+def logged_set(log: SetLog) -> LoggedSet:
+    return LoggedSet(
+        session_id=str(log.session_id),
+        exercise=log.exercise_slug,
+        set_index=log.set_index,
+        performed_at=log.performed_at,
+        reps=log.reps,
+        side=log.side,
+        weight_kg=log.weight_kg,
+        added_weight_kg=log.added_weight_kg,
+        is_warmup=log.is_warmup,
     )
 
 
@@ -352,7 +369,7 @@ class WorkoutService:
         )
         records = await self._update_records(stored)
         all_logs = await self.set_logs.for_session(workout.id)
-        tonnage = self._tonnage(all_logs)
+        tonnage = await self._tonnage(all_logs)
         await self.sessions.update(workout, total_tonnage_kg=tonnage)
         await self.session.commit()
         return SetsAccepted(
@@ -442,7 +459,7 @@ class WorkoutService:
             workout,
             status=SessionStatus.COMPLETED.value,
             finished_at=datetime.now(UTC),
-            total_tonnage_kg=self._tonnage(logs),
+            total_tonnage_kg=await self._tonnage(logs),
             note=data.note,
         )
         await self.session.commit()
@@ -456,14 +473,18 @@ class WorkoutService:
         await self.session.commit()
         return await self.get(workout.id)
 
-    def _tonnage(self, logs: Sequence[SetLog]) -> Decimal:
-        """Kilograms moved. Bodyweight work carries a share of body mass — that coefficient
-        arrives with analytics (docs/03-engine.md §7), so for now only external load counts."""
-        return sum(
-            ((log.weight_kg or Decimal(0)) + (log.added_weight_kg or Decimal(0))) * log.reps
-            for log in logs
-            if not log.is_warmup
-        ) or Decimal(0)
+    async def _tonnage(self, logs: Sequence[SetLog]) -> Decimal:
+        """Kilograms moved: external load plus each exercise's share of body mass
+        (docs/03-engine.md §7), with the body mass of the last weighing."""
+        catalog = {e.slug: e for e in await CatalogService(self.session).engine_exercises()}
+        metrics = await BodyMetricRepository(self.session).for_user(self.user.id)
+        weights = body_weights(list(metrics))
+        total = Decimal(0)
+        for log in logs:
+            if (exercise := catalog.get(log.exercise_slug)) is not None:
+                logged = logged_set(log)
+                total += set_tonnage(logged, exercise, body_mass_at(log.performed_at, weights))
+        return total
 
     async def _update_records(self, logs: Sequence[SetLog]) -> list[PersonalRecord]:
         if not logs:

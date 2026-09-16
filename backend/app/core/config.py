@@ -50,6 +50,18 @@ class Settings(BaseSettings):
     SMTP_STARTTLS: bool = False
     EMAIL_FROM: str = "Self Forge <noreply@selfforge.local>"
 
+    # S3-compatible storage; defaults match the MinIO container from docker-compose.
+    # The API talks to S3_ENDPOINT_URL, the browser to S3_PUBLIC_URL: a presigned URL is
+    # signed for the host it names, so it must be one the browser can reach.
+    S3_ENDPOINT_URL: str = "http://localhost:9000"
+    S3_PUBLIC_URL: str = "http://localhost:9000"
+    S3_ACCESS_KEY: str = "minioadmin"
+    S3_SECRET_KEY: str = "minioadmin"
+    S3_REGION: str = "us-east-1"
+    S3_PHOTOS_BUCKET: str = "progress-photos"
+    PHOTO_URL_TTL_SECONDS: int = 900
+    PHOTO_MAX_BYTES: int = 15 * 1024 * 1024
+
     @model_validator(mode="after")
     def _require_real_secret_outside_dev(self) -> Self:
         if self.ENV in ("staging", "production") and (
