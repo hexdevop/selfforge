@@ -42,8 +42,21 @@ export const workoutQuery = (id: string) =>
     staleTime: Number.POSITIVE_INFINITY,
   })
 
+/** A workout left open — on this device or another — to pick up instead of starting over. */
+export const inProgressQuery = queryOptions({
+  queryKey: ['sessions', 'in-progress'],
+  queryFn: async () => {
+    const { data } = await api.GET('/api/v1/sessions', {
+      params: { query: { status: 'in_progress', size: 1 } },
+    })
+    return unwrap(data, 'Не удалось проверить начатые тренировки').items[0] ?? null
+  },
+  staleTime: 0,
+})
+
 export async function startWorkout(body: {
   planned_session_id?: string | null
+  unplanned?: boolean
   location_id?: string | null
   readiness?: Readiness
 }): Promise<WorkoutSession> {

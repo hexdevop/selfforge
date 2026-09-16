@@ -43,11 +43,13 @@ function Cabinet() {
             {program ? 'Начать тренировку' : 'Собрать программу'}
           </Link>
         </Button>
-        {program && (
-          <Button asChild variant="outline" size="lg">
+        <Button asChild variant="outline" size="lg">
+          {program ? (
             <Link to="/program">Открыть программу</Link>
-          </Button>
-        )}
+          ) : (
+            <Link to="/workout">Свободная тренировка</Link>
+          )}
+        </Button>
       </div>
 
       <h2 className="mt-4 text-lg font-semibold">Места</h2>

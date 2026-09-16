@@ -45,10 +45,10 @@ type Panel = 'none' | 'technique' | 'substitute' | 'time'
 export function WorkoutScreen({ session, titles, guidance }: WorkoutScreenProps) {
   const navigate = useNavigate()
   const queryClient = useQueryClient()
-  const { logged, pending, failingSince, enqueue, flush, open, close } = useQueue()
+  const { logged, pending, failingSince, restStartedAt, enqueue, flush, open, close } = useQueue()
+  const { startRest, skipRest } = useQueue()
   const [picked, setPicked] = useState<number | null>(null)
   const [panel, setPanel] = useState<Panel>(guidance === 'verbose' ? 'technique' : 'none')
-  const [restStartedAt, setRestStartedAt] = useState<number | null>(null)
   const [reps, setReps] = useState<number | null>(null)
   const [weight, setWeight] = useState<string | null>(null)
 
@@ -59,10 +59,10 @@ export function WorkoutScreen({ session, titles, guidance }: WorkoutScreenProps)
 
   useScreenAwake(session.status === 'in_progress')
 
+  // No cleanup on unmount: leaving the screen must not drop sets still on their way.
   useEffect(() => {
     open(session.id, session.sets as SetLogIn[])
-    return close
-  }, [session.id, session.sets, open, close])
+  }, [session.id, session.sets, open])
 
   // Leaving with sets still in the buffer would lose them; the browser asks first.
   useEffect(() => {
@@ -107,11 +107,17 @@ export function WorkoutScreen({ session, titles, guidance }: WorkoutScreenProps)
   const closeOut = useMutation({
     mutationFn: async (how: 'finish' | 'abort') => {
       await flush()
+      // A closed workout takes no more sets: closing now would lose the ones still waiting.
+      if (useQueue.getState().pending.length > 0) {
+        throw new Error('Подходы ещё не ушли на сервер. Как появится связь — заверши снова.')
+      }
       return how === 'finish' ? finishWorkout(session.id) : abortWorkout(session.id)
     },
     onSuccess: async (updated) => {
+      close()
       queryClient.setQueryData(['sessions', session.id], updated)
       await queryClient.invalidateQueries({ queryKey: ['programs'] })
+      await queryClient.invalidateQueries({ queryKey: ['sessions'] })
       await navigate({ to: '/program' })
     },
   })
@@ -143,7 +149,8 @@ export function WorkoutScreen({ session, titles, guidance }: WorkoutScreenProps)
     setWeight(null)
     setPicked(null)
     // Rest only starts once the set is really over — for one-sided work, after both sides.
-    setRestStartedAt(at.side === 'left' ? null : Date.now())
+    if (at.side === 'left') skipRest()
+    else startRest()
   }
 
   return (
@@ -201,11 +208,7 @@ export function WorkoutScreen({ session, titles, guidance }: WorkoutScreenProps)
         ))}
       </ol>
 
-      <RestTimer
-        startedAt={restStartedAt}
-        seconds={exercise.rest_seconds}
-        onSkip={() => setRestStartedAt(null)}
-      />
+      <RestTimer startedAt={restStartedAt} seconds={exercise.rest_seconds} onSkip={skipRest} />
 
       <nav className="flex flex-wrap gap-2 border-t pt-4">
         <Toggle active={panel === 'technique'} onClick={() => toggle(panel, 'technique', setPanel)}>
@@ -274,6 +277,7 @@ export function WorkoutScreen({ session, titles, guidance }: WorkoutScreenProps)
           Остановить
         </Button>
       </div>
+      {closeOut.isError && <p className="text-destructive">{closeOut.error.message}</p>}
       {workoutIsDone(session, logged) && (
         <p className="text-muted-foreground">Все подходы отмечены — можно завершать.</p>
       )}

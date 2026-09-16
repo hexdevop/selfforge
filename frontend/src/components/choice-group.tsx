@@ -14,7 +14,7 @@ type ChoiceGroupProps = {
   /** Controlled mode (without react-hook-form): the checked values and a toggle callback. */
   selected?: string[]
   onSelect?: (value: string) => void
-} & Omit<ComponentProps<'input'>, 'type'>
+} & Omit<ComponentProps<'input'>, 'type' | 'onSelect'>
 
 /** Native radios/checkboxes styled as chips: keyboard and screen readers work for free. */
 export function ChoiceGroup({

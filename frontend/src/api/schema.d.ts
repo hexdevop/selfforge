@@ -584,7 +584,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** List Sessions */
+        /**
+         * List Sessions
+         * @description Newest first.
+         */
         get: operations["list_sessions_api_v1_sessions_get"];
         put?: never;
         /**
@@ -1531,9 +1534,15 @@ export interface components {
         SessionStart: {
             /**
              * Planned Session Id
-             * @description Omit for an unplanned workout at the given place
+             * @description A day of the program; the next unfinished one if omitted
              */
             planned_session_id?: string | null;
+            /**
+             * Unplanned
+             * @description A one-off full-body workout at `location_id`, outside the program
+             * @default false
+             */
+            unplanned?: boolean;
             /**
              * Location Id
              * @description Defaults to the place the plan names, then the default one
@@ -3413,6 +3422,8 @@ export interface operations {
             query?: {
                 page?: number;
                 size?: number;
+                /** @description `in_progress` finds a workout left open to resume */
+                status?: components["schemas"]["SessionStatus"] | null;
             };
             header?: never;
             path?: never;

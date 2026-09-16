@@ -1,27 +1,30 @@
 import { useMutation, useQuery, useSuspenseQuery } from '@tanstack/react-query'
 import { createFileRoute, Link, redirect } from '@tanstack/react-router'
-import { useMemo, useState } from 'react'
+import { useMemo } from 'react'
 import { exercisesQuery } from '@/api/catalog'
+import { locationsQuery } from '@/api/locations'
 import { profileQuery } from '@/api/profile'
-import { activeProgramQuery } from '@/api/programs'
-import { nextSessionQuery, type Readiness, startWorkout, workoutQuery } from '@/api/sessions'
+import { inProgressQuery, nextSessionQuery, startWorkout, workoutQuery } from '@/api/sessions'
 import { Button } from '@/components/ui/button'
-import { ReadinessForm } from '@/features/workout/readiness-form'
+import { ReadinessForm, type StartChoice } from '@/features/workout/readiness-form'
 import { WorkoutScreen } from '@/features/workout/workout-screen'
 
 export const Route = createFileRoute('/_authed/workout')({
   validateSearch: (search): { session?: string } => ({
     session: typeof search.session === 'string' ? search.session : undefined,
   }),
-  beforeLoad: async ({ context: { queryClient } }) => {
-    if (!(await queryClient.ensureQueryData(activeProgramQuery))) {
-      throw redirect({ to: '/program/new' })
-    }
+  beforeLoad: async ({ context: { queryClient }, search }) => {
+    const profile = await queryClient.ensureQueryData(profileQuery)
+    if (!profile.onboarding_completed_at) throw redirect({ to: '/onboarding' })
+    if (search.session) return
+    // Coming back to a workout left open resumes it; starting over would close it unfinished.
+    const running = await queryClient.fetchQuery(inProgressQuery)
+    if (running) throw redirect({ to: '/workout', search: { session: running.id }, replace: true })
   },
   loader: ({ context: { queryClient } }) =>
     Promise.all([
       queryClient.ensureQueryData(exercisesQuery),
-      queryClient.ensureQueryData(profileQuery),
+      queryClient.ensureQueryData(locationsQuery),
       queryClient.ensureQueryData(nextSessionQuery),
     ]),
   component: WorkoutPage,
@@ -32,20 +35,35 @@ function WorkoutPage() {
   const navigate = Route.useNavigate()
   const { data: profile } = useSuspenseQuery(profileQuery)
   const { data: planned } = useSuspenseQuery(nextSessionQuery)
+  const { data: locations } = useSuspenseQuery(locationsQuery)
   const { data: catalog } = useSuspenseQuery(exercisesQuery)
   const titles = useMemo(() => new Map(catalog.map((e) => [e.slug, e])), [catalog])
-  const [note, setNote] = useState<string | null>(null)
 
   const running = useQuery({ ...workoutQuery(search.session ?? ''), enabled: !!search.session })
 
   const start = useMutation({
-    mutationFn: (readiness: Readiness) =>
-      startWorkout({ planned_session_id: planned?.id ?? null, readiness }),
+    mutationFn: ({ readiness, unplanned, locationId }: StartChoice) =>
+      startWorkout({
+        readiness,
+        unplanned,
+        planned_session_id: unplanned ? null : (planned?.id ?? null),
+        location_id: locationId,
+      }),
     onSuccess: (session) => navigate({ search: { session: session.id }, replace: true }),
-    onError: (error: Error) => setNote(error.message),
   })
 
   if (search.session) {
+    if (running.isError) {
+      return (
+        <section className="flex max-w-prose flex-col items-start gap-4">
+          <h1 className="text-2xl font-semibold">Тренировку не удалось открыть</h1>
+          <p className="text-muted-foreground">
+            Проверь связь и попробуй ещё раз. Отмеченные подходы сохранены на этом устройстве.
+          </p>
+          <Button onClick={() => running.refetch()}>Попробовать снова</Button>
+        </section>
+      )
+    }
     if (!running.data) return <p className="text-muted-foreground">Загружаем тренировку…</p>
     if (running.data.status !== 'in_progress') {
       return (
@@ -54,10 +72,10 @@ function WorkoutPage() {
           <p className="text-muted-foreground">
             {running.data.status === 'completed'
               ? 'Всё записано. Следующий день ждёт в программе.'
-              : 'Она была остановлена. Можно начать день заново.'}
+              : 'Она была остановлена. Можно начать новую.'}
           </p>
           <Button asChild>
-            <Link to="/program">К программе</Link>
+            <Link to="/workout">Новая тренировка</Link>
           </Button>
         </section>
       )
@@ -70,16 +88,21 @@ function WorkoutPage() {
   return (
     <div className="flex flex-col gap-4">
       <ReadinessForm
-        title={planned ? `День ${planned.day_index + 1} · ${planned.title_ru}` : 'Тренировка'}
-        subtitle={
+        planned={
           planned
-            ? `Около ${planned.estimated_minutes} минут. Три вопроса — и начинаем.`
-            : 'Три вопроса — и начинаем.'
+            ? {
+                id: planned.id ?? '',
+                title: `День ${planned.day_index + 1} · ${planned.title_ru}`,
+                minutes: planned.estimated_minutes,
+                locationId: planned.location_id,
+              }
+            : null
         }
+        locations={locations}
         pending={start.isPending}
-        onStart={(readiness) => start.mutate(readiness)}
+        onStart={(choice) => start.mutate(choice)}
       />
-      {note && <p className="text-destructive">{note}</p>}
+      {start.isError && <p className="text-destructive">{start.error.message}</p>}
     </div>
   )
 }

@@ -102,6 +102,59 @@ describe('the set buffer', () => {
     expect(state().logged[0]?.reps).toBe(10)
   })
 
+  it('keeps unsent sets across a reload and sends them on return', async () => {
+    const send = vi.fn().mockRejectedValue(new Error('offline'))
+    state().open('s1')
+    useQueue.setState({ send })
+    state().enqueue(set('a'))
+    await vi.advanceTimersByTimeAsync(FLUSH_DELAY_MS)
+
+    const saved = JSON.parse(localStorage.getItem('selfforge:workout-buffer') ?? '{}')
+    expect(saved.state.pending).toEqual(['a'])
+    expect(saved.state.logged).toHaveLength(1)
+
+    // Back after the tab was unloaded: the server knows nothing yet, the device still does.
+    const retry = vi.fn().mockResolvedValue({ records: [] })
+    useQueue.setState({ send: retry, attempt: 0, failingSince: null })
+    state().open('s1', [])
+    await vi.advanceTimersByTimeAsync(0)
+
+    expect(retry).toHaveBeenCalledWith('s1', [set('a')])
+    expect(state().pending).toEqual([])
+  })
+
+  it('merges what the server has with what is still waiting here', () => {
+    state().open('s1')
+    state().enqueue(set('a'))
+    state().enqueue({ ...set('b'), performed_at: '2026-09-16T10:05:00Z' })
+
+    state().open('s1', [set('a')])
+
+    expect(state().logged.map((s) => s.client_uuid)).toEqual(['a', 'b'])
+    expect(state().pending).toEqual(['b'])
+  })
+
+  it('starts clean for a different workout', () => {
+    state().open('s1')
+    state().enqueue(set('a'))
+    state().startRest()
+
+    state().open('s2', [set('z')])
+
+    expect(state().logged.map((s) => s.client_uuid)).toEqual(['z'])
+    expect(state().pending).toEqual([])
+    expect(state().restStartedAt).toBeNull()
+  })
+
+  it('remembers when the rest began, not how far it has counted', () => {
+    vi.setSystemTime(1_000_000)
+    state().open('s1')
+    state().startRest()
+
+    const saved = JSON.parse(localStorage.getItem('selfforge:workout-buffer') ?? '{}')
+    expect(saved.state.restStartedAt).toBe(1_000_000)
+  })
+
   it('backs off further after each failure but not forever', () => {
     expect(backoffMs(1)).toBe(1_000)
     expect(backoffMs(2)).toBe(2_000)
