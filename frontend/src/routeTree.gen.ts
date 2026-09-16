@@ -18,6 +18,7 @@ import { Route as VerifyEmailRouteImport } from './routes/verify-email'
 import { Route as AuthedIndexRouteImport } from './routes/_authed/index'
 import { Route as AuthedLocationsRouteImport } from './routes/_authed/locations'
 import { Route as AuthedOnboardingRouteImport } from './routes/_authed/onboarding'
+import { Route as AuthedWorkoutRouteImport } from './routes/_authed/workout'
 import { Route as AuthedExercisesIndexRouteImport } from './routes/_authed/exercises/index'
 import { Route as AuthedExercisesSlugRouteImport } from './routes/_authed/exercises/$slug'
 import { Route as AuthedPatternsCodeRouteImport } from './routes/_authed/patterns/$code'
@@ -68,6 +69,11 @@ const AuthedOnboardingRoute = AuthedOnboardingRouteImport.update({
   path: '/onboarding',
   getParentRoute: () => AuthedRoute,
 } as any)
+const AuthedWorkoutRoute = AuthedWorkoutRouteImport.update({
+  id: '/workout',
+  path: '/workout',
+  getParentRoute: () => AuthedRoute,
+} as any)
 const AuthedExercisesIndexRoute = AuthedExercisesIndexRouteImport.update({
   id: '/exercises/',
   path: '/exercises/',
@@ -103,6 +109,7 @@ export interface FileRoutesByFullPath {
   '/verify-email': typeof VerifyEmailRoute
   '/locations': typeof AuthedLocationsRoute
   '/onboarding': typeof AuthedOnboardingRoute
+  '/workout': typeof AuthedWorkoutRoute
   '/exercises/$slug': typeof AuthedExercisesSlugRoute
   '/patterns/$code': typeof AuthedPatternsCodeRoute
   '/program/new': typeof AuthedProgramNewRoute
@@ -117,6 +124,7 @@ export interface FileRoutesByTo {
   '/verify-email': typeof VerifyEmailRoute
   '/locations': typeof AuthedLocationsRoute
   '/onboarding': typeof AuthedOnboardingRoute
+  '/workout': typeof AuthedWorkoutRoute
   '/': typeof AuthedIndexRoute
   '/exercises/$slug': typeof AuthedExercisesSlugRoute
   '/patterns/$code': typeof AuthedPatternsCodeRoute
@@ -134,6 +142,7 @@ export interface FileRoutesById {
   '/verify-email': typeof VerifyEmailRoute
   '/_authed/locations': typeof AuthedLocationsRoute
   '/_authed/onboarding': typeof AuthedOnboardingRoute
+  '/_authed/workout': typeof AuthedWorkoutRoute
   '/_authed/': typeof AuthedIndexRoute
   '/_authed/exercises/$slug': typeof AuthedExercisesSlugRoute
   '/_authed/patterns/$code': typeof AuthedPatternsCodeRoute
@@ -152,6 +161,7 @@ export interface FileRouteTypes {
     | '/verify-email'
     | '/locations'
     | '/onboarding'
+    | '/workout'
     | '/exercises/$slug'
     | '/patterns/$code'
     | '/program/new'
@@ -166,6 +176,7 @@ export interface FileRouteTypes {
     | '/verify-email'
     | '/locations'
     | '/onboarding'
+    | '/workout'
     | '/'
     | '/exercises/$slug'
     | '/patterns/$code'
@@ -182,6 +193,7 @@ export interface FileRouteTypes {
     | '/verify-email'
     | '/_authed/locations'
     | '/_authed/onboarding'
+    | '/_authed/workout'
     | '/_authed/'
     | '/_authed/exercises/$slug'
     | '/_authed/patterns/$code'
@@ -264,6 +276,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthedOnboardingRouteImport
       parentRoute: typeof AuthedRoute
     }
+    '/_authed/workout': {
+      id: '/_authed/workout'
+      path: '/workout'
+      fullPath: '/workout'
+      preLoaderRoute: typeof AuthedWorkoutRouteImport
+      parentRoute: typeof AuthedRoute
+    }
     '/_authed/exercises/': {
       id: '/_authed/exercises/'
       path: '/exercises'
@@ -305,6 +324,7 @@ declare module '@tanstack/react-router' {
 interface AuthedRouteChildren {
   AuthedLocationsRoute: typeof AuthedLocationsRoute
   AuthedOnboardingRoute: typeof AuthedOnboardingRoute
+  AuthedWorkoutRoute: typeof AuthedWorkoutRoute
   AuthedIndexRoute: typeof AuthedIndexRoute
   AuthedExercisesSlugRoute: typeof AuthedExercisesSlugRoute
   AuthedPatternsCodeRoute: typeof AuthedPatternsCodeRoute
@@ -316,6 +336,7 @@ interface AuthedRouteChildren {
 const AuthedRouteChildren: AuthedRouteChildren = {
   AuthedLocationsRoute: AuthedLocationsRoute,
   AuthedOnboardingRoute: AuthedOnboardingRoute,
+  AuthedWorkoutRoute: AuthedWorkoutRoute,
   AuthedIndexRoute: AuthedIndexRoute,
   AuthedExercisesSlugRoute: AuthedExercisesSlugRoute,
   AuthedPatternsCodeRoute: AuthedPatternsCodeRoute,

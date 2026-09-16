@@ -37,11 +37,18 @@ function Cabinet() {
           получилось и почему, — начнёшь, когда устроит.
         </p>
       )}
-      <Button asChild size="lg">
-        <Link to={program ? '/program' : '/program/new'}>
-          {program ? 'Открыть программу' : 'Собрать программу'}
-        </Link>
-      </Button>
+      <div className="flex flex-wrap gap-3">
+        <Button asChild size="lg">
+          <Link to={program ? '/workout' : '/program/new'}>
+            {program ? 'Начать тренировку' : 'Собрать программу'}
+          </Link>
+        </Button>
+        {program && (
+          <Button asChild variant="outline" size="lg">
+            <Link to="/program">Открыть программу</Link>
+          </Button>
+        )}
+      </div>
 
       <h2 className="mt-4 text-lg font-semibold">Места</h2>
       <ul className="flex w-full flex-col">

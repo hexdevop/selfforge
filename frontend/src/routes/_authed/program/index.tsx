@@ -78,9 +78,14 @@ function ProgramPage() {
         <Rationale text={program.rationale_ru} />
       </details>
 
-      <Button asChild variant="outline" className="self-start">
-        <Link to="/program/new">Собрать заново</Link>
-      </Button>
+      <div className="flex flex-wrap gap-3">
+        <Button asChild size="lg">
+          <Link to="/workout">Начать тренировку</Link>
+        </Button>
+        <Button asChild variant="outline">
+          <Link to="/program/new">Собрать заново</Link>
+        </Button>
+      </div>
     </div>
   )
 }

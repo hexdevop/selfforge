@@ -540,6 +540,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/programs/active/next-session": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Next Session
+         * @description The day to train next: the first one of the active program without a finished workout.
+         */
+        get: operations["next_session_api_v1_programs_active_next_session_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/programs/{program_id}": {
         parameters: {
             query?: never;
@@ -551,6 +571,135 @@ export interface paths {
         get: operations["get_program_api_v1_programs__program_id__get"];
         put?: never;
         post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/sessions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List Sessions */
+        get: operations["list_sessions_api_v1_sessions_get"];
+        put?: never;
+        /**
+         * Start Session
+         * @description Prepare today's workout: weights from history, readiness applied, warm-up added.
+         */
+        post: operations["start_session_api_v1_sessions_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/sessions/{session_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get Session */
+        get: operations["get_session_api_v1_sessions__session_id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/sessions/{session_id}/sets": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Log Sets
+         * @description The buffer the client keeps, sent in one go. Repeating a `client_uuid` is a no-op.
+         */
+        post: operations["log_sets_api_v1_sessions__session_id__sets_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/sessions/{session_id}/substitute": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Substitute */
+        post: operations["substitute_api_v1_sessions__session_id__substitute_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/sessions/{session_id}/trim": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Trim
+         * @description Rebuild what's left of the session for the time that's actually available.
+         */
+        post: operations["trim_api_v1_sessions__session_id__trim_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/sessions/{session_id}/finish": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Finish */
+        post: operations["finish_api_v1_sessions__session_id__finish_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/sessions/{session_id}/abort": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Abort */
+        post: operations["abort_api_v1_sessions__session_id__abort_post"];
         delete?: never;
         options?: never;
         head?: never;
@@ -673,6 +822,19 @@ export interface components {
              */
             accepted: true;
         };
+        /** DrillRead */
+        DrillRead: {
+            /** Title Ru */
+            title_ru: string;
+            /** Seconds */
+            seconds: number;
+        };
+        /**
+         * EffortLabel
+         * @description Words instead of reps in reserve, for people who can't rate that yet.
+         * @enum {string}
+         */
+        EffortLabel: "easy" | "solid" | "hard" | "limit";
         /**
          * EquipmentCategory
          * @enum {string}
@@ -829,6 +991,12 @@ export interface components {
             primary_muscles: components["schemas"]["Muscle"][];
         };
         /**
+         * Feeling
+         * @description One of the three taps before a session. `GOOD` means slept well, calm, not sore.
+         * @enum {string}
+         */
+        Feeling: "bad" | "ok" | "good";
+        /**
          * Goal
          * @enum {string}
          */
@@ -980,6 +1148,19 @@ export interface components {
             /** Pages */
             readonly pages: number;
         };
+        /** Page[WorkoutSessionRead] */
+        Page_WorkoutSessionRead_: {
+            /** Items */
+            items: components["schemas"]["WorkoutSessionRead"][];
+            /** Total */
+            total: number;
+            /** Page */
+            page: number;
+            /** Size */
+            size: number;
+            /** Pages */
+            readonly pages: number;
+        };
         /** PasswordResetConfirm */
         PasswordResetConfirm: {
             /** Token */
@@ -1024,6 +1205,20 @@ export interface components {
             description_ru: string;
             /** Is Bilateral Default */
             is_bilateral_default: boolean;
+        };
+        /** PersonalRecordRead */
+        PersonalRecordRead: {
+            /** Exercise Slug */
+            exercise_slug: string;
+            pattern_code: components["schemas"]["PatternCode"];
+            kind: components["schemas"]["RecordKind"];
+            /** Value */
+            value: string;
+            /**
+             * Achieved At
+             * Format: date-time
+             */
+            achieved_at: string;
         };
         /**
          * Pistol
@@ -1241,6 +1436,228 @@ export interface components {
          * @enum {string}
          */
         Pushups: "0" | "1-5" | "6-15" | "16-30" | "30+";
+        /**
+         * Readiness
+         * @description Three taps before the start; `good` means slept well, calm, not sore.
+         */
+        "Readiness-Input": {
+            /** @default ok */
+            sleep?: components["schemas"]["Feeling"];
+            /** @default ok */
+            stress?: components["schemas"]["Feeling"];
+            /** @default ok */
+            soreness?: components["schemas"]["Feeling"];
+        };
+        /**
+         * Readiness
+         * @description Three taps before the start; `good` means slept well, calm, not sore.
+         */
+        "Readiness-Output": {
+            /** @default ok */
+            sleep: components["schemas"]["Feeling"];
+            /** @default ok */
+            stress: components["schemas"]["Feeling"];
+            /** @default ok */
+            soreness: components["schemas"]["Feeling"];
+        };
+        /**
+         * RecordKind
+         * @enum {string}
+         */
+        RecordKind: "max_weight" | "max_reps" | "est_1rm" | "max_volume";
+        /** SessionBlockRead */
+        SessionBlockRead: {
+            kind: components["schemas"]["BlockKind"];
+            /** Minutes */
+            minutes: number;
+            /**
+             * Exercises
+             * @default []
+             */
+            exercises: components["schemas"]["SessionExerciseRead"][];
+            /**
+             * Drills
+             * @default []
+             */
+            drills: components["schemas"]["DrillRead"][];
+        };
+        /** SessionExerciseRead */
+        SessionExerciseRead: {
+            /** Exercise Slug */
+            exercise_slug: string;
+            pattern_code: components["schemas"]["PatternCode"];
+            /** Sets */
+            sets: number;
+            /** Target Min */
+            target_min: number;
+            /** Target Max */
+            target_max: number;
+            /**
+             * Timed
+             * @description target is seconds of work, not reps
+             */
+            timed: boolean;
+            /** Rest Seconds */
+            rest_seconds: number;
+            /** Rir */
+            rir: number;
+            /**
+             * Unilateral
+             * @description log each side separately; both sides do equal reps
+             */
+            unilateral: boolean;
+            /** Weight Kg */
+            weight_kg: string | null;
+            /** Tempo */
+            tempo: string | null;
+            /**
+             * Hint Ru
+             * @default
+             */
+            hint_ru: string;
+            /**
+             * Planned Slug
+             * @description the plan slot this fills; a swap keeps it
+             * @default
+             */
+            planned_slug: string;
+        };
+        /** SessionFinish */
+        SessionFinish: {
+            /** Note */
+            note?: string | null;
+        };
+        /** SessionStart */
+        SessionStart: {
+            /**
+             * Planned Session Id
+             * @description Omit for an unplanned workout at the given place
+             */
+            planned_session_id?: string | null;
+            /**
+             * Location Id
+             * @description Defaults to the place the plan names, then the default one
+             */
+            location_id?: string | null;
+            /**
+             * @default {
+             *       "sleep": "ok",
+             *       "stress": "ok",
+             *       "soreness": "ok"
+             *     }
+             */
+            readiness?: components["schemas"]["Readiness-Input"];
+        };
+        /**
+         * SessionStatus
+         * @enum {string}
+         */
+        SessionStatus: "in_progress" | "completed" | "aborted";
+        /**
+         * SetLogIn
+         * @description One confirmed set. `client_uuid` makes resending the whole buffer harmless.
+         */
+        SetLogIn: {
+            /**
+             * Client Uuid
+             * Format: uuid
+             */
+            client_uuid: string;
+            /** Exercise Slug */
+            exercise_slug: string;
+            /** Set Index */
+            set_index: number;
+            /** Reps */
+            reps: number;
+            /**
+             * Performed At
+             * Format: date-time
+             */
+            performed_at: string;
+            /** @default both */
+            side?: components["schemas"]["Side"];
+            /** Weight Kg */
+            weight_kg?: number | string | null;
+            /** Added Weight Kg */
+            added_weight_kg?: number | string | null;
+            /** Band */
+            band?: string | null;
+            /** Tempo */
+            tempo?: string | null;
+            /** Rir */
+            rir?: number | null;
+            effort_label?: components["schemas"]["EffortLabel"] | null;
+            /**
+             * Is Warmup
+             * @default false
+             */
+            is_warmup?: boolean;
+        };
+        /** SetLogRead */
+        SetLogRead: {
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /**
+             * Client Uuid
+             * Format: uuid
+             */
+            client_uuid: string;
+            /** Exercise Slug */
+            exercise_slug: string;
+            pattern_code: components["schemas"]["PatternCode"];
+            /** Set Index */
+            set_index: number;
+            side: components["schemas"]["Side"];
+            /** Reps */
+            reps: number;
+            /** Weight Kg */
+            weight_kg: string | null;
+            /** Added Weight Kg */
+            added_weight_kg: string | null;
+            /** Band */
+            band: string | null;
+            /** Tempo */
+            tempo: string | null;
+            /** Rir */
+            rir: number | null;
+            effort_label: components["schemas"]["EffortLabel"] | null;
+            /** Is Warmup */
+            is_warmup: boolean;
+            /**
+             * Performed At
+             * Format: date-time
+             */
+            performed_at: string;
+        };
+        /** SetsAccepted */
+        SetsAccepted: {
+            /**
+             * Accepted
+             * @description client_uuid of every set now stored
+             */
+            accepted: string[];
+            /**
+             * Records
+             * @description beaten by this batch
+             * @default []
+             */
+            records: components["schemas"]["PersonalRecordRead"][];
+            /** Total Tonnage Kg */
+            total_tonnage_kg: string;
+        };
+        /** SetsBatch */
+        SetsBatch: {
+            /** Sets */
+            sets: components["schemas"]["SetLogIn"][];
+        };
+        /**
+         * Side
+         * @enum {string}
+         */
+        Side: "both" | "left" | "right";
         /** SkillPrerequisite */
         SkillPrerequisite: {
             /** Exercise Slug */
@@ -1273,6 +1690,30 @@ export interface components {
          * @enum {string}
          */
         Structure: "fullbody" | "upper_lower" | "ppl";
+        /** SubstituteRequest */
+        SubstituteRequest: {
+            /** Exercise Slug */
+            exercise_slug: string;
+            reason: components["schemas"]["SubstitutionReason"];
+        };
+        /** SubstitutionRead */
+        SubstitutionRead: {
+            /** From Slug */
+            from_slug: string;
+            /** To Slug */
+            to_slug: string;
+            reason: components["schemas"]["SubstitutionReason"];
+            /**
+             * At
+             * Format: date-time
+             */
+            at: string;
+        };
+        /**
+         * SubstitutionReason
+         * @enum {string}
+         */
+        SubstitutionReason: "equipment_busy" | "pain" | "too_hard" | "too_easy" | "disliked";
         /**
          * Surface
          * @enum {string}
@@ -1290,6 +1731,11 @@ export interface components {
              * @default bearer
              */
             token_type?: string;
+        };
+        /** TrimRequest */
+        TrimRequest: {
+            /** Minutes Left */
+            minutes_left: number;
         };
         /** UserCreate */
         UserCreate: {
@@ -1362,6 +1808,39 @@ export interface components {
             weights_kg: string[];
             /** Min Step Kg */
             min_step_kg: string | null;
+        };
+        /** WorkoutSessionRead */
+        WorkoutSessionRead: {
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Planned Session Id */
+            planned_session_id: string | null;
+            /** Location Id */
+            location_id: string | null;
+            status: components["schemas"]["SessionStatus"];
+            /**
+             * Started At
+             * Format: date-time
+             */
+            started_at: string;
+            /** Finished At */
+            finished_at: string | null;
+            readiness: components["schemas"]["Readiness-Output"];
+            /** Blocks */
+            blocks: components["schemas"]["SessionBlockRead"][];
+            /** Notes Ru */
+            notes_ru: string[];
+            /** Substitutions */
+            substitutions: components["schemas"]["SubstitutionRead"][];
+            /** Total Tonnage Kg */
+            total_tonnage_kg: string;
+            /** Note */
+            note: string | null;
+            /** Sets */
+            sets: components["schemas"]["SetLogRead"][];
         };
     };
     responses: never;
@@ -2851,6 +3330,44 @@ export interface operations {
             };
         };
     };
+    next_session_api_v1_programs_active_next_session_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PlannedSessionRead"];
+                };
+            };
+            /** @description Unprocessable Entity */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Client Error */
+            "4XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
     get_program_api_v1_programs__program_id__get: {
         parameters: {
             query?: never;
@@ -2869,6 +3386,345 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["ProgramRead"];
+                };
+            };
+            /** @description Unprocessable Entity */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Client Error */
+            "4XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    list_sessions_api_v1_sessions_get: {
+        parameters: {
+            query?: {
+                page?: number;
+                size?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Page_WorkoutSessionRead_"];
+                };
+            };
+            /** @description Unprocessable Entity */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Client Error */
+            "4XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    start_session_api_v1_sessions_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["SessionStart"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["WorkoutSessionRead"];
+                };
+            };
+            /** @description Unprocessable Entity */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Client Error */
+            "4XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    get_session_api_v1_sessions__session_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                session_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["WorkoutSessionRead"];
+                };
+            };
+            /** @description Unprocessable Entity */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Client Error */
+            "4XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    log_sets_api_v1_sessions__session_id__sets_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                session_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["SetsBatch"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SetsAccepted"];
+                };
+            };
+            /** @description Unprocessable Entity */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Client Error */
+            "4XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    substitute_api_v1_sessions__session_id__substitute_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                session_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["SubstituteRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["WorkoutSessionRead"];
+                };
+            };
+            /** @description Unprocessable Entity */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Client Error */
+            "4XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    trim_api_v1_sessions__session_id__trim_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                session_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["TrimRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["WorkoutSessionRead"];
+                };
+            };
+            /** @description Unprocessable Entity */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Client Error */
+            "4XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    finish_api_v1_sessions__session_id__finish_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                session_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["SessionFinish"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["WorkoutSessionRead"];
+                };
+            };
+            /** @description Unprocessable Entity */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Client Error */
+            "4XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    abort_api_v1_sessions__session_id__abort_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                session_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["WorkoutSessionRead"];
                 };
             };
             /** @description Unprocessable Entity */

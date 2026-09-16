@@ -4,6 +4,7 @@ import type { components } from './schema'
 
 export type Profile = components['schemas']['ProfileRead']
 export type Goal = components['schemas']['Goal']
+export type GuidanceLevel = components['schemas']['GuidanceLevel']
 export type Assessment = components['schemas']['AssessmentRead']
 export type AssessmentAnswers = components['schemas']['AssessmentRequest']
 export type PatternLevel = components['schemas']['PatternLevelRead']
