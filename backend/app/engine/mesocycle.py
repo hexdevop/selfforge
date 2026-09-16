@@ -58,9 +58,15 @@ WEEKS = (
 COVERED = ("squat", "hinge", "push_h", "push_v", "pull_h", "pull_v", "lunge", "core")
 _NEVER_MAIN = ("core", "carry")
 _MAIN_SLOTS = 2
-_SECONDS_PER_REP = 3
-_SETUP_SECONDS = 60  # moving between exercises, setting up the implement
+SECONDS_PER_REP = 3
+SETUP_SECONDS = 60  # moving between exercises, setting up the implement
 _FINISHER = Scheme(sets=3, reps=(30, 45), rest_seconds=30, rir=1)  # seconds of work
+
+
+def exercise_seconds(sets: int, top: int, timed: bool, unilateral: bool, rest_seconds: int) -> int:
+    """Seconds an exercise takes, counting the top of the range and both sides."""
+    work = top if timed else top * SECONDS_PER_REP
+    return sets * work * (2 if unilateral else 1) + (sets - 1) * rest_seconds + SETUP_SECONDS
 
 
 @dataclass(frozen=True)
@@ -285,11 +291,13 @@ class _Planner:
         return sorted(patterns, key=rank)
 
     def cost(self, p: PlannedExercise, sets: int | None = None) -> int:
-        """Seconds the exercise takes, counting the top of the range and both sides."""
-        sets = p.sets if sets is None else sets
-        work = p.target[1] if p.timed else p.target[1] * _SECONDS_PER_REP
-        sides = 2 if self.by_slug[p.exercise].is_unilateral else 1
-        return sets * work * sides + (sets - 1) * p.rest_seconds + _SETUP_SECONDS
+        return exercise_seconds(
+            sets=p.sets if sets is None else sets,
+            top=p.target[1],
+            timed=p.timed,
+            unilateral=self.by_slug[p.exercise].is_unilateral,
+            rest_seconds=p.rest_seconds,
+        )
 
     def add(self, day: _Day, pattern: str, lead: bool) -> bool:
         """Put an exercise for `pattern` into the day if there is one here and time for it."""
