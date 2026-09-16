@@ -1,8 +1,8 @@
 import uuid
 from enum import StrEnum
-from typing import Literal
+from typing import Annotated, Literal
 
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import AfterValidator, BaseModel, ConfigDict, Field
 
 from app.engine.types import Surface
 from app.schemas.types import PositiveKg as Kg
@@ -65,12 +65,26 @@ class LocationEquipmentRead(LocationEquipmentIn):
     )
 
 
+OUTDOOR_KINDS = frozenset({LocationKind.OUTDOOR_GYM, LocationKind.OUTDOOR_BARE})
+
+
+def _coarse(value: float | None) -> float | None:
+    """Two decimals is about a kilometre: plenty for a forecast, too coarse to be an address."""
+    return None if value is None else round(value, 2)
+
+
+Latitude = Annotated[float | None, Field(ge=-90, le=90), AfterValidator(_coarse)]
+Longitude = Annotated[float | None, Field(ge=-180, le=180), AfterValidator(_coarse)]
+
+
 class LocationCreate(BaseModel):
     kind: LocationKind
     title: str = Field(min_length=1, max_length=100)
     is_default: bool = False
     travel_minutes: int | None = Field(default=None, ge=0, le=180)
     constraints: Constraints = Constraints()
+    geo_lat: Latitude = Field(default=None, description="Outdoor places only; stored at ~1 km")
+    geo_lon: Longitude = None
 
 
 class LocationUpdate(BaseModel):
@@ -80,6 +94,8 @@ class LocationUpdate(BaseModel):
     is_default: bool | None = None
     travel_minutes: int | None = Field(default=None, ge=0, le=180)
     constraints: Constraints | None = None
+    geo_lat: Latitude = None
+    geo_lon: Longitude = None
 
 
 class LocationRead(BaseModel):
@@ -91,6 +107,8 @@ class LocationRead(BaseModel):
     is_default: bool
     travel_minutes: int | None
     constraints: Constraints
+    geo_lat: float | None
+    geo_lon: float | None
     equipment: list[LocationEquipmentRead]
     available_exercise_count: int = Field(
         description="Exercises doable here, given the equipment, constraints and health flags"

@@ -17,9 +17,11 @@ from app.engine.session import (
     Session,
     SessionBlock,
     SessionExercise,
+    SubstitutionReason,
     matched_reps,
     prepare_session,
     substitute_exercise,
+    swap_location,
     trim_session,
 )
 from app.models.program import PlannedSession
@@ -33,6 +35,7 @@ from app.repositories.workout import (
     WorkoutSessionRepository,
 )
 from app.schemas.pagination import Page, PageParams
+from app.schemas.weather import SwapLocationRequest
 from app.schemas.workout import (
     PersonalRecordRead,
     RecordKind,
@@ -449,6 +452,54 @@ class WorkoutService:
         workout = await self._running(session_id)
         trimmed = trim_session(_session_from_json(workout.plan), data.minutes_left)
         await self.sessions.update(workout, plan=_session_to_json(trimmed))
+        await self.session.commit()
+        return await self.get(workout.id)
+
+    async def swap_location(
+        self, session_id: uuid.UUID, data: SwapLocationRequest
+    ) -> WorkoutSessionRead:
+        """The same workout at another place — indoors when the weather turns. What already
+        has sets logged stays as it was."""
+        workout = await self._running(session_id)
+        location = await LocationRepository(self.session).get_for_user(
+            data.location_id, self.user.id
+        )
+        if location is None:
+            raise ValidationFailedException(fields={"location_id": "Такого места нет"})
+
+        profile = await ProfileService(self.session, self.user).get()
+        before = _session_from_json(workout.plan)
+        logged = {log.exercise_slug for log in await self.set_logs.for_session(workout.id)}
+        after = swap_location(
+            before,
+            to_engine_location(location),
+            await CatalogService(self.session).engine_exercises(),
+            Goal(profile.goal_primary or Goal.HEALTH),
+            frozenset(profile.health_flags),
+            done=logged,
+        )
+
+        now = datetime.now(UTC).isoformat()
+        slots = {
+            e.planned_slug or e.exercise: e.exercise for b in after.blocks for e in b.exercises
+        }
+        changes = [
+            {
+                "from_slug": e.exercise,
+                "to_slug": slots[e.planned_slug or e.exercise],
+                "reason": SubstitutionReason.WEATHER.value,
+                "at": now,
+            }
+            for b in before.blocks
+            for e in b.exercises
+            if slots.get(e.planned_slug or e.exercise, e.exercise) != e.exercise
+        ]
+        await self.sessions.update(
+            workout,
+            location_id=location.id,
+            plan=_session_to_json(after),
+            substitutions=[*workout.substitutions, *changes],
+        )
         await self.session.commit()
         return await self.get(workout.id)
 

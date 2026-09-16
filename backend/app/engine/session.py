@@ -28,6 +28,8 @@ class SubstitutionReason(StrEnum):
     TOO_HARD = "too_hard"
     TOO_EASY = "too_easy"
     DISLIKED = "disliked"
+    # Not a choice on the swap screen: recorded when the whole session moves indoors.
+    WEATHER = "weather"
 
 
 _POINTS = {Feeling.BAD: 1, Feeling.OK: 2, Feeling.GOOD: 3}

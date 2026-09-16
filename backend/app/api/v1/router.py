@@ -2,7 +2,18 @@ from typing import Any
 
 from fastapi import APIRouter
 
-from app.api.v1 import auth, body, catalog, locations, profile, programs, progress, sessions, users
+from app.api.v1 import (
+    auth,
+    body,
+    catalog,
+    locations,
+    profile,
+    programs,
+    progress,
+    sessions,
+    users,
+    weather,
+)
 from app.schemas.error import ErrorResponse
 
 # Every error goes through the handlers in `app.main`, so document that single
@@ -22,3 +33,4 @@ router.include_router(programs.router)
 router.include_router(sessions.router)
 router.include_router(body.router)
 router.include_router(progress.router)
+router.include_router(weather.router)

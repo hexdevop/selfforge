@@ -82,3 +82,11 @@ class InactiveUserException(AppException):
     status_code = status.HTTP_403_FORBIDDEN
     code = "inactive_user"
     message = "Аккаунт отключён"
+
+
+class ServiceUnavailableException(AppException):
+    """An outside service we depend on (the forecast) didn't answer."""
+
+    status_code = status.HTTP_503_SERVICE_UNAVAILABLE
+    code = "service_unavailable"
+    message = "Сервис сейчас недоступен. Попробуй чуть позже"

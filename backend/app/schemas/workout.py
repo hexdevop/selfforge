@@ -3,7 +3,7 @@ from datetime import datetime
 from decimal import Decimal
 from enum import StrEnum
 
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, Field, field_validator
 
 from app.engine.mesocycle import BlockKind
 from app.engine.session import Feeling, SubstitutionReason
@@ -176,6 +176,13 @@ class SetsAccepted(_Model):
 class SubstituteRequest(BaseModel):
     exercise_slug: str
     reason: SubstitutionReason
+
+    @field_validator("reason")
+    @classmethod
+    def _not_weather(cls, reason: SubstitutionReason) -> SubstitutionReason:
+        if reason is SubstitutionReason.WEATHER:
+            raise ValueError("Из-за погоды переносится вся тренировка, а не одно упражнение")
+        return reason
 
 
 class TrimRequest(BaseModel):

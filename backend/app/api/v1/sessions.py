@@ -6,6 +6,7 @@ from fastapi import APIRouter, Query, status
 from app.dependencies.auth import CurrentActiveUser
 from app.dependencies.db import DbSession
 from app.schemas.pagination import Page
+from app.schemas.weather import SwapLocationRequest
 from app.schemas.workout import (
     SessionFilters,
     SessionFinish,
@@ -70,6 +71,17 @@ async def trim(
 ) -> WorkoutSessionRead:
     """Rebuild what's left of the session for the time that's actually available."""
     return await WorkoutService(session, user).trim(session_id, data)
+
+
+@router.post("/{session_id}/swap-location", response_model=WorkoutSessionRead)
+async def swap_location(
+    session_id: uuid.UUID,
+    data: SwapLocationRequest,
+    user: CurrentActiveUser,
+    session: DbSession,
+) -> WorkoutSessionRead:
+    """Move the workout to another place: the same patterns with that place's equipment."""
+    return await WorkoutService(session, user).swap_location(session_id, data)
 
 
 @router.post("/{session_id}/finish", response_model=WorkoutSessionRead)

@@ -13,10 +13,12 @@ from app.repositories.catalog import CatalogRepository
 from app.repositories.location import LocationRepository
 from app.schemas.catalog import ExerciseSummary
 from app.schemas.location import (
+    OUTDOOR_KINDS,
     Constraints,
     EquipmentDetails,
     LocationCreate,
     LocationEquipmentIn,
+    LocationKind,
     LocationRead,
     LocationUpdate,
     PlateSet,
@@ -28,6 +30,15 @@ from app.services.catalog import to_engine_exercise
 from app.services.profile import ProfileService
 
 WEIGHTED = ("barbell", "dumbbell", "kettlebell")
+
+
+def _check_geo(kind: LocationKind, lat: float | None, lon: float | None) -> None:
+    if (lat is None) != (lon is None):
+        raise ValidationFailedException(fields={"geo_lat": "Нужны обе координаты"})
+    if lat is not None and kind not in OUTDOOR_KINDS:
+        raise ValidationFailedException(
+            fields={"geo_lat": "Координаты нужны только уличным местам — для прогноза погоды"}
+        )
 
 
 def to_engine_location(location: Location) -> engine.Location:
@@ -81,6 +92,7 @@ class LocationService:
         return await self._read(*await self.locations.list_for_user(self.user.id))
 
     async def create(self, data: LocationCreate) -> LocationRead:
+        _check_geo(data.kind, data.geo_lat, data.geo_lon)
         is_first = not await self.locations.list_for_user(self.user.id)
         if data.is_default:
             await self.locations.clear_default(self.user.id)
@@ -91,6 +103,8 @@ class LocationService:
             is_default=data.is_default or is_first,
             travel_minutes=data.travel_minutes,
             constraints=data.constraints.model_dump(mode="json"),
+            geo_lat=data.geo_lat,
+            geo_lon=data.geo_lon,
             equipment=[],
         )
         await self.session.commit()
@@ -99,6 +113,12 @@ class LocationService:
     async def update(self, location_id: uuid.UUID, data: LocationUpdate) -> LocationRead:
         location = await self._get(location_id)
         values = data.model_dump(exclude_unset=True, mode="json")
+        if "geo_lat" in values or "geo_lon" in values:
+            _check_geo(
+                LocationKind(location.kind),
+                values.get("geo_lat", location.geo_lat),
+                values.get("geo_lon", location.geo_lon),
+            )
         if values.get("is_default"):
             await self.locations.clear_default(self.user.id)
         await self.locations.update(location, **values)
@@ -208,6 +228,8 @@ class LocationService:
                         "is_default": location.is_default,
                         "travel_minutes": location.travel_minutes,
                         "constraints": location.constraints,
+                        "geo_lat": location.geo_lat,
+                        "geo_lon": location.geo_lon,
                         "equipment": [
                             {
                                 "equipment_code": item.equipment_code,

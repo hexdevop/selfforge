@@ -62,6 +62,11 @@ class Settings(BaseSettings):
     PHOTO_URL_TTL_SECONDS: int = 900
     PHOTO_MAX_BYTES: int = 15 * 1024 * 1024
 
+    # Open-Meteo: no key; free for non-commercial use, a paid plan for commercial.
+    WEATHER_API_URL: str = "https://api.open-meteo.com/v1/forecast"
+    WEATHER_CACHE_SECONDS: int = 30 * 60
+    WEATHER_TIMEOUT_SECONDS: float = 5.0
+
     @model_validator(mode="after")
     def _require_real_secret_outside_dev(self) -> Self:
         if self.ENV in ("staging", "production") and (
