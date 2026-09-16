@@ -3,6 +3,7 @@ import type { Location } from '@/api/locations'
 import type { Feeling, Readiness } from '@/api/sessions'
 import { ChoiceGroup } from '@/components/choice-group'
 import { Button } from '@/components/ui/button'
+import { WeatherNotice } from '@/features/weather/weather-notice'
 
 type Tap = 'sleep' | 'stress' | 'soreness'
 type Taps = Record<Tap, Feeling>
@@ -40,12 +41,20 @@ type ReadinessFormProps = {
   locations: Location[]
   pending: boolean
   onStart: (choice: StartChoice) => void
+  /** A place picked elsewhere, e.g. «move indoors» on the day card. */
+  initialPlace?: string
 }
 
 const FREE = 'free'
 
 /** What to train, where, and three taps that scale today's volume — nothing else. */
-export function ReadinessForm({ planned, locations, pending, onStart }: ReadinessFormProps) {
+export function ReadinessForm({
+  planned,
+  locations,
+  pending,
+  onStart,
+  initialPlace,
+}: ReadinessFormProps) {
   const [readiness, setReadiness] = useState<Taps>({
     sleep: 'ok',
     stress: 'ok',
@@ -54,7 +63,10 @@ export function ReadinessForm({ planned, locations, pending, onStart }: Readines
   const [what, setWhat] = useState(planned ? planned.id : FREE)
   const unplanned = what === FREE
   const defaultPlace = locations.find((l) => l.is_default)?.id ?? locations[0]?.id ?? null
-  const [place, setPlace] = useState<string | null>(planned?.locationId ?? defaultPlace)
+  const [place, setPlace] = useState<string | null>(
+    initialPlace ?? planned?.locationId ?? defaultPlace,
+  )
+  const chosen = locations.find((l) => l.id === place)
 
   return (
     <section className="flex max-w-prose flex-col gap-6">
@@ -97,6 +109,13 @@ export function ReadinessForm({ planned, locations, pending, onStart }: Readines
           choices={locations.map((l) => ({ value: l.id, label: l.title }))}
           selected={place ? [place] : []}
           onSelect={(value) => setPlace(value)}
+        />
+      )}
+
+      {chosen && (
+        <WeatherNotice
+          location={chosen}
+          moveIndoors={{ label: 'Тренироваться дома', onClick: (id) => setPlace(id) }}
         />
       )}
 

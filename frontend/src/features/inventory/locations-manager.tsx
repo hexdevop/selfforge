@@ -4,6 +4,8 @@ import { api } from '@/api/client'
 import { type Location, type LocationKind, locationsQuery } from '@/api/locations'
 import { FormError } from '@/components/form-field'
 import { Button } from '@/components/ui/button'
+import { isOutdoor } from '@/features/weather/format'
+import { PinLocation } from '@/features/weather/pin-location'
 import { exercisesCount } from '@/lib/format'
 import { InventoryEditor } from './inventory-editor'
 import { DEFAULT_EQUIPMENT, KIND_LABELS } from './labels'
@@ -81,6 +83,7 @@ export function LocationsManager({ withTools = false }: { withTools?: boolean })
                 </Button>
               </div>
             </div>
+            {isOutdoor(location.kind) && <PinLocation location={location} />}
             {open && <InventoryEditor location={location} onSaved={() => setEditing(null)} />}
             {!open && withTools && hasAdjustable(location) && (
               <PlateCalculator location={location} />

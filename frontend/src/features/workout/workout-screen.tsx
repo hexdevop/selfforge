@@ -1,7 +1,8 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useNavigate } from '@tanstack/react-router'
 import { useEffect, useMemo, useState } from 'react'
 import type { ExerciseSummary } from '@/api/catalog'
+import { locationsQuery } from '@/api/locations'
 import type { GuidanceLevel } from '@/api/profile'
 import {
   abortWorkout,
@@ -13,7 +14,9 @@ import {
   trimWorkout,
   type WorkoutSession,
 } from '@/api/sessions'
+import { swapLocation } from '@/api/weather'
 import { Button } from '@/components/ui/button'
+import { WeatherNotice } from '@/features/weather/weather-notice'
 import { formatKg } from '@/lib/format'
 import { cn } from '@/lib/utils'
 import { primeChime } from './chime'
@@ -84,6 +87,22 @@ export function WorkoutScreen({ session, titles, guidance }: WorkoutScreenProps)
       window.removeEventListener('online', retry)
     }
   }, [flush])
+
+  const { data: locations } = useQuery(locationsQuery)
+  const place = locations?.find((l) => l.id === session.location_id)
+  const moveIndoors = useMutation({
+    mutationFn: async (locationId: string) => {
+      // Sets on their way belong to exercises that stay; send them before the plan changes.
+      await flush()
+      return swapLocation(session.id, locationId)
+    },
+    onSuccess: (updated) => {
+      queryClient.setQueryData(['sessions', session.id], updated)
+      setPicked(null)
+      setReps(null)
+      setWeight(null)
+    },
+  })
 
   const reshape = useMutation({
     mutationFn: async (action: { substitute?: SubstitutionReason; minutes?: number }) => {
@@ -174,6 +193,21 @@ export function WorkoutScreen({ session, titles, guidance }: WorkoutScreenProps)
           {exercise.tempo && ` · темп ${exercise.tempo}`}
         </p>
       </header>
+
+      {place && (
+        <WeatherNotice
+          location={place}
+          onlyWhenBad
+          moveIndoors={{
+            label: 'Перенести тренировку домой',
+            onClick: (id) => moveIndoors.mutate(id),
+            pending: moveIndoors.isPending,
+          }}
+        />
+      )}
+      {moveIndoors.isError && <p className="text-destructive">{moveIndoors.error.message}</p>}
+
+      <Notes notes={session.notes_ru} />
 
       {exercise.hint_ru && <p className="text-muted-foreground">{exercise.hint_ru}</p>}
 
@@ -280,6 +314,31 @@ export function WorkoutScreen({ session, titles, guidance }: WorkoutScreenProps)
       {closeOut.isError && <p className="text-destructive">{closeOut.error.message}</p>}
       {workoutIsDone(session, logged) && (
         <p className="text-muted-foreground">Все подходы отмечены — можно завершать.</p>
+      )}
+    </div>
+  )
+}
+
+/**
+ * Why the workout looks the way it does: readiness, a trim, a move indoors. The latest
+ * change is spoken right away; the earlier ones stay one tap away.
+ */
+function Notes({ notes }: { notes: string[] }) {
+  const latest = notes.at(-1)
+  if (!latest) return null
+  const earlier = notes.slice(0, -1)
+  return (
+    <div className="flex flex-col gap-1 rounded-lg border bg-card px-4 py-3">
+      <p aria-live="polite">{latest}</p>
+      {earlier.length > 0 && (
+        <details className="text-sm text-muted-foreground">
+          <summary className="flex min-h-11 cursor-pointer items-center">Что ещё менялось</summary>
+          <ul className="flex flex-col gap-1">
+            {earlier.map((note) => (
+              <li key={note}>{note}</li>
+            ))}
+          </ul>
+        </details>
       )}
     </div>
   )

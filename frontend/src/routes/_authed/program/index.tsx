@@ -1,14 +1,16 @@
-import { useSuspenseQuery } from '@tanstack/react-query'
+import { useQuery, useSuspenseQuery } from '@tanstack/react-query'
 import { createFileRoute, Link, redirect } from '@tanstack/react-router'
 import { useMemo } from 'react'
 import { exercisesQuery } from '@/api/catalog'
 import { locationsQuery } from '@/api/locations'
 import { activeProgramQuery } from '@/api/programs'
+import { nextSessionQuery } from '@/api/sessions'
 import { Button } from '@/components/ui/button'
 import { Calendar } from '@/features/program/calendar'
 import { DayCard } from '@/features/program/day-card'
 import { STRUCTURE_LABELS, weeksText, weekTitle } from '@/features/program/format'
 import { Rationale } from '@/features/program/rationale'
+import { WeatherNotice } from '@/features/weather/weather-notice'
 
 const dayMonth = new Intl.DateTimeFormat('ru', { day: 'numeric', month: 'long' })
 const index = (value: unknown) =>
@@ -39,6 +41,8 @@ function ProgramPage() {
   const { data: locations } = useSuspenseQuery(locationsQuery)
   const { data: catalog } = useSuspenseQuery(exercisesQuery)
   const exercises = useMemo(() => new Map(catalog.map((e) => [e.slug, e])), [catalog])
+  const { data: next } = useQuery(nextSessionQuery)
+  const nextPlace = locations.find((l) => l.id === next?.location_id)
   const week = program?.weeks[search.week ?? 0] ?? program?.weeks[0]
   const session = week?.sessions.find((s) => s.day_index === search.day) ?? week?.sessions[0]
   if (!program || !week || !session) return null
@@ -59,6 +63,16 @@ function ProgramPage() {
       <section className="flex flex-col gap-3">
         <h2 className="text-lg font-semibold">{weekTitle(week.index, week.kind)}</h2>
         <DayCard session={session} exercises={exercises} place={placeOf(session.location_id)} />
+        {/* The forecast is only about today: it's shown on the day that's up next. */}
+        {next?.id === session.id && nextPlace && (
+          <WeatherNotice
+            location={nextPlace}
+            moveIndoors={{
+              label: 'Сделать этот день дома',
+              onClick: (id) => navigate({ to: '/workout', search: { place: id } }),
+            }}
+          />
+        )}
       </section>
 
       <section className="flex flex-col gap-3">

@@ -675,6 +675,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/sessions/{session_id}/swap-location": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Swap Location
+         * @description Move the workout to another place: the same patterns with that place's equipment.
+         */
+        post: operations["swap_location_api_v1_sessions__session_id__swap_location_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/sessions/{session_id}/finish": {
         parameters: {
             query?: never;
@@ -946,6 +966,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/weather/forecast": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Forecast
+         * @description The next hours at an outdoor place and whether to move today's workout indoors.
+         */
+        get: operations["forecast_api_v1_weather_forecast_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -1062,6 +1102,11 @@ export interface components {
              */
             weight_trend: components["schemas"]["TrendPoint"][];
         };
+        /**
+         * Concern
+         * @enum {string}
+         */
+        Concern: "rain" | "snow" | "wind" | "cold" | "heat";
         /** Constraints */
         "Constraints-Input": {
             /**
@@ -1332,6 +1377,26 @@ export interface components {
          * @enum {string}
          */
         Feeling: "bad" | "ok" | "good";
+        /** ForecastRead */
+        ForecastRead: {
+            /**
+             * Location Id
+             * Format: uuid
+             */
+            location_id: string;
+            /** @description null when the forecast doesn't reach */
+            verdict: components["schemas"]["VerdictRead"] | null;
+            /**
+             * Hours
+             * @description The next twelve hours
+             */
+            hours: components["schemas"]["HourRead"][];
+            /**
+             * Indoor Location Id
+             * @description Where to move the workout: the default indoor place, if there is one
+             */
+            indoor_location_id: string | null;
+        };
         /**
          * Goal
          * @enum {string}
@@ -1347,6 +1412,34 @@ export interface components {
          * @enum {string}
          */
         HealthTag: "knees" | "shoulders" | "lower_back" | "wrists" | "neck" | "elbows";
+        /**
+         * Hint
+         * @enum {string}
+         */
+        Hint: "frost" | "warm";
+        /** HourRead */
+        HourRead: {
+            /**
+             * At
+             * Format: date-time
+             */
+            at: string;
+            /** Temperature C */
+            temperature_c: number;
+            /** Apparent C */
+            apparent_c: number;
+            /** Precipitation Mm */
+            precipitation_mm: number;
+            /** Precipitation Probability */
+            precipitation_probability: number;
+            /** Wind Gust Ms */
+            wind_gust_ms: number;
+            /**
+             * Weather Code
+             * @description WMO code
+             */
+            weather_code: number;
+        };
         /** ImbalanceRead */
         ImbalanceRead: {
             /** Exercise Slug */
@@ -1394,6 +1487,13 @@ export interface components {
              *     }
              */
             constraints?: components["schemas"]["Constraints-Input"];
+            /**
+             * Geo Lat
+             * @description Outdoor places only; stored at ~1 km
+             */
+            geo_lat?: number | null;
+            /** Geo Lon */
+            geo_lon?: number | null;
         };
         /** LocationEquipmentIn */
         LocationEquipmentIn: {
@@ -1451,6 +1551,10 @@ export interface components {
             /** Travel Minutes */
             travel_minutes: number | null;
             constraints: components["schemas"]["Constraints-Output"];
+            /** Geo Lat */
+            geo_lat: number | null;
+            /** Geo Lon */
+            geo_lon: number | null;
             /** Equipment */
             equipment: components["schemas"]["LocationEquipmentRead"][];
             /**
@@ -1468,6 +1572,10 @@ export interface components {
             /** Travel Minutes */
             travel_minutes?: number | null;
             constraints?: components["schemas"]["Constraints-Input"] | null;
+            /** Geo Lat */
+            geo_lat?: number | null;
+            /** Geo Lon */
+            geo_lon?: number | null;
         };
         /** LoginRequest */
         LoginRequest: {
@@ -2194,7 +2302,7 @@ export interface components {
          * SubstitutionReason
          * @enum {string}
          */
-        SubstitutionReason: "equipment_busy" | "pain" | "too_hard" | "too_easy" | "disliked";
+        SubstitutionReason: "equipment_busy" | "pain" | "too_hard" | "too_easy" | "disliked" | "weather";
         /** Summary */
         Summary: {
             /**
@@ -2218,6 +2326,14 @@ export interface components {
          * @enum {string}
          */
         Surface: "rubber" | "sand" | "asphalt";
+        /** SwapLocationRequest */
+        SwapLocationRequest: {
+            /**
+             * Location Id
+             * Format: uuid
+             */
+            location_id: string;
+        };
         /** TargetRead */
         TargetRead: {
             /** Exercise Slug */
@@ -2336,6 +2452,43 @@ export interface components {
             full_name?: string | null;
             /** Password */
             password?: string | null;
+        };
+        /** VerdictRead */
+        VerdictRead: {
+            /**
+             * Move Indoors
+             * @description Offer the same workout at home
+             */
+            move_indoors: boolean;
+            /** Concerns */
+            concerns: components["schemas"]["Concern"][];
+            /**
+             * Hints
+             * @description Advice for training outside anyway
+             */
+            hints: components["schemas"]["Hint"][];
+            /**
+             * Window Start
+             * Format: date-time
+             */
+            window_start: string;
+            /**
+             * Window End
+             * Format: date-time
+             */
+            window_end: string;
+            /** Min Apparent C */
+            min_apparent_c: number;
+            /** Max Apparent C */
+            max_apparent_c: number;
+            /** Max Gust Ms */
+            max_gust_ms: number;
+            /** Max Precipitation Mm */
+            max_precipitation_mm: number;
+            /** Max Precipitation Probability */
+            max_precipitation_probability: number;
+            /** Text Ru */
+            text_ru: string;
         };
         /** VerifyEmailRequest */
         VerifyEmailRequest: {
@@ -4224,6 +4377,50 @@ export interface operations {
             };
         };
     };
+    swap_location_api_v1_sessions__session_id__swap_location_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                session_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["SwapLocationRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["WorkoutSessionRead"];
+                };
+            };
+            /** @description Unprocessable Entity */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Client Error */
+            "4XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
     finish_api_v1_sessions__session_id__finish_post: {
         parameters: {
             query?: never;
@@ -4842,6 +5039,46 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["SkillProgressRead"];
+                };
+            };
+            /** @description Unprocessable Entity */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Client Error */
+            "4XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    forecast_api_v1_weather_forecast_get: {
+        parameters: {
+            query: {
+                location_id: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ForecastRead"];
                 };
             };
             /** @description Unprocessable Entity */

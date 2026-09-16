@@ -10,8 +10,9 @@ import { ReadinessForm, type StartChoice } from '@/features/workout/readiness-fo
 import { WorkoutScreen } from '@/features/workout/workout-screen'
 
 export const Route = createFileRoute('/_authed/workout')({
-  validateSearch: (search): { session?: string } => ({
+  validateSearch: (search): { session?: string; place?: string } => ({
     session: typeof search.session === 'string' ? search.session : undefined,
+    place: typeof search.place === 'string' ? search.place : undefined,
   }),
   beforeLoad: async ({ context: { queryClient }, search }) => {
     const profile = await queryClient.ensureQueryData(profileQuery)
@@ -101,6 +102,7 @@ function WorkoutPage() {
         locations={locations}
         pending={start.isPending}
         onStart={(choice) => start.mutate(choice)}
+        initialPlace={search.place}
       />
       {start.isError && <p className="text-destructive">{start.error.message}</p>}
     </div>
