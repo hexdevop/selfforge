@@ -112,6 +112,7 @@ class ExerciseSummary(BaseModel):
     is_unilateral: bool
     requires_pair: bool
     is_quiet: bool
+    timed: bool = Field(description="reps are seconds of work: planks, carries, holds")
     required_equipment: list[list[str]] = Field(
         description="AND of OR-groups of equipment codes; empty means bodyweight only"
     )

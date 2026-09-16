@@ -9,6 +9,7 @@ from sqlalchemy.dialects.postgresql import ARRAY, JSONB
 from sqlalchemy.orm import Mapped, mapped_column
 
 from app.db.base import Base, TimestampMixin, UUIDPrimaryKeyMixin
+from app.engine.types import is_timed
 
 
 class MovementPattern(TimestampMixin, Base):
@@ -69,6 +70,11 @@ class Exercise(UUIDPrimaryKeyMixin, TimestampMixin, Base):
     prev_slug: Mapped[str | None] = mapped_column(String(64))
     next_slug: Mapped[str | None] = mapped_column(String(64))
     progression_criteria: Mapped[dict[str, Any] | None] = mapped_column(JSONB)
+
+    @property
+    def timed(self) -> bool:
+        """Measured in seconds of work rather than reps."""
+        return is_timed(self.pattern_code, self.progression_criteria)
 
 
 class Skill(TimestampMixin, Base):

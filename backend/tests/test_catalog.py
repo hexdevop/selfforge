@@ -175,3 +175,11 @@ async def test_etag_revalidation(client: AsyncClient) -> None:
 
     stale = await client.get("/api/v1/patterns", headers={"If-None-Match": '"old"'})
     assert stale.status_code == 200
+
+
+@pytest.mark.usefixtures("seeded")
+async def test_exercises_say_whether_they_are_counted_in_seconds(client: AsyncClient) -> None:
+    exercises = {e["slug"]: e for e in (await client.get("/api/v1/exercises")).json()}
+    assert exercises["plank"]["timed"] is True
+    assert exercises["farmer_carry"]["timed"] is True
+    assert exercises["pullup"]["timed"] is False
