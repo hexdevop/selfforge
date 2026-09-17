@@ -45,7 +45,8 @@ services:
   # S3-compatible storage for exercise media and progress photos.
   # API: http://localhost:9000, console: http://localhost:9001
   minio:
-    image: minio/minio:latest
+    # Pulled from quay.io: MinIO no longer publishes community images to Docker Hub.
+    image: quay.io/minio/minio@sha256:14cea493d9a34af32f524e538b8346cf79f3321eff8e708c1e2960462bd8936e
     restart: unless-stopped
     command: server /data --console-address ":9001"
     environment:
