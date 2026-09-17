@@ -5,6 +5,7 @@ import { locationsQuery } from '@/api/locations'
 import { profileQuery } from '@/api/profile'
 import { activeProgramQuery } from '@/api/programs'
 import { Button } from '@/components/ui/button'
+import { InstallHint } from '@/features/app/install-hint'
 import { exercisesCount } from '@/lib/format'
 
 export const Route = createFileRoute('/_authed/')({
@@ -28,6 +29,7 @@ function Cabinet() {
 
   return (
     <section className="flex max-w-prose flex-col items-start gap-6">
+      <InstallHint />
       <h1 className="text-2xl font-semibold">Привет, {user.full_name || user.username}!</h1>
       {program ? (
         <p>Программа собрана: открой её, чтобы посмотреть день и весь цикл.</p>
