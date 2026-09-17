@@ -986,6 +986,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/export/all": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Export All
+         * @description A full dump of the person's data as a JSON file download.
+         */
+        get: operations["export_all_api_v1_export_all_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -1370,6 +1390,46 @@ export interface components {
             required_equipment: string[][];
             /** Primary Muscles */
             primary_muscles: components["schemas"]["Muscle"][];
+        };
+        /**
+         * Export
+         * @description Everything the app keeps about one person, in one file (docs/00-product.md, principle 6).
+         */
+        Export: {
+            /**
+             * Format Version
+             * @default 1
+             */
+            format_version?: number;
+            /**
+             * Exported At
+             * Format: date-time
+             */
+            exported_at: string;
+            user: components["schemas"]["UserRead"];
+            profile: components["schemas"]["ProfileRead"];
+            /** Pattern Levels */
+            pattern_levels: components["schemas"]["PatternLevelRead"][];
+            /** Locations */
+            locations: components["schemas"]["LocationRead"][];
+            /** Programs */
+            programs: components["schemas"]["ProgramRead"][];
+            /**
+             * Workouts
+             * @description Oldest first, with every logged set
+             */
+            workouts: components["schemas"]["WorkoutSessionRead"][];
+            /** Personal Records */
+            personal_records: components["schemas"]["PersonalRecordRead"][];
+            /** Body Metrics */
+            body_metrics: components["schemas"]["BodyMetricRead"][];
+            /**
+             * Photos
+             * @description The files themselves are behind `url`, a link that works for 15 minutes
+             */
+            photos: components["schemas"]["PhotoRead"][];
+            /** Skill Progress */
+            skill_progress: components["schemas"]["SkillProgressExport"][];
         };
         /**
          * Feeling
@@ -2230,6 +2290,17 @@ export interface components {
             reps?: number | null;
             /** Hold Seconds */
             hold_seconds?: number | null;
+        };
+        /** SkillProgressExport */
+        SkillProgressExport: {
+            /** Skill Slug */
+            skill_slug: string;
+            /** Status */
+            status: string;
+            /** Current Lead Up Slug */
+            current_lead_up_slug: string | null;
+            /** Achieved At */
+            achieved_at: string | null;
         };
         /** SkillProgressRead */
         SkillProgressRead: {
@@ -5079,6 +5150,44 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["ForecastRead"];
+                };
+            };
+            /** @description Unprocessable Entity */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Client Error */
+            "4XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    export_all_api_v1_export_all_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Export"];
                 };
             };
             /** @description Unprocessable Entity */
