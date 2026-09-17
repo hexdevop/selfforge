@@ -4,10 +4,13 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What this is
 
-Backend of Self Forge (see the root `CLAUDE.md` and `../docs/` — they win over this file).
-Grown from a FastAPI starter template: users, JWT auth by email/username (refresh token in
-an httpOnly cookie), email verification / password reset over SMTP, Redis rate limiting,
-middlewares, generic repository with filters, pagination, Redis caching.
+Backend of Self Forge (see the root `CLAUDE.md` and `../docs/` — they win over this file;
+human-facing overview in `README.md`). Grown from a FastAPI starter template: users, JWT auth
+by email/username (refresh token in an httpOnly cookie), email verification / password reset
+over SMTP, Redis rate limiting, middlewares, generic repository with filters, pagination,
+Redis caching. On top of it: the reference catalog, profile and places, the program engine,
+workouts, progress analytics, body metrics with photos in S3, the weather forecast and a
+full data export.
 
 ## Commands
 
@@ -28,8 +31,11 @@ make revision m="add something"      # alembic revision --autogenerate
 make docker-up / make docker-down    # full stack (app + postgres + redis) via docker-compose
 ```
 
+`pnpm` isn't on PATH on the dev machine: the frontend runs as `corepack pnpm …`.
+
 Tests run against a real Postgres (the models rely on JSONB) + `fakeredis`. Start the DB
-with `docker compose up -d db` first; `tests/conftest.py` creates the `app_test` database on
+with `docker compose up -d db` first (`docker compose up -d db redis minio mailpit` for
+running the app); `tests/conftest.py` creates the `app_test` database on
 first run, builds the schema via `Base.metadata.create_all` once per session and truncates
 all tables after every test. The app's own `get_db` is used as-is — no override.
 
@@ -93,9 +99,37 @@ repositories only `flush()`.
 - **Catalog** (`app/models/catalog.py`, `seed/`) — patterns, equipment, exercises and skills
   are reference data: never in migrations, only in `seed/*.yaml`, loaded by `app/seed.py`.
   `load_catalog()` cross-validates everything (ladder links stay within a pattern and go the
-  right way, equipment codes exist, skills point to real exercises) before upserting by
+  right way, equipment codes exist, skills point to real exercises, timed exercises have no
+  `bodyweight_share`, a skill's `goal` uses the same unit as its exercise) before upserting by
   `code`/`slug`. The seed then drops the `catalog:*` Redis prefix; catalog endpoints add an
   ETag and answer `If-None-Match` with 304.
+
+- **Engine** (`app/engine/`) — the product core: inventory and weight grids, level
+  assessment, ladders, goal schemes, progression levers, the mesocycle and one-off days,
+  preparing/substituting/trimming/moving a session, analytics, the weather verdict. Pure:
+  dataclasses in, dataclasses out; no SQLAlchemy, FastAPI, Redis, httpx or boto3 —
+  `tests/engine/test_purity.py` enforces it. Services build engine inputs from models
+  (`to_engine_location`, `CatalogService.engine_exercises`, `logged_set`) and persist results.
+  Russian texts shown to people (`hint_ru`, `notes_ru`, `rationale_ru`, `text_ru`) are
+  produced by the engine next to the decision they explain. Spec: `../docs/03-engine.md`.
+
+- **Workouts** (`app/services/workout.py`) — a session stores the engine's prepared plan in
+  `workout_sessions.plan` (JSONB) and rebuilds the engine `Session` from it for substitute /
+  trim / swap-location. Progression history is keyed by the plan slot (`planned_slug`), not
+  by exercise. Sets are idempotent on `client_uuid` (`INSERT … ON CONFLICT DO NOTHING`).
+
+- **Storage** (`app/storage.py`) — S3/MinIO via boto3. The API reaches storage at
+  `S3_ENDPOINT_URL` but signs browser links for `S3_PUBLIC_URL` (the signature binds the
+  host). Uploads are presigned POST so the policy caps size and type. Network calls
+  (`ensure_bucket`, `delete`) run in a thread; tests monkeypatch them.
+
+- **Weather** (`app/weather.py`) — Open-Meteo over httpx, cached in Redis per rounded
+  coordinates and hour; failures raise `ServiceUnavailableException` (503). Tests
+  monkeypatch `app.weather._fetch`.
+
+- **Production** — `../deploy/` (compose behind the host nginx, deploy/backup/restore
+  scripts) and `../docs/07-deploy.md`. uvicorn runs with `--proxy-headers` there so rate
+  limiting sees client IPs.
 
 ## Adding a new domain (e.g. "posts")
 

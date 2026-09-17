@@ -41,21 +41,33 @@ Zustand, Tailwind CSS v4, shadcn/ui, React Hook Form + Zod, Recharts, Biome, Vit
 
 ```
 # бэкенд (из backend/)
+docker compose up -d db redis minio mailpit   сервисы для разработки и тестов
 make dev            запуск с автоперезагрузкой
 make lint           ruff check + ruff format --check
 make typecheck      mypy strict
 make test           pytest
 make migrate        alembic upgrade head
 make revision m=""  новая миграция
+make seed           залить справочник из seed/*.yaml
 
-# фронтенд (из frontend/)
-pnpm dev
-pnpm build
-pnpm lint
-pnpm typecheck
-pnpm test
-pnpm gen:api        перегенерировать типы из OpenAPI бэкенда
+# фронтенд (из frontend/); pnpm запускается через corepack
+corepack pnpm dev
+corepack pnpm build
+corepack pnpm lint
+corepack pnpm typecheck
+corepack pnpm test
+corepack pnpm gen:api    перегенерировать типы из OpenAPI бэкенда
+
+# прод (на сервере, каталог проекта — любой)
+deploy/deploy.sh    сборка, миграции, справочник, запуск
+deploy/backup.sh    бэкап базы и фото на диск
+deploy/restore.sh   восстановление из бэкапа
 ```
+
+Обзор проекта для людей — `README.md`; как поднять прод — `docs/07-deploy.md`.
+
+Цепочки проверок перед коммитом запускаются с `set -o pipefail`: `make lint | tail` иначе
+проглатывает код ошибки.
 
 ## Правила работы
 
