@@ -11,7 +11,8 @@ def test_engine_never_imports_infrastructure() -> None:
     modules = [f"app.engine.{p.stem}" for p in ENGINE.glob("*.py") if p.stem != "__init__"]
     check = (
         f"import sys; import {', '.join(modules)}; "
-        "leaked = {'sqlalchemy', 'fastapi', 'redis'} & {m.split('.')[0] for m in sys.modules}; "
+        "infra = {'sqlalchemy', 'fastapi', 'redis', 'httpx', 'boto3', 'botocore'}; "
+        "leaked = infra & {m.split('.')[0] for m in sys.modules}; "
         "sys.exit(', '.join(sorted(leaked)) or None)"
     )
     result = subprocess.run([sys.executable, "-c", check], capture_output=True, text=True)
