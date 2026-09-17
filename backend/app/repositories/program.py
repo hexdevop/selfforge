@@ -1,4 +1,5 @@
 import uuid
+from collections.abc import Sequence
 
 from sqlalchemy import select
 
@@ -19,3 +20,7 @@ class ProgramRepository(BaseRepository[Program]):
             .where(PlannedSession.id == planned_session_id, Program.user_id == user_id)
         )
         return (await self.session.scalars(stmt)).first()
+
+    async def all_for_user(self, user_id: uuid.UUID) -> Sequence[Program]:
+        stmt = select(Program).where(Program.user_id == user_id).order_by(Program.started_at)
+        return (await self.session.scalars(stmt)).all()

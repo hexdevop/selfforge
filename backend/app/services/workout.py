@@ -325,13 +325,13 @@ class WorkoutService:
         return await self.get(workout.id)
 
     async def get(self, session_id: uuid.UUID) -> WorkoutSessionRead:
-        return await self._read(await self._own(session_id))
+        return await self.read(await self._own(session_id))
 
     async def history(
         self, pagination: PageParams, status: SessionStatus | None = None
     ) -> Page[WorkoutSessionRead]:
         page = await self.sessions.history(self.user.id, pagination, status)
-        items = [await self._read(workout) for workout in page.items]
+        items = [await self.read(workout) for workout in page.items]
         return Page[WorkoutSessionRead](
             items=items, total=page.total, page=page.page, size=page.size, pages=page.pages
         )
@@ -579,7 +579,7 @@ class WorkoutService:
             raise ValidationFailedException("Эта тренировка уже завершена")
         return workout
 
-    async def _read(self, workout: WorkoutSession) -> WorkoutSessionRead:
+    async def read(self, workout: WorkoutSession) -> WorkoutSessionRead:
         plan = workout.plan or {"blocks": [], "notes_ru": []}
         return WorkoutSessionRead(
             id=workout.id,

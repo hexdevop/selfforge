@@ -35,6 +35,14 @@ class WorkoutSessionRepository(BaseRepository[WorkoutSession]):
             filters["status"] = status
         return await self.list(filters, pagination, order_by=WorkoutSession.started_at.desc())
 
+    async def all_for_user(self, user_id: uuid.UUID) -> Sequence[WorkoutSession]:
+        stmt = (
+            select(WorkoutSession)
+            .where(WorkoutSession.user_id == user_id)
+            .order_by(WorkoutSession.started_at)
+        )
+        return (await self.session.scalars(stmt)).all()
+
     async def completed_planned_ids(self, planned_ids: Iterable[uuid.UUID]) -> set[uuid.UUID]:
         ids = list(planned_ids)
         if not ids:

@@ -6,6 +6,7 @@ from app.api.v1 import (
     auth,
     body,
     catalog,
+    export,
     locations,
     profile,
     programs,
@@ -34,3 +35,4 @@ router.include_router(sessions.router)
 router.include_router(body.router)
 router.include_router(progress.router)
 router.include_router(weather.router)
+router.include_router(export.router)
