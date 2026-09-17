@@ -141,7 +141,31 @@ export function WorkoutScreen({ session, titles, guidance }: WorkoutScreenProps)
     },
   })
 
-  if (!exercise) return null
+  if (!exercise) {
+    return (
+      <section className="flex max-w-prose flex-col items-start gap-4">
+        <h1 className="text-2xl font-semibold">Здесь нечем выполнить эту тренировку</h1>
+        <Notes notes={session.notes_ru} />
+        <p className="text-muted-foreground">
+          Для движений этого дня на этом месте нет подходящего инвентаря. Можно завершить сейчас —
+          всё, что уже сделано, сохранится, — или начать свободную тренировку под это место.
+        </p>
+        <div className="flex flex-wrap gap-3">
+          <Button disabled={closeOut.isPending} onClick={() => closeOut.mutate('finish')}>
+            Завершить тренировку
+          </Button>
+          <Button
+            variant="outline"
+            disabled={closeOut.isPending}
+            onClick={() => closeOut.mutate('abort')}
+          >
+            Остановить
+          </Button>
+        </div>
+        {closeOut.isError && <p className="text-destructive">{closeOut.error.message}</p>}
+      </section>
+    )
+  }
 
   const done = doneSets(logged, exercise.exercise_slug)
   const currentWeight = weight ?? exercise.weight_kg

@@ -26,6 +26,12 @@ function AuthedLayout() {
 
   return (
     <div className="min-h-dvh">
+      <a
+        href="#content"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-50 focus:rounded-lg focus:bg-card focus:px-4 focus:py-3 focus:ring-3 focus:ring-ring/50"
+      >
+        Перейти к содержанию
+      </a>
       <header className="border-b bg-card">
         {/* On a phone the sections get their own row under the logo instead of being cut off. */}
         <div className="mx-auto flex max-w-3xl flex-wrap items-center gap-1 px-2 py-2 sm:flex-nowrap sm:gap-2 sm:px-4">
@@ -50,7 +56,7 @@ function AuthedLayout() {
         </div>
       </header>
       {!user.is_verified && <VerifyEmailNotice user={user} />}
-      <main className="mx-auto max-w-3xl px-4 py-8">
+      <main id="content" tabIndex={-1} className="mx-auto max-w-3xl px-4 py-8 outline-none">
         <Outlet />
       </main>
     </div>

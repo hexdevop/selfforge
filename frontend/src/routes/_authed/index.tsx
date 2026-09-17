@@ -5,6 +5,7 @@ import { locationsQuery } from '@/api/locations'
 import { profileQuery } from '@/api/profile'
 import { activeProgramQuery } from '@/api/programs'
 import { Button } from '@/components/ui/button'
+import { ExportData } from '@/features/app/export-data'
 import { InstallHint } from '@/features/app/install-hint'
 import { exercisesCount } from '@/lib/format'
 
@@ -73,6 +74,9 @@ function Cabinet() {
           <Link to="/exercises">Упражнения</Link>
         </Button>
       </div>
+
+      <h2 className="mt-4 text-lg font-semibold">Мои данные</h2>
+      <ExportData />
     </section>
   )
 }

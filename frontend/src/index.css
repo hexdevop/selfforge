@@ -111,3 +111,19 @@
     cursor: pointer;
   }
 }
+
+/* Motion only ever answers an action (docs/05-frontend.md); those who asked for less get none. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    /* biome-ignore lint/complexity/noImportantStyles: the reset has to beat every component's own motion */
+    animation-duration: 0.01ms !important;
+    /* biome-ignore lint/complexity/noImportantStyles: the reset has to beat every component's own motion */
+    animation-iteration-count: 1 !important;
+    /* biome-ignore lint/complexity/noImportantStyles: the reset has to beat every component's own motion */
+    transition-duration: 0.01ms !important;
+    /* biome-ignore lint/complexity/noImportantStyles: the reset has to beat every component's own motion */
+    scroll-behavior: auto !important;
+  }
+}
