@@ -83,11 +83,14 @@ chmod 600 deploy/.env
 попытки), сначала убрать ссылку: `sudo rm -f /etc/nginx/sites-enabled/selfforge.hexdevop.ru.conf`.
 
 ```bash
-sudo certbot certonly --nginx -d selfforge.hexdevop.ru
-sudo cp "$APP_DIR/deploy/nginx/selfforge.hexdevop.ru.conf" /etc/nginx/sites-available/
-sudo ln -s /etc/nginx/sites-available/selfforge.hexdevop.ru.conf /etc/nginx/sites-enabled/
+sudo certbot certonly --nginx -d selfforge.hexdevop.ru && \
+sudo cp "$APP_DIR/deploy/nginx/selfforge.hexdevop.ru.conf" /etc/nginx/sites-available/ && \
+sudo ln -sf /etc/nginx/sites-available/selfforge.hexdevop.ru.conf /etc/nginx/sites-enabled/ && \
 sudo nginx -t && sudo systemctl reload nginx
 ```
+
+Команды связаны `&&`: если certbot не выпустил сертификат (чаще всего — DNS-запись из шага 1
+ещё не видна снаружи), сайт не подключится и не сломает `nginx -t` остальным сайтам сервера.
 
 Плагин `--nginx` создаёт `options-ssl-nginx.conf` и `ssl-dhparams.pem`, на которые ссылается
 конфиг. Если nginx на сервере подключает сайты не через `sites-enabled`, а через `conf.d/`, —
